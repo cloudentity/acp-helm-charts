@@ -14,3 +14,7 @@ dependencies:
   version: "5.0.7"
   repository: https://charts.cockroachdb.com
   condition: cockroachdb.enabled
+- name: acp
+  version: "0.4.0"
+  repository: "file://../acp/"
+  condition: acp.enabled
