@@ -1,0 +1,9 @@
+dependencies:
+- name: hazelcast
+  repository: https://hazelcast-charts.s3.amazonaws.com
+  version: 3.7.1
+- name: cockroachdb
+  repository: https://charts.cockroachdb.com
+  version: 5.0.7
+digest: sha256:6cec857a3c857ed0ef38c2f1c2f2cb436a08f7e362f9938e17c9efcc2deeb15b
+generated: "2021-04-19T10:45:11.857800022+02:00"
