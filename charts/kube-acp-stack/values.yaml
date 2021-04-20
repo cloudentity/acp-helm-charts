@@ -2,3 +2,5 @@ hazelcast:
   enabled: true
 cockroachdb:
   enabled: true
+acp:
+  enabled: true
