@@ -7,7 +7,7 @@ sources:
   - https://github.com/cloudentity/acp-helm-charts
 dependencies:
 - name: hazelcast
-  version: "3.7.1"
+  version: "2.11.0"
   repository: https://hazelcast-charts.s3.amazonaws.com
   condition: hazelcast.enabled
 - name: cockroachdb
