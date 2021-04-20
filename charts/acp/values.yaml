@@ -20,10 +20,17 @@ args:
   - --metrics
   - --create-default-tenant
   - --create-default-workspaces
-  - --hazelcast.address
-  - test-release-hazelcast:5701
-  - --sql.url
-  - postgres://root@test-release-cockroachdb:26257/defaultdb?sslmode=disable
+env:
+  - name: SERVER_URL
+    value: https://localhost:8443
+  - name: HAZELCAST_ADDRESS
+    value: test-release-hazelcast:5701
+  - name: HAZELCAST_USERNAME
+    value: dev
+  - name: HAZELCAST_SERVERNAME
+    value: test-release-hazelcast
+  - name: SQL_URL
+    value: "postgres://root@test-release-cockroachdb:26257/defaultdb?sslmode=disable"
 service:
   type: ClusterIP
   port: 8443
