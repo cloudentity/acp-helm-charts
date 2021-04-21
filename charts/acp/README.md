@@ -12,7 +12,7 @@ This chart bootstraps a [ACP](https://github.com/cloudentity/acp-helm-charts/tre
 ## Get Repo Info
 
 ```console
-helm repo add acp https://artifactory.cloudentity.com/acp-helm-charts
+helm repo add acp https://charts.cloudentity.io
 helm repo update
 ```
 
