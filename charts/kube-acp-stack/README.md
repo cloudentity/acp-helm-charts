@@ -76,10 +76,6 @@ helm show values acp/kube-acp-stack
 
 You may also `helm show values` on this chart's [dependencies](#dependencies) for additional options.
 
-### Multiple releases
-
-The same chart can be used to run multiple ACP instances in the same cluster if required. To achieve this, it is necessary to run only one instance of ACP, while all other components need to be disabled. To disable a dependency during installation, set `cockroachdb.enabled`, and `hazelcast.enabled` to `false`.
-
 ## Work-Arounds for Known Issues
 TBD
 
