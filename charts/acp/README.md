@@ -69,27 +69,6 @@ To manually configure Docker credentials, first createreate a Secret by providin
 kubectl create secret docker-registry artifactory --docker-server=artifactory.cloudentity.com --docker-username=<your-name> --docker-password=<your-password>
 ```
 
-### Sharing Alerts Between Services
-
-Note that when [installing](#install-chart) or [upgrading](#upgrading-chart) you may use multiple values override files. This is particularly useful when you need to customize ACP configuration:
-
-```yaml
-# values.yaml
-# ...
-
-# config1-acp.yaml
-acp:
-  # ...
-
-# config2-acp.yaml
-acp:
-  # ...
-```
-
-```console
-helm install [RELEASE_NAME] acp/acp -f values.yaml -f config1-acp.yaml -f config2-acp.yaml
-```
-
 ### RBAC Configuration
 
 Roles and RoleBindings resources will be created automatically for `acp` service.
