@@ -24,6 +24,10 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: data
+          configMap:
+            name: {{ .Release.Name }}-acp
       serviceAccountName: {{ include "acp.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -67,6 +71,10 @@ spec:
               port: 8443
             initialDelaySeconds: 5
             periodSeconds: 5
+          volumeMounts:
+            - mountPath: /data
+              name: data
+              readOnly: true
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
