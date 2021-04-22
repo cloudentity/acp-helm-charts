@@ -9,9 +9,32 @@ data:
     server:
       url: {{ .Values.serverURL }}
     sql:
+      {{- with .Values.sql }}
+      {{- toYaml . | nindent 6 }}
+      {{- else }}
       url: "postgres://root@{{ .Release.Name }}-cockroachdb:26257/defaultdb?sslmode=disable"
+      {{- end }}
     hazelcast:
+      {{- with .Values.hazelcast }}
+      {{- toYaml . | nindent 6 }}
+      {{- else }}
       addresses:
       - "{{ .Release.Name }}-hazelcast:5701"
       serverName: "{{ .Release.Name }}-hazelcast"
       username: "dev"
+      {{- end }}
+    {{- with .Values.features }}
+    features:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .Values.certificate }}
+    certificate:
+      certPath: "/data/acp.crt"
+      keyPath: "/data/acp.key"
+    {{- end }}
+  {{- with .Values.certificate.cert }}
+  acp.crt: {{ . | quote }}
+  {{- end }}
+  {{- with .Values.certificate.key }}
+  acp.key: {{ . | quote }}
+  {{- end }}
