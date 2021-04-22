@@ -8,6 +8,11 @@ data:
   config.yaml: |
     server:
       url: {{ .Values.serverURL }}
+      {{- with .Values.certificate.cert }}
+      certificate:
+        certPath: "/data/acp.crt"
+        keyPath: "/data/acp.key"
+      {{- end }}
     sql:
       {{- with .Values.sql }}
       {{- toYaml . | nindent 6 }}
@@ -26,11 +31,6 @@ data:
     {{- with .Values.features }}
     features:
       {{- toYaml . | nindent 6 }}
-    {{- end }}
-    {{- with .Values.certificate }}
-    certificate:
-      certPath: "/data/acp.crt"
-      keyPath: "/data/acp.key"
     {{- end }}
   {{- with .Values.certificate.cert }}
   acp.crt: {{ . | quote }}
