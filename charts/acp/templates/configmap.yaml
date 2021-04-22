@@ -27,3 +27,14 @@ data:
     features:
       {{- toYaml . | nindent 6 }}
     {{- end }}
+    {{- with .Values.certificate }}
+    certificate:
+      certPath: "/data/acp.crt"
+      keyPath: "/data/acp.key"
+    {{- end }}
+  {{- with .Values.certificate.cert }}
+  acp.crt: {{ . | quote }}
+  {{- end }}
+  {{- with .Values.certificate.key }}
+  acp.key: {{ . | quote }}
+  {{- end }}
