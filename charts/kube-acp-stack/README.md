@@ -12,7 +12,7 @@ See the [acp](https://github.com/cloudentity/acp-helm-charts/tree/master/charts/
 ## Get Repo Info
 
 ```console
-helm repo add acp https://artifactory.cloudentity.com/acp-helm-charts
+helm repo add acp https://charts.cloudentity.io
 helm repo update
 ```
 
@@ -84,6 +84,6 @@ TBD
 
 For more in-depth documentation of configuration options meanings, please see
 
-- [ACP](https://artifactory.cloudentity.com/acp-helm-charts)
+- [ACP](https://github.com/cloudentity/acp-helm-charts)
 - [CockroachDB](https://github.com/cockroachdb/helm-charts)
 - [Hazelcast](https://github.com/hazelcast/charts)

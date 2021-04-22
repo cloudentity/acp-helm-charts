@@ -5,32 +5,16 @@ imagePullSecrets:
   - name: artifactory
 serviceAccount:
   create: true
-config.yaml:
-  server:
-    port: 8443
-    disableGZIP: true
-  features:
-    integrationEndpoints: true
 args:
   - server
   - start
   - --config
-  - /config/reference.yaml
+  - /config/reference.yaml,/data/config.yaml
   - --demo
   - --metrics
   - --create-default-tenant
   - --create-default-workspaces
-env:
-  - name: SERVER_URL
-    value: https://localhost:8443
-  - name: HAZELCAST_ADDRESS
-    value: test-release-hazelcast:5701
-  - name: HAZELCAST_USERNAME
-    value: dev
-  - name: HAZELCAST_SERVERNAME
-    value: test-release-hazelcast
-  - name: SQL_URL
-    value: "postgres://root@test-release-cockroachdb:26257/defaultdb?sslmode=disable"
+serverURL: "https://acp.local"
 service:
   type: ClusterIP
   port: 8443
