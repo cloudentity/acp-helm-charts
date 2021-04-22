@@ -7,6 +7,6 @@ dependencies:
   version: 5.0.7
 - name: acp
   repository: https://charts.cloudentity.io
-  version: 0.4.0
-digest: sha256:2178964d7818f714560cf9894510b9599104b4f3cbf78828ad3c582bb655cc11
-generated: "2021-04-21T17:28:00.763657614+02:00"
+  version: 0.6.0
+digest: sha256:346f6fc7f4965dcd878c5bad4da01a1c8c9b38f4117f98c41a5eaa76a2ac019f
+generated: "2021-04-22T00:12:02.572685612+02:00"

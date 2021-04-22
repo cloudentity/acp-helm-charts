@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-acp
+  labels:
+    {{- include "acp.labels" . | nindent 4 }}
+data:
+  config.yaml: |
+    server:
+      url: {{ .Values.serverURL }}
+    sql:
+      url: "postgres://root@{{ .Release.Name }}-cockroachdb:26257/defaultdb?sslmode=disable"
+    hazelcast:
+      addresses:
+      - "{{ .Release.Name }}-hazelcast:5701"
+      serverName: "{{ .Release.Name }}-hazelcast"
+      username: "dev"
