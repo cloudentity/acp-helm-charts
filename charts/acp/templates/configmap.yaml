@@ -15,3 +15,7 @@ data:
       - "{{ .Release.Name }}-hazelcast:5701"
       serverName: "{{ .Release.Name }}-hazelcast"
       username: "dev"
+    {{- with .Values.features }}
+    features:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
