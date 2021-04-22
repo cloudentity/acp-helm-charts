@@ -14,7 +14,7 @@ args:
   - --metrics
   - --create-default-tenant
   - --create-default-workspaces
-serverURL: "https://acp.local"
+serverURL: "https://acp.local:8443"
 service:
   type: ClusterIP
   port: 8443
