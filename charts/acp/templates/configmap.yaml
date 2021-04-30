@@ -10,8 +10,8 @@ data:
       url: {{ .Values.serverURL }}
       {{- with .Values.certificate.cert }}
       certificate:
-        certPath: "/data/acp.crt"
-        keyPath: "/data/acp.key"
+        cert_path: "/data/acp.crt"
+        key_path: "/data/acp.key"
       {{- end }}
     sql:
       {{- with .Values.sql }}
@@ -25,7 +25,7 @@ data:
       {{- else }}
       addresses:
       - "{{ .Release.Name }}-hazelcast:5701"
-      serverName: "{{ .Release.Name }}-hazelcast"
+      server_name: "{{ .Release.Name }}-hazelcast"
       username: "dev"
       {{- end }}
     {{- with .Values.features }}
