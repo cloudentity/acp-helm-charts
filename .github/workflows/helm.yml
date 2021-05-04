@@ -1,0 +1,13 @@
+name: helm
+on:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Helm lint
+        run: |
+          helm lint charts/*
