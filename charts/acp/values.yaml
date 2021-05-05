@@ -41,6 +41,47 @@ autoscaling:
   enabled: false
 replicaCount: 1
 
+# feature flags
+features:
+  # enables import, export, global accept, deny, introspect endpoints
+  integrationEndpoints: false
+
+  # reload templates, adds local redirects urls to frontend apps
+  devMode: false
+
+  # enables demo app endpoints
+  demoApp: false
+
+  # enables swagger ui
+  swaggerUI: false
+
+  # enable javascript transformer
+  scriptTransformer: false
+
+  # enable system openbanking consent management apis
+  systemOpenbankingConsentsManagement: false
+
+  # enable system client management apis
+  systemClientsManagement: false
+
+  # enable jwt bearer grant type
+  jwtBearerGrantType: false
+
+  # enable, when ACP is running on-prem, and Pyron is used as gateway
+  pyronOnPrem: true
+
+  # enable openbanking domestic scheduled payment consent apis
+  openbankingDomesticScheduledPaymentConsents: false
+
+  # enable openbanking domestic payment consent apis
+  openbankingDomesticPaymentConsents: false
+
+  # enable verification middleware for POST payment consent endpoints
+  openbankingJwsVerification: false
+
+  # enable rotation keys in frontend
+  webRotationKeys: false
+
 certificate:
   # dummy cert and key
   cert: |
