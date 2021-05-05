@@ -1,5 +1,10 @@
 name: helm
 on:
+  push:
+    branches:
+      - "test-contributions"
+    paths:
+      - "**/Chart.yaml"
   pull_request:
 
 jobs:
@@ -11,3 +16,37 @@ jobs:
       - name: Helm lint
         run: |
           helm lint charts/*
+
+  acp:
+    needs: lint
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Helm package charts/acp
+        run: helm package charts/acp
+
+      - uses: jfrog/setup-jfrog-cli@v1
+        env:
+          JF_ARTIFACTORY_1: ${{ secrets.JF_ARTIFACTORY_SECRET_1 }}
+
+      - name: Publish
+        run: jfrog rt u *.tgz acp-helm-charts
+
+  kube-acp-stack:
+    needs: acp
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Helm package charts/kube-acp-stack
+        run: helm package -u charts/kube-acp-stack
+
+      - uses: jfrog/setup-jfrog-cli@v1
+        env:
+          JF_ARTIFACTORY_1: ${{ secrets.JF_ARTIFACTORY_SECRET_1 }}
+
+      - name: Publish
+        run: jfrog rt u *.tgz acp-helm-charts
