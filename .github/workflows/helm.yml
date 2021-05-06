@@ -2,7 +2,7 @@ name: helm
 on:
   push:
     branches:
-      - "test-contributions"
+      - "master"
     paths:
       - "**/Chart.yaml"
   pull_request:
