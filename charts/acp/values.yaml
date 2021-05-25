@@ -43,45 +43,25 @@ replicaCount: 1
 
 # feature flags
 features:
-  # enables import, export, global accept, deny, introspect endpoints
-  integrationEndpoints: false
-
-  # reload templates, adds local redirects urls to frontend apps
-  devMode: false
-
-  # enables demo app endpoints
-  demoApp: false
-
-  # enables swagger ui
-  swaggerUI: false
-
-  # enable javascript transformer
-  scriptTransformer: false
-
-  # enable system openbanking consent management apis
-  systemOpenbankingConsentsManagement: false
-
-  # enable system client management apis
-  systemClientsManagement: false
-
-  # enable jwt bearer grant type
-  jwtBearerGrantType: false
-
-  # enable, when ACP is running on-prem, and Pyron is used as gateway
-  pyronOnPrem: true
-
-  # enable openbanking domestic scheduled payment consent apis
-  openbankingDomesticScheduledPaymentConsents: false
-
-  # enable openbanking domestic payment consent apis
-  openbankingDomesticPaymentConsents: false
-
-  # enable verification middleware for POST payment consent endpoints
-  openbankingJwsVerification: false
-
-  # enable rotation keys in frontend
-  webRotationKeys: false
-
+  integration_endpoints: false # enables import, export, global accept, deny, introspect endpoints
+  dev_mode: false # realod templates, adds local redirects urls to frontend apps
+  demo_app: false # enables demo app endpoints
+  swagger_ui: false # enables swagger ui
+  script_transformer: false # enable javascript transformer
+  system_openbanking_consents_management: false # enable system openbanking consent management apis
+  system_clients_management: false # enable system client management apis
+  jwt_bearer_grant_type: false # enable jwt bearer grant type
+  pyron_on_prem: false # enable, when ACP is running on-prem, and Pyron is used as gateway
+  faas_provider: "" # default not secure embedded script runtime or fission
+  openbanking_domestic_scheduled_payment_consents: false # enable openbanking domestic scheduled payment consent apis
+  openbanking_domestic_payment_consents: false # enable openbanking domestic payment consent apis
+  openbanking_domestic_standing_order_consents: false # enable openbanking domestic standing order consent apis
+  openbanking_international_payment_consents: false # enable openbanking international payment consent apis
+  openbanking_international_scheduled_payment_consents: false # enable openbanking international scheduled payment consent apis
+  openbanking_international_standing_order_consents: false # enable openbanking international standing order consent apis
+  openbanking_file_payment_consents: false # enable openbanking file payment consent apis
+  openbanking_jws_verification: false # enable verification middleware for POST payment consent endpoints
+  web_rotation_keys: false # enable roatation keys in frontend
 certificate:
   # dummy cert and key
   cert: |
