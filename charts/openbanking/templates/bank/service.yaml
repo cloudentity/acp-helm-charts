@@ -1,0 +1,41 @@
+{{- if .Values.bank.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+{{- if .Values.bank.service.annotations }}
+  annotations:
+{{ toYaml .Values.bank.service.annotations | indent 4}}
+{{- end }}
+  labels:
+    {{- include "openbanking.bank.labels" . | nindent 4 }}
+{{- if .Values.bank.service.labels }}
+{{ toYaml .Values.bank.service.labels | indent 4}}
+{{- end }}
+  name: {{ template "openbanking.bank.fullname" . }}
+{{ include "openbanking.namespace" . | indent 2 }}
+spec:
+{{- if .Values.bank.service.clusterIP }}
+  clusterIP: {{ .Values.bank.service.clusterIP }}
+{{- end }}
+{{- if .Values.bank.service.externalIPs }}
+  externalIPs:
+{{ toYaml .Values.bank.service.externalIPs | indent 4 }}
+{{- end }}
+{{- if .Values.bank.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.bank.service.loadBalancerIP }}
+{{- end }}
+{{- if .Values.bank.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{- range $cidr := .Values.bank.service.loadBalancerSourceRanges }}
+    - {{ $cidr }}
+  {{- end }}
+{{- end }}
+  ports:
+    - name: http
+      port: {{ .Values.bank.service.servicePort }}
+      protocol: TCP
+      targetPort: 9091
+  selector:
+    {{- include "openbanking.bank.matchLabels" . | nindent 4 }}
+  type: "{{ .Values.bank.service.type }}"
+{{- end }}

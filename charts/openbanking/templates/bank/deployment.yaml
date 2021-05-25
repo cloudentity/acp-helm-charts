@@ -1,0 +1,74 @@
+{{- if .Values.bank.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{- include "openbanking.bank.labels" . | nindent 4 }}
+  name: {{ template "openbanking.bank.fullname" . }}
+{{ include "openbanking.namespace" . | indent 2 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "openbanking.bank.matchLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- if .Values.bank.podAnnotations }}
+      annotations:
+{{ toYaml .Values.bank.podAnnotations | indent 8 }}
+    {{- end }}
+      labels:
+        {{- include "openbanking.bank.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ template "openbanking.serviceAccountName.bank" . }}
+      {{- if .Values.bank.extraInitContainers }}
+      initContainers:
+{{ toYaml .Values.bank.extraInitContainers | indent 8 }}
+      {{- end }}
+{{- if .Values.bank.priorityClassName }}
+      priorityClassName: "{{ .Values.bank.priorityClassName }}"
+{{- end }}
+      containers:
+        - name: {{ template "openbanking.name" . }}-{{ .Values.bank.name }}
+          image: "{{ .Values.bank.image.repository }}:{{ .Values.bank.image.tag }}"
+          imagePullPolicy: "{{ .Values.bank.image.pullPolicy }}"
+          args:
+          {{- range $key, $value := .Values.bank.extraArgs }}
+            - --{{ $key }}={{ $value }}
+          {{- end }}
+          ports:
+            - containerPort: 9091
+          livenessProbe:
+            httpGet:
+              path: /-/healthy
+              port: 9091
+            initialDelaySeconds: 10
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /-/ready
+              port: 9091
+            initialDelaySeconds: 10
+            timeoutSeconds: 10
+          resources:
+{{ toYaml .Values.bank.resources | indent 12 }}
+    {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{ toYaml .Values.imagePullSecrets | indent 2 }}
+    {{- end }}
+    {{- if .Values.bank.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.bank.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if .Values.bank.securityContext }}
+      securityContext:
+{{ toYaml .Values.bank.securityContext | indent 8 }}
+    {{- end }}
+    {{- if .Values.bank.tolerations }}
+      tolerations:
+{{ toYaml .Values.bank.tolerations | indent 8 }}
+    {{- end }}
+    {{- if .Values.bank.affinity }}
+      affinity:
+{{ toYaml .Values.bank.affinity | indent 8 }}
+    {{- end }}
+{{- end }}
