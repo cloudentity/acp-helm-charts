@@ -469,3 +469,151 @@ consent-admin:
   ## consent-admin Deployment Strategy type
   # strategy:
   #   type: Recreate
+
+consent-self-service:
+  ## If false, consent-self-service will not be installed
+  ##
+  enabled: true
+
+  ## consent-self-service container name
+  ##
+  name: consent-self-service
+
+  ## consent-self-service container image
+  ##
+  image:
+    repository: cloudentity/openbanking-sandbox-consent-self-service
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  ## consent-self-service priorityClassName
+  ##
+  priorityClassName: ""
+
+  ## Additional consent-self-service container arguments
+  ##
+  ## for example: persistence.file: /data/consent-self-service.data
+  extraArgs: {}
+
+  ## Additional InitContainers to initialize the pod
+  ##
+  extraInitContainers: []
+
+  ## Define serviceAccount name. Defaults to component's fully qualified name.
+  ##
+  serviceAccount:
+    create: true
+    annotations: {}
+    name: ""
+
+  ingress:
+    ## If true, consent-self-service Ingress will be created
+    ##
+    enabled: false
+
+    ## consent-self-service Ingress annotations
+    ##
+    annotations: {}
+    #   kubernetes.io/ingress.class: nginx
+    #   kubernetes.io/tls-acme: 'true'
+
+    ## consent-self-service Ingress hostnames with optional path
+    ## Must be provided if Ingress is enabled
+    ##
+    hosts: []
+    #   - consent-self-service.domain.com
+    #   - domain.com/consent-self-service
+
+    ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
+    extraPaths: []
+    # - path: /*
+    #   backend:
+    #     serviceName: ssl-redirect
+    #     servicePort: use-annotation
+
+    ## consent-self-service Ingress TLS configuration
+    ## Secrets must be manually created in the namespace
+    ##
+    tls: []
+    #   - secretName: prometheus-alerts-tls
+    #     hosts:
+    #       - consent-self-service.domain.com
+
+  ## Node tolerations for consent-self-service scheduling to nodes with taints
+  ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  ##
+  tolerations:
+    []
+    # - key: "key"
+    #   operator: "Equal|Exists"
+    #   value: "value"
+    #   effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
+
+  ## Node labels for consent-self-service pod assignment
+  ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+  ##
+  nodeSelector: {}
+
+  ## Annotations to be added to consent-self-service pods
+  ##
+  podAnnotations: {}
+
+  ## Specify if a Pod Security Policy for node-exporter must be created
+  ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/
+  ##
+  podSecurityPolicy:
+    annotations:
+      {}
+      ## Specify pod annotations
+      ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#apparmor
+      ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#seccomp
+      ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#sysctl
+      ##
+      # seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
+      # seccomp.security.alpha.kubernetes.io/defaultProfileName: 'docker/default'
+      # apparmor.security.beta.kubernetes.io/defaultProfileName: 'runtime/default'
+
+  replicaCount: 1
+
+  ## PodDisruptionBudget settings
+  ## ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+  ##
+  podDisruptionBudget:
+    enabled: false
+    maxUnavailable: 1
+
+  ## consent-self-service resource requests and limits
+  ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+  ##
+  resources:
+    {}
+    # limits:
+    #   cpu: 10m
+    #   memory: 32Mi
+    # requests:
+    #   cpu: 10m
+    #   memory: 32Mi
+
+  ## Security context to be added to push-gateway pods
+  ##
+  securityContext:
+    runAsUser: 65534
+    runAsNonRoot: true
+
+  service:
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+
+    ## List of IP addresses at which the consent-self-service service is available
+    ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
+    ##
+    externalIPs: []
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 9091
+    type: ClusterIP
+  ## consent-self-service Deployment Strategy type
+  # strategy:
+  #   type: Recreate
