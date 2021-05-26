@@ -1,0 +1,40 @@
+{{- if .Values.import.enabled -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: acp-ob-quickstart-import
+spec:
+  backoffLimit: 3
+  template:
+    spec:
+      containers:
+        - name: acp-import
+          image: cloudentity/openbanking-quickstart-configuration:latest
+          args:
+            - /app/main
+            - --templates-dir
+            - /app/imports
+            - --tenant-url
+            - {{ .Values.import.tenantUrl }}
+            - --tenant
+            - {{ .Values.import.tenant }}
+            {{- if .Values.import.verbose }}
+            - --verbose
+            {{ end -}}
+            - --variables-file
+            - /app/vars
+          volumeMounts:
+            - name: imports
+              mountPath: /app/imports
+          volumeMounts:
+            - name: imports
+              mountPath: /app/vars
+      volumes:
+        - name: imports
+          configMap:
+            name: acp-openbanking-quickstart-import
+        - name: variables
+          configMap:
+            name: acp-openbanking-quickstart-variables
+      restartPolicy: Never
+{{- end }}
