@@ -62,6 +62,10 @@ $ helm upgrade [RELEASE_NAME] acp/kube-acp-stack
 
 _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
 
+### From 0.6.x to 0.7.x
+
+Version 1.10.0 of ACP changes the key names in feature flags from camelCase to snake_case [values.yaml](https://github.com/cloudentity/acp-helm-charts/commit/e150d8c713bc1b7eae0f5d272b77071b0c0b29bf#diff-8bff71ce1c243a3af0288410a6f5900e2c5d5bde86fbcbf8124615970237759a).
+
 ### Upgrading an existing Release to a new major version
 
 A major chart version change (like v1.2.3 -> v2.0.0) indicates that there is an incompatible breaking change needing manual actions.
