@@ -1,0 +1,62 @@
+{{- if .Values.consentSelfservice.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{- include "openbanking.consentSelfservice.labels" . | nindent 4 }}
+  name: {{ template "openbanking.consentSelfservice.fullname" . }}
+{{ include "openbanking.namespace" . | indent 2 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "openbanking.consentSelfservice.matchLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- if .Values.consentSelfservice.podAnnotations }}
+      annotations:
+{{ toYaml .Values.consentSelfservice.podAnnotations | indent 8 }}
+    {{- end }}
+      labels:
+        {{- include "openbanking.consentSelfservice.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ template "openbanking.serviceAccountName.bank" . }}
+      {{- if .Values.consentSelfservice.extraInitContainers }}
+      initContainers:
+{{ toYaml .Values.consentSelfservice.extraInitContainers | indent 8 }}
+      {{- end }}
+{{- if .Values.consentSelfservice.priorityClassName }}
+      priorityClassName: "{{ .Values.consentSelfservice.priorityClassName }}"
+{{- end }}
+      containers:
+        - name: {{ template "openbanking.name" . }}-{{ .Values.consentSelfservice.name }}
+          image: "{{ .Values.consentSelfservice.image.repository }}:{{ .Values.consentSelfservice.image.tag }}"
+          imagePullPolicy: "{{ .Values.consentSelfservice.image.pullPolicy }}"
+          args:
+          {{- range $key, $value := .Values.consentSelfservice.extraArgs }}
+            - --{{ $key }}={{ $value }}
+          {{- end }}
+          ports:
+            - containerPort: 8070
+          resources:
+{{ toYaml .Values.consentSelfservice.resources | indent 12 }}
+    {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{ toYaml .Values.imagePullSecrets | indent 2 }}
+    {{- end }}
+    {{- if .Values.consentSelfservice.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.consentSelfservice.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if .Values.consentSelfservice.securityContext }}
+      securityContext:
+{{ toYaml .Values.consentSelfservice.securityContext | indent 8 }}
+    {{- end }}
+    {{- if .Values.consentSelfservice.tolerations }}
+      tolerations:
+{{ toYaml .Values.consentSelfservice.tolerations | indent 8 }}
+    {{- end }}
+    {{- if .Values.consentSelfservice.affinity }}
+      affinity:
+{{ toYaml .Values.consentSelfservice.affinity | indent 8 }}
+    {{- end }}
+{{- end }}

@@ -123,3 +123,105 @@ Create the name of the service account to use for the bank component
     {{ default "default" .Values.serviceAccounts.bank.name }}
 {{- end -}}
 {{- end -}}
+
+{{- define "openbanking.consentAdmin.fullname" -}}
+{{- if .Values.consentAdmin.fullnameOverride -}}
+{{- .Values.consentAdmin.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- printf "%s-%s" .Release.Name .Values.consentAdmin.name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.consentAdmin.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "openbanking.consentAdmin.matchLabels" -}}
+component: {{ .Values.consentAdmin.name | quote }}
+{{ include "openbanking.common.matchLabels" . }}
+{{- end -}}
+
+{{- define "openbanking.consentAdmin.labels" -}}
+{{ include "openbanking.consentAdmin.matchLabels" . }}
+{{ include "openbanking.common.metaLabels" . }}
+{{- end -}}
+
+{{/*
+Create the name of the service account to use for the bank component
+*/}}
+{{- define "openbanking.serviceAccountName.consentAdmin" -}}
+{{- if .Values.serviceAccounts.consentAdmin.create -}}
+    {{ default (include "openbanking.consentAdmin.fullname" .) .Values.serviceAccounts.consentAdmin.name }}
+{{- else -}}
+    {{ default "default" .Values.serviceAccounts.consentAdmin.name }}
+{{- end -}}
+{{- end -}}
+
+{{- define "openbanking.consentPage.fullname" -}}
+{{- if .Values.consentPage.fullnameOverride -}}
+{{- .Values.consentPage.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- printf "%s-%s" .Release.Name .Values.consentPage.name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.consentPage.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "openbanking.consentPage.matchLabels" -}}
+component: {{ .Values.consentPage.name | quote }}
+{{ include "openbanking.common.matchLabels" . }}
+{{- end -}}
+
+{{- define "openbanking.consentPage.labels" -}}
+{{ include "openbanking.consentPage.matchLabels" . }}
+{{ include "openbanking.common.metaLabels" . }}
+{{- end -}}
+
+{{/*
+Create the name of the service account to use for the bank component
+*/}}
+{{- define "openbanking.serviceAccountName.consentPage" -}}
+{{- if .Values.serviceAccounts.consentPage.create -}}
+    {{ default (include "openbanking.consentPage.fullname" .) .Values.serviceAccounts.consentPage.name }}
+{{- else -}}
+    {{ default "default" .Values.serviceAccounts.consentPage.name }}
+{{- end -}}
+{{- end -}}
+
+{{- define "openbanking.consentSelfservice.fullname" -}}
+{{- if .Values.consentSelfservice.fullnameOverride -}}
+{{- .Values.consentSelfservice.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- printf "%s-%s" .Release.Name .Values.consentSelfservice.name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.consentSelfservice.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "openbanking.consentSelfservice.matchLabels" -}}
+component: {{ .Values.consentSelfservice.name | quote }}
+{{ include "openbanking.common.matchLabels" . }}
+{{- end -}}
+
+{{- define "openbanking.consentSelfservice.labels" -}}
+{{ include "openbanking.consentSelfservice.matchLabels" . }}
+{{ include "openbanking.common.metaLabels" . }}
+{{- end -}}
+
+{{/*
+Create the name of the service account to use for the bank component
+*/}}
+{{- define "openbanking.serviceAccountName.consentSelfservice" -}}
+{{- if .Values.serviceAccounts.consentSelfservice.create -}}
+    {{ default (include "openbanking.consentSelfservice.fullname" .) .Values.serviceAccounts.consentSelfservice.name }}
+{{- else -}}
+    {{ default "default" .Values.serviceAccounts.consentSelfservice.name }}
+{{- end -}}
+{{- end -}}

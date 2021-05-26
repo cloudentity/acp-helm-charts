@@ -1,0 +1,62 @@
+{{- if .Values.consentPage.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{- include "openbanking.consentPage.labels" . | nindent 4 }}
+  name: {{ template "openbanking.consentPage.fullname" . }}
+{{ include "openbanking.namespace" . | indent 2 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "openbanking.consentPage.matchLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- if .Values.consentPage.podAnnotations }}
+      annotations:
+{{ toYaml .Values.consentPage.podAnnotations | indent 8 }}
+    {{- end }}
+      labels:
+        {{- include "openbanking.consentPage.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ template "openbanking.serviceAccountName.bank" . }}
+      {{- if .Values.consentPage.extraInitContainers }}
+      initContainers:
+{{ toYaml .Values.consentPage.extraInitContainers | indent 8 }}
+      {{- end }}
+{{- if .Values.consentPage.priorityClassName }}
+      priorityClassName: "{{ .Values.consentPage.priorityClassName }}"
+{{- end }}
+      containers:
+        - name: {{ template "openbanking.name" . }}-{{ .Values.consentPage.name }}
+          image: "{{ .Values.consentPage.image.repository }}:{{ .Values.consentPage.image.tag }}"
+          imagePullPolicy: "{{ .Values.consentPage.image.pullPolicy }}"
+          args:
+          {{- range $key, $value := .Values.consentPage.extraArgs }}
+            - --{{ $key }}={{ $value }}
+          {{- end }}
+          ports:
+            - containerPort: 8070
+          resources:
+{{ toYaml .Values.consentPage.resources | indent 12 }}
+    {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{ toYaml .Values.imagePullSecrets | indent 2 }}
+    {{- end }}
+    {{- if .Values.consentPage.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.consentPage.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if .Values.consentPage.securityContext }}
+      securityContext:
+{{ toYaml .Values.consentPage.securityContext | indent 8 }}
+    {{- end }}
+    {{- if .Values.consentPage.tolerations }}
+      tolerations:
+{{ toYaml .Values.consentPage.tolerations | indent 8 }}
+    {{- end }}
+    {{- if .Values.consentPage.affinity }}
+      affinity:
+{{ toYaml .Values.consentPage.affinity | indent 8 }}
+    {{- end }}
+{{- end }}

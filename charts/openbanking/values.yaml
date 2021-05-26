@@ -12,15 +12,15 @@ serviceAccounts:
     create: true
     name:
     annotations: {}
-  consent-page:
+  consentPage:
     create: true
     name:
     annotations: {}
-  consent-admin:
+  consentAdmin:
     create: true
     name:
     annotations: {}
-  consent-self-service:
+  consentSelfservice:
     create: true
     name:
     annotations: {}
@@ -49,6 +49,12 @@ bank:
   ##
   ## for example: persistence.file: /data/bank.data
   extraArgs: {}
+
+  extraEnv:
+    - name: CLIENT_ID
+      value: bukj5p6k7qdmm5ppbi4g
+    - name: ISSUER_URL
+      value: $(ACP_INTERNAL_URL)/default/openbanking
 
   ## Additional InitContainers to initialize the pod
   ##
@@ -173,7 +179,7 @@ bank:
   # strategy:
   #   type: Recreate
 
-consent-page:
+consentPage:
   ## If false, consent-page will not be installed
   ##
   enabled: true
@@ -321,7 +327,7 @@ consent-page:
   # strategy:
   #   type: Recreate
 
-consent-admin:
+consentAdmin:
   ## If false, consent-admin will not be installed
   ##
   enabled: true
@@ -470,7 +476,7 @@ consent-admin:
   # strategy:
   #   type: Recreate
 
-consent-self-service:
+consentSelfservice:
   ## If false, consent-self-service will not be installed
   ##
   enabled: true
