@@ -1,0 +1,13 @@
+import:
+  enabled: true
+
+  tenantUrl: https://acp.local/system
+  tenant: system
+
+  verbose: true
+
+  variables:
+   test: test
+
+    
+
