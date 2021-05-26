@@ -51,7 +51,7 @@ _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documen
 
 ### From 0.9.x to 0.10.x
 
-Version 1.10.0 of ACP changes the key names in feature flags from camelCase to to snake_case [#32](https://github.com/cloudentity/acp-helm-charts/pull/32/files).
+Version 1.10.0 of ACP changes the key names in feature flags from camelCase to snake_case [values.yaml](https://github.com/cloudentity/acp-helm-charts/commit/e150d8c713bc1b7eae0f5d272b77071b0c0b29bf#diff-8bff71ce1c243a3af0288410a6f5900e2c5d5bde86fbcbf8124615970237759a).
 
 ## Configuration
 
