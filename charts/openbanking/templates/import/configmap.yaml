@@ -2,7 +2,6 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-<<<<<<< HEAD
   name: {{ template "openbanking.fullname" . -}}-variables
 {{ include "openbanking.namespace" . | indent 2 }}
 data:
@@ -19,19 +18,4 @@ metadata:
 {{ include "openbanking.namespace" . | indent 2 }}
 data:
 {{- end -}}
-=======
-  name: acp-openbanking-quickstart-import
-data:
-  {{- (.Files.Glob "files/import/**.tmpl").AsConfig | nindent 2 }}
-
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: acp-openbanking-quickstart-variables
-data:
-  variables.yaml: |
-    {{- range $key, $value := .Values.import.variables }}
-    {{ $key }}: {{ $value }}
-    {{- end -}}
->>>>>>> configuration init job + configmaps + variables
 {{- end -}}
