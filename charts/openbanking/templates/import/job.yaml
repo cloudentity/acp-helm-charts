@@ -25,15 +25,9 @@ spec:
             - --variables-file
             - /app/vars/variables.yaml
           volumeMounts:
-            - name: imports
-              mountPath: /app/imports
-          volumeMounts:
             - name: variables
               mountPath: /app/vars
       volumes:
-        - name: imports
-          configMap:
-            name: {{ template "openbanking.fullname" . -}}-import
         - name: variables
           configMap:
             name: {{ template "openbanking.fullname" . -}}-variables
