@@ -2,7 +2,8 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: acp-ob-quickstart-import
+  name: {{ template "openbanking.fullname" . -}}-import
+{{ include "openbanking.namespace" . | indent 2 }}
 spec:
   backoffLimit: 3
   template:
@@ -32,9 +33,9 @@ spec:
       volumes:
         - name: imports
           configMap:
-            name: acp-openbanking-quickstart-import
+            name: {{ template "openbanking.fullname" . -}}-import
         - name: variables
           configMap:
-            name: acp-openbanking-quickstart-variables
+            name: {{ template "openbanking.fullname" . -}}-variables
       restartPolicy: Never
 {{- end }}
