@@ -22,12 +22,12 @@ spec:
             - --verbose
             {{ end -}}
             - --variables-file
-            - /app/vars
+            - /app/vars/variables.yaml
           volumeMounts:
             - name: imports
               mountPath: /app/imports
           volumeMounts:
-            - name: imports
+            - name: variables
               mountPath: /app/vars
       volumes:
         - name: imports
