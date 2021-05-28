@@ -37,7 +37,7 @@ bank:
   ## bank container image
   ##
   image:
-    repository: cloudentity/openbanking-sandbox-bank
+    repository: cloudentity/openbanking-quickstart-bank
     tag: latest
     pullPolicy: IfNotPresent
 
@@ -191,7 +191,7 @@ consentPage:
   ## consent-page container image
   ##
   image:
-    repository: cloudentity/openbanking-sandbox-consent-page
+    repository: cloudentity/openbanking-quickstart-consent-page
     tag: latest
     pullPolicy: IfNotPresent
 
@@ -339,7 +339,7 @@ consentAdmin:
   ## consent-admin container image
   ##
   image:
-    repository: cloudentity/openbanking-sandbox-consent-admin
+    repository: cloudentity/openbanking-quickstart-consent-admin
     tag: latest
     pullPolicy: IfNotPresent
 
@@ -488,7 +488,7 @@ consentSelfservice:
   ## consent-self-service container image
   ##
   image:
-    repository: cloudentity/openbanking-sandbox-consent-self-service
+    repository: cloudentity/openbanking-quickstart-consent-self-service
     tag: latest
     pullPolicy: IfNotPresent
 
