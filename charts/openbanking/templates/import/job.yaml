@@ -13,8 +13,8 @@ spec:
           image: cloudentity/openbanking-quickstart-configuration:latest
           args:
             - /app/main
-            - --templates-dir
-            - /app/imports
+            - --templates-dirs
+            - /app/imports{{- if .Values.import.extraTemplate -}},/app/extra-imports{{- end }}
             - --tenant-url
             - {{ .Values.import.tenantUrl }}
             - --tenant
@@ -35,9 +35,18 @@ spec:
           volumeMounts:
             - name: variables
               mountPath: /app/vars
+            {{- if .Values.import.extraTemplate -}}
+            - name: extra-templates
+              mountPath: /app/extra-imports
+            {{- end -}}
       volumes:
         - name: variables
           configMap:
             name: {{ template "openbanking.fullname" . -}}-variables
+        {{- if .Values.import.extraTemplate -}}
+        - name: extra-templates
+          configMap:
+            name: {{ template "openbanking.fullname" . -}}-extra-templates
+        {{- end -}}
       restartPolicy: Never
 {{- end }}
