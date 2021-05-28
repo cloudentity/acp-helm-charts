@@ -24,6 +24,14 @@ spec:
             {{ end -}}
             - --variables-file
             - /app/vars/variables.yaml
+            {{- if .Values.import.clientId }}
+            - --client-id
+            - {{ .Values.import.clientId }}
+            {{ end -}}
+            {{- if .Values.import.clientSecret }}
+            - --client-secret
+            - {{ .Values.import.clientSecret }}
+            {{ end -}}
           volumeMounts:
             - name: variables
               mountPath: /app/vars

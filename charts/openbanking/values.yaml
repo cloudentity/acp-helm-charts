@@ -339,7 +339,7 @@ consentAdmin:
   ## consent-admin container image
   ##
   image:
-    repository: cloudentity/openbanking-quickstart-consent-admin
+    repository: cloudentity/openbanking-quickstart-consent-admin-portal
     tag: latest
     pullPolicy: IfNotPresent
 
@@ -488,7 +488,7 @@ consentSelfservice:
   ## consent-self-service container image
   ##
   image:
-    repository: cloudentity/openbanking-quickstart-consent-self-service
+    repository: cloudentity/openbanking-quickstart-consent-self-service-portal
     tag: latest
     pullPolicy: IfNotPresent
 
