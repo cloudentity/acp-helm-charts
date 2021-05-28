@@ -27,26 +27,26 @@ spec:
             {{- if .Values.import.clientId }}
             - --client-id
             - {{ .Values.import.clientId }}
-            {{ end -}}
+            {{ end }}
             {{- if .Values.import.clientSecret }}
             - --client-secret
             - {{ .Values.import.clientSecret }}
-            {{ end -}}
+            {{- end }}
           volumeMounts:
             - name: variables
               mountPath: /app/vars
-            {{- if .Values.import.extraTemplate -}}
+            {{- if .Values.import.extraTemplate }}
             - name: extra-templates
               mountPath: /app/extra-imports
-            {{- end -}}
+            {{- end }}
       volumes:
         - name: variables
           configMap:
             name: {{ template "openbanking.fullname" . -}}-variables
-        {{- if .Values.import.extraTemplate -}}
+        {{- if .Values.import.extraTemplate }}
         - name: extra-templates
           configMap:
             name: {{ template "openbanking.fullname" . -}}-extra-templates
-        {{- end -}}
+        {{- end }}
       restartPolicy: Never
 {{- end }}

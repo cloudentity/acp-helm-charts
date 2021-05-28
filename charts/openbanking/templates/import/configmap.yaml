@@ -9,4 +9,13 @@ data:
     {{- range $key, $value := .Values.import.variables }}
     {{ $key }}: {{ $value }}
     {{- end -}}
+---
+{{- if .Values.import.extraTemplate -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "openbanking.fullname" . -}}-extra-templates
+{{ include "openbanking.namespace" . | indent 2 }}
+data:
+{{- end -}}
 {{- end -}}
