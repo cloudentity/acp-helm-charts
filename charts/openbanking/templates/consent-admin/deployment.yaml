@@ -1,0 +1,62 @@
+{{- if .Values.consentAdmin.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{- include "openbanking.consentAdmin.labels" . | nindent 4 }}
+  name: {{ template "openbanking.consentAdmin.fullname" . }}
+{{ include "openbanking.namespace" . | indent 2 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "openbanking.consentAdmin.matchLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- if .Values.consentAdmin.podAnnotations }}
+      annotations:
+{{ toYaml .Values.consentAdmin.podAnnotations | indent 8 }}
+    {{- end }}
+      labels:
+        {{- include "openbanking.consentAdmin.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ template "openbanking.serviceAccountName.bank" . }}
+      {{- if .Values.consentAdmin.extraInitContainers }}
+      initContainers:
+{{ toYaml .Values.consentAdmin.extraInitContainers | indent 8 }}
+      {{- end }}
+{{- if .Values.consentAdmin.priorityClassName }}
+      priorityClassName: "{{ .Values.consentAdmin.priorityClassName }}"
+{{- end }}
+      containers:
+        - name: {{ template "openbanking.name" . }}-{{ .Values.consentAdmin.name }}
+          image: "{{ .Values.consentAdmin.image.repository }}:{{ .Values.consentAdmin.image.tag }}"
+          imagePullPolicy: "{{ .Values.consentAdmin.image.pullPolicy }}"
+          args:
+          {{- range $key, $value := .Values.consentAdmin.extraArgs }}
+            - --{{ $key }}={{ $value }}
+          {{- end }}
+          ports:
+            - containerPort: 8070
+          resources:
+{{ toYaml .Values.consentAdmin.resources | indent 12 }}
+    {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{ toYaml .Values.imagePullSecrets | indent 2 }}
+    {{- end }}
+    {{- if .Values.consentAdmin.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.consentAdmin.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if .Values.consentAdmin.securityContext }}
+      securityContext:
+{{ toYaml .Values.consentAdmin.securityContext | indent 8 }}
+    {{- end }}
+    {{- if .Values.consentAdmin.tolerations }}
+      tolerations:
+{{ toYaml .Values.consentAdmin.tolerations | indent 8 }}
+    {{- end }}
+    {{- if .Values.consentAdmin.affinity }}
+      affinity:
+{{ toYaml .Values.consentAdmin.affinity | indent 8 }}
+    {{- end }}
+{{- end }}
