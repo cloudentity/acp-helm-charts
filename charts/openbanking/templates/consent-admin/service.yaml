@@ -1,0 +1,41 @@
+{{- if .Values.consentAdmin.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+{{- if .Values.consentAdmin.service.annotations }}
+  annotations:
+{{ toYaml .Values.consentAdmin.service.annotations | indent 4}}
+{{- end }}
+  labels:
+    {{- include "openbanking.consentAdmin.labels" . | nindent 4 }}
+{{- if .Values.consentAdmin.service.labels }}
+{{ toYaml .Values.consentAdmin.service.labels | indent 4}}
+{{- end }}
+  name: {{ template "openbanking.consentAdmin.fullname" . }}
+{{ include "openbanking.namespace" . | indent 2 }}
+spec:
+{{- if .Values.consentAdmin.service.clusterIP }}
+  clusterIP: {{ .Values.consentAdmin.service.clusterIP }}
+{{- end }}
+{{- if .Values.consentAdmin.service.externalIPs }}
+  externalIPs:
+{{ toYaml .Values.consentAdmin.service.externalIPs | indent 4 }}
+{{- end }}
+{{- if .Values.consentAdmin.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.consentAdmin.service.loadBalancerIP }}
+{{- end }}
+{{- if .Values.consentAdmin.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{- range $cidr := .Values.consentAdmin.service.loadBalancerSourceRanges }}
+    - {{ $cidr }}
+  {{- end }}
+{{- end }}
+  ports:
+    - name: http
+      port: {{ .Values.consentAdmin.service.servicePort }}
+      protocol: TCP
+      targetPort: 8086
+  selector:
+    {{- include "openbanking.consentAdmin.matchLabels" . | nindent 4 }}
+  type: "{{ .Values.consentAdmin.service.type }}"
+{{- end }}

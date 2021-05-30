@@ -182,7 +182,7 @@ bank:
 consentPage:
   ## If false, consent-page will not be installed
   ##
-  enabled: true
+  enabled: false
 
   ## consent-page container name
   ##
@@ -340,7 +340,7 @@ consentPage:
 consentAdmin:
   ## If false, consent-admin will not be installed
   ##
-  enabled: false
+  enabled: true
 
   ## consent-admin container name
   ##
@@ -361,6 +361,38 @@ consentAdmin:
   ##
   ## for example: persistence.file: /data/consent-admin.data
   extraArgs: {}
+
+  extraEnv:
+    - name: SYSTEM_CLIENT_ID
+      value: bv2fe0tpfc67lmeti340
+    - name: SYSTEM_CLIENT_SECRET
+      value: v6yYaApda9juR_DrlI5mpdsdm9u2-D0rQIG9ynakyDE
+    - name: SYSTEM_ISSUER_URL
+      value: $(ACP_INTERNAL_URL)/default/system
+    - name: SYSTEM_CLIENTS_SERVER_ID
+      value: openbanking
+    - name: CERT_FILE
+      value: /tls/tls.crt
+    - name: KEY_FILE
+      value: /tls/tls.key
+    - name: ROOT_CA
+      value: /tls/ca.crt
+    - name: BANK_URL
+      value: http://bank:8070
+    - name: LOGIN_AUTHORIZATION_SERVER_URL
+      value: $(ACP_URL)
+    - name: LOGIN_AUTHORIZATION_SERVER_ID
+      value: bank-admins
+    - name: LOGIN_TENANT_ID
+      value: default
+    - name: LOGIN_CLIENT_ID
+      value: bv2f80aed9c9is80f2d0
+    - name: INTROSPECT_CLIENT_ID
+      value: bv2fddlpfc67lmeti32g
+    - name: INTROSPECT_CLIENT_SECRET
+      value: RkAIOVRlP6ZLhDvYixT1wBb8DG3bVkXAouoIrX7cwzA
+    - name: INTROSPECT_ISSUER_URL
+      value: $(ACP_INTERNAL_URL)/default/bank-admins
 
   ## Additional InitContainers to initialize the pod
   ##
@@ -479,7 +511,7 @@ consentAdmin:
 
     loadBalancerIP: ""
     loadBalancerSourceRanges: []
-    servicePort: 9091
+    servicePort: 8086
     type: ClusterIP
 
   ## consent-admin Deployment Strategy type
