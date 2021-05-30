@@ -50,6 +50,15 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /app/data
+            - mountPath: /tls
+              name: tls
+              readOnly: true
+          {{- range .Values.financroo.extraSecretMounts }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+              subPath: {{ .subPath }}
+              readOnly: {{ .readOnly }}
+          {{- end }}
     {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
       {{ toYaml .Values.imagePullSecrets | indent 2 }}
@@ -71,6 +80,9 @@ spec:
 {{ toYaml .Values.financroo.affinity | indent 8 }}
     {{- end }}
       volumes:
+        - name: tls
+          secret:
+            secretName: {{ template "openbanking.financroo.fullname" . }}-tls
         - name: config-volume
           {{- if empty .Values.financroo.configFromSecret }}
           configMap:

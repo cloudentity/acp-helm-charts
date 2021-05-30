@@ -47,6 +47,10 @@ spec:
             - containerPort: 8086
           resources:
 {{ toYaml .Values.consentAdmin.resources | indent 12 }}
+          volumeMounts:
+            - mountPath: /tls
+              name: tls
+              readOnly: true
     {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
       {{ toYaml .Values.imagePullSecrets | indent 2 }}
@@ -67,4 +71,8 @@ spec:
       affinity:
 {{ toYaml .Values.consentAdmin.affinity | indent 8 }}
     {{- end }}
+      volumes:
+        - name: tls
+          secret:
+            secretName: {{ template "openbanking.financroo.fullname" . }}-tls
 {{- end }}

@@ -32,7 +32,7 @@ serviceAccounts:
 bank:
   ## If false, bank will not be installed
   ##
-  enabled: false
+  enabled: true
 
   ## bank container name
   ##
@@ -186,7 +186,7 @@ bank:
 consentPage:
   ## If false, consent-page will not be installed
   ##
-  enabled: true
+  enabled: false
 
   ## consent-page container name
   ##

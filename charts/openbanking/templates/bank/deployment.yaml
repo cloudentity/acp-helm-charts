@@ -51,6 +51,9 @@ spec:
             - name: config-volume
               mountPath: /etc/config
               readOnly: true
+            - mountPath: /tls
+              name: tls
+              readOnly: true
     {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
       {{ toYaml .Values.imagePullSecrets | indent 2 }}
@@ -72,6 +75,9 @@ spec:
 {{ toYaml .Values.bank.affinity | indent 8 }}
     {{- end }}
       volumes:
+        - name: tls
+          secret:
+            secretName: {{ template "openbanking.financroo.fullname" . }}-tls
         - name: config-volume
           {{- if empty .Values.bank.configFromSecret }}
           configMap:
