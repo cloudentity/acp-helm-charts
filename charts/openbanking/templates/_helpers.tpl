@@ -225,3 +225,37 @@ Create the name of the service account to use for the bank component
     {{ default "default" .Values.serviceAccounts.consentSelfservice.name }}
 {{- end -}}
 {{- end -}}
+
+{{- define "openbanking.financroo.fullname" -}}
+{{- if .Values.financroo.fullnameOverride -}}
+{{- .Values.financroo.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- printf "%s-%s" .Release.Name .Values.financroo.name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.financroo.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "openbanking.financroo.matchLabels" -}}
+component: {{ .Values.financroo.name | quote }}
+{{ include "openbanking.common.matchLabels" . }}
+{{- end -}}
+
+{{- define "openbanking.financroo.labels" -}}
+{{ include "openbanking.financroo.matchLabels" . }}
+{{ include "openbanking.common.metaLabels" . }}
+{{- end -}}
+
+{{/*
+Create the name of the service account to use for the bank component
+*/}}
+{{- define "openbanking.serviceAccountName.financroo" -}}
+{{- if .Values.serviceAccounts.financroo.create -}}
+    {{ default (include "openbanking.financroo.fullname" .) .Values.serviceAccounts.financroo.name }}
+{{- else -}}
+    {{ default "default" .Values.serviceAccounts.financroo.name }}
+{{- end -}}
+{{- end -}}

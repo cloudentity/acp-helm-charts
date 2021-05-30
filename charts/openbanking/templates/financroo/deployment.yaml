@@ -1,0 +1,87 @@
+{{- if .Values.financroo.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{- include "openbanking.financroo.labels" . | nindent 4 }}
+  name: {{ template "openbanking.financroo.fullname" . }}
+{{ include "openbanking.namespace" . | indent 2 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "openbanking.financroo.matchLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- if .Values.financroo.podAnnotations }}
+      annotations:
+{{ toYaml .Values.financroo.podAnnotations | indent 8 }}
+    {{- end }}
+      labels:
+        {{- include "openbanking.financroo.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ template "openbanking.serviceAccountName.bank" . }}
+      {{- if .Values.financroo.extraInitContainers }}
+      initContainers:
+{{ toYaml .Values.financroo.extraInitContainers | indent 8 }}
+      {{- end }}
+{{- if .Values.financroo.priorityClassName }}
+      priorityClassName: "{{ .Values.financroo.priorityClassName }}"
+{{- end }}
+      containers:
+        - name: {{ template "openbanking.name" . }}-{{ .Values.financroo.name }}
+          image: "{{ .Values.financroo.image.repository }}:{{ .Values.financroo.image.tag }}"
+          imagePullPolicy: "{{ .Values.financroo.image.pullPolicy }}"
+          env:
+            - name: CERT_FILE
+              value: /tls/tls.crt
+            - name: KEY_FILE
+              value: /tls/tls.key
+            - name: ROOT_CA
+              value: /tls/ca.crt
+{{ toYaml .Values.financroo.extraEnv | indent 12 }}
+          args:
+          {{- range $key, $value := .Values.financroo.extraArgs }}
+            - --{{ $key }}={{ $value }}
+          {{- end }}
+          ports:
+            - containerPort: 8091
+          resources:
+{{ toYaml .Values.financroo.resources | indent 12 }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/data
+    {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{ toYaml .Values.imagePullSecrets | indent 2 }}
+    {{- end }}
+    {{- if .Values.financroo.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.financroo.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if .Values.financroo.securityContext }}
+      securityContext:
+{{ toYaml .Values.financroo.securityContext | indent 8 }}
+    {{- end }}
+    {{- if .Values.financroo.tolerations }}
+      tolerations:
+{{ toYaml .Values.financroo.tolerations | indent 8 }}
+    {{- end }}
+    {{- if .Values.financroo.affinity }}
+      affinity:
+{{ toYaml .Values.financroo.affinity | indent 8 }}
+    {{- end }}
+      volumes:
+        - name: config-volume
+          {{- if empty .Values.financroo.configFromSecret }}
+          configMap:
+            name: {{ if .Values.financroo.configMapOverrideName }}{{ .Release.Name }}-{{ .Values.financroo.configMapOverrideName }}{{- else }}{{ template "openbanking.financroo.fullname" . }}{{- end }}
+          {{- else }}
+          secret:
+            secretName: {{ .Values.financroo.configFromSecret }}
+          {{- end }}
+      {{- range .Values.financroo.extraSecretMounts }}
+        - name: {{ .name }}
+          secret:
+            secretName: {{ .secretName }}
+      {{- end }}
+{{- end }}
