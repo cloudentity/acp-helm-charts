@@ -28,7 +28,7 @@ serviceAccounts:
 bank:
   ## If false, bank will not be installed
   ##
-  enabled: true
+  enabled: false
 
   ## bank container name
   ##
@@ -182,7 +182,7 @@ bank:
 consentPage:
   ## If false, consent-page will not be installed
   ##
-  enabled: false
+  enabled: true
 
   ## consent-page container name
   ##
@@ -203,6 +203,16 @@ consentPage:
   ##
   ## for example: persistence.file: /data/consent-page.data
   extraArgs: {}
+
+  extraEnv:
+    - name: CLIENT_ID
+      value: bv0ocudfotn6edhsiu7g
+    - name: CLIENT_SECRET
+      value: pMPBmv62z3Jt1S4sWl2qRhOhEGPVZ9EcujGL7Xy0-E0
+    - name: ISSUER_URL
+      value: $(ACP_INTERNAL_URL)/default/system
+    - name: BANK_URL
+      value: http://bank:8070
 
   ## Additional InitContainers to initialize the pod
   ##
@@ -321,7 +331,7 @@ consentPage:
 
     loadBalancerIP: ""
     loadBalancerSourceRanges: []
-    servicePort: 9091
+    servicePort: 8080
     type: ClusterIP
   ## consent-page Deployment Strategy type
   # strategy:

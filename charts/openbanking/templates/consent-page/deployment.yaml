@@ -31,12 +31,20 @@ spec:
         - name: {{ template "openbanking.name" . }}-{{ .Values.consentPage.name }}
           image: "{{ .Values.consentPage.image.repository }}:{{ .Values.consentPage.image.tag }}"
           imagePullPolicy: "{{ .Values.consentPage.image.pullPolicy }}"
+          env:
+            - name: CERT_FILE
+              value: /tls/tls.crt
+            - name: KEY_FILE
+              value: /tls/tls.key
+            - name: ROOT_CA
+              value: /tls/ca.crt
+{{ toYaml .Values.consentPage.extraEnv | indent 12 }}
           args:
           {{- range $key, $value := .Values.consentPage.extraArgs }}
             - --{{ $key }}={{ $value }}
           {{- end }}
           ports:
-            - containerPort: 8070
+            - containerPort: 8080
           resources:
 {{ toYaml .Values.consentPage.resources | indent 12 }}
     {{- if .Values.imagePullSecrets }}
