@@ -186,7 +186,7 @@ bank:
 consentPage:
   ## If false, consent-page will not be installed
   ##
-  enabled: false
+  enabled: true
 
   ## consent-page container name
   ##
@@ -232,20 +232,23 @@ consentPage:
   ingress:
     ## If true, consent-page Ingress will be created
     ##
-    enabled: false
+    enabled: true
 
     ## consent-page Ingress annotations
     ##
-    annotations: {}
-    #   kubernetes.io/ingress.class: nginx
-    #   kubernetes.io/tls-acme: 'true'
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-ssl-secret: "acp/bank-tls"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/proxy-buffer-size: "8k"
 
     ## consent-page Ingress hostnames with optional path
     ## Must be provided if Ingress is enabled
     ##
-    hosts: []
-    #   - consent-page.domain.com
-    #   - domain.com/consent-page
+    hosts:
+      - consent.local
 
     ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
     extraPaths: []
@@ -412,20 +415,23 @@ consentAdmin:
   ingress:
     ## If true, consent-admin Ingress will be created
     ##
-    enabled: false
+    enabled: true
 
     ## consent-admin Ingress annotations
     ##
-    annotations: {}
-    #   kubernetes.io/ingress.class: nginx
-    #   kubernetes.io/tls-acme: 'true'
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-ssl-secret: "acp/bank-tls"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/proxy-buffer-size: "8k"
 
     ## consent-admin Ingress hostnames with optional path
     ## Must be provided if Ingress is enabled
     ##
-    hosts: []
-    #   - consent-admin.domain.com
-    #   - domain.com/consent-admin
+    hosts:
+      - consent-admin.local
 
     ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
     extraPaths: []
@@ -587,20 +593,23 @@ consentSelfservice:
   ingress:
     ## If true, consent-self-service Ingress will be created
     ##
-    enabled: false
+    enabled: true
 
     ## consent-self-service Ingress annotations
     ##
-    annotations: {}
-    #   kubernetes.io/ingress.class: nginx
-    #   kubernetes.io/tls-acme: 'true'
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-ssl-secret: "acp/bank-tls"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/proxy-buffer-size: "8k"
 
     ## consent-self-service Ingress hostnames with optional path
     ## Must be provided if Ingress is enabled
     ##
-    hosts: []
-    #   - consent-self-service.domain.com
-    #   - domain.com/consent-self-service
+    hosts:
+      - consent-ss.local
 
     ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
     extraPaths: []
@@ -697,7 +706,7 @@ consentSelfservice:
   #   type: Recreate
 
 import:
-  enabled: true
+  enabled: false
 
   tenantUrl: https://acp.local/system
   tenant: system
@@ -714,7 +723,7 @@ import:
 financroo:
   ## If false, financroo will not be installed
   ##
-  enabled: true
+  enabled: false
 
   ## financroo container name
   ##
@@ -756,20 +765,22 @@ financroo:
   ingress:
     ## If true, financroo Ingress will be created
     ##
-    enabled: false
+    enabled: true
 
     ## financroo Ingress annotations
     ##
-    annotations: {}
-    #   kubernetes.io/ingress.class: nginx
-    #   kubernetes.io/tls-acme: 'true'
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-ssl-secret: "acp/financroo-tls"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/proxy-buffer-size: "8k"
 
     ## financroo Ingress hostnames with optional path
     ## Must be provided if Ingress is enabled
     ##
-    hosts: []
-    #   - financroo.domain.com
-    #   - domain.com/financroo
+    hosts:
+      - financroo.local
 
     ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
     extraPaths: []
