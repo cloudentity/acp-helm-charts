@@ -340,7 +340,7 @@ consentPage:
 consentAdmin:
   ## If false, consent-admin will not be installed
   ##
-  enabled: true
+  enabled: false
 
   ## consent-admin container name
   ##
@@ -521,7 +521,7 @@ consentAdmin:
 consentSelfservice:
   ## If false, consent-self-service will not be installed
   ##
-  enabled: false
+  enabled: true
 
   ## consent-self-service container name
   ##
@@ -542,6 +542,32 @@ consentSelfservice:
   ##
   ## for example: persistence.file: /data/consent-self-service.data
   extraArgs: {}
+
+  extraEnv:
+    - name: SYSTEM_CLIENT_ID
+      value: buc3b1hhuc714r78env0
+    - name: SYSTEM_CLIENT_SECRET
+      value: PBV7q0akoP603rZbU0EFdxbhZ-djxF7FIVwyKaLnBYU
+    - name: SYSTEM_ISSUER_URL
+      value: $(ACP_INTERNAL_URL)/default/system
+    - name: SYSTEM_CLIENTS_SERVER_ID
+      value: openbanking
+    - name: BANK_URL
+      value: http://bank:8070
+    - name: LOGIN_AUTHORIZATION_SERVER_URL
+      value: $(ACP_URL)
+    - name: LOGIN_AUTHORIZATION_SERVER_ID
+      value: bank-customers
+    - name: LOGIN_TENANT_ID
+      value: default
+    - name: LOGIN_CLIENT_ID
+      value: bv0nab0mekk67nekvq7g
+    - name: INTROSPECT_CLIENT_ID
+      value: bv2dkff8mll9cf6pvd6g
+    - name: INTROSPECT_CLIENT_SECRET
+      value: KThGH68f-gMC4cscGLFeOpIU4EYriYhKspOV9IwHbnw
+    - name: INTROSPECT_ISSUER_URL
+      value: $(ACP_INTERNAL_URL)/default/bank-customers
 
   ## Additional InitContainers to initialize the pod
   ##
@@ -660,7 +686,7 @@ consentSelfservice:
 
     loadBalancerIP: ""
     loadBalancerSourceRanges: []
-    servicePort: 9091
+    servicePort: 8085
     type: ClusterIP
   ## consent-self-service Deployment Strategy type
   # strategy:
