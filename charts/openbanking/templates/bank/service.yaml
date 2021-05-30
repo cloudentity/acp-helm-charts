@@ -34,7 +34,7 @@ spec:
     - name: http
       port: {{ .Values.bank.service.servicePort }}
       protocol: TCP
-      targetPort: 9091
+      targetPort: 8070
   selector:
     {{- include "openbanking.bank.matchLabels" . | nindent 4 }}
   type: "{{ .Values.bank.service.type }}"
