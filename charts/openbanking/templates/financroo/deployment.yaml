@@ -84,7 +84,7 @@ spec:
       volumes:
         - name: tls
           secret:
-            secretName: {{ template "openbanking.financroo.fullname" . }}-tls
+            secretName: {{ template "openbanking.fullname" . }}-tls
         - name: config-volume
           {{- if empty .Values.financroo.configFromSecret }}
           configMap:
