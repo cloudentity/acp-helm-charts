@@ -16,7 +16,7 @@ spec:
             - --templates-dirs
             - /app/imports{{- if .Values.import.extraTemplate -}},/app/extra-imports{{- end }}
             - --tenant-url
-            - {{ .Values.import.tenantUrl }}
+            - {{ .Values.acpURL }}/system
             - --tenant
             - {{ .Values.import.tenant }}
             {{- if .Values.import.verbose }}
