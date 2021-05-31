@@ -64,13 +64,6 @@ bank:
   ##
   extraInitContainers: []
 
-  ## Define serviceAccount name. Defaults to component's fully qualified name.
-  ##
-  serviceAccount:
-    create: true
-    annotations: {}
-    name: ""
-
   ingress:
     ## If true, bank Ingress will be created
     ##
@@ -217,13 +210,6 @@ consentPage:
   ## Additional InitContainers to initialize the pod
   ##
   extraInitContainers: []
-
-  ## Define serviceAccount name. Defaults to component's fully qualified name.
-  ##
-  serviceAccount:
-    create: true
-    annotations: {}
-    name: ""
 
   ingress:
     ## If true, consent-page Ingress will be created
@@ -386,13 +372,6 @@ consentAdmin:
   ## Additional InitContainers to initialize the pod
   ##
   extraInitContainers: []
-
-  ## Define serviceAccount name. Defaults to component's fully qualified name.
-  ##
-  serviceAccount:
-    create: true
-    annotations: {}
-    name: ""
 
   ingress:
     ## If true, consent-admin Ingress will be created
@@ -557,13 +536,6 @@ consentSelfservice:
   ##
   extraInitContainers: []
 
-  ## Define serviceAccount name. Defaults to component's fully qualified name.
-  ##
-  serviceAccount:
-    create: true
-    annotations: {}
-    name: ""
-
   ingress:
     ## If true, consent-self-service Ingress will be created
     ##
@@ -721,13 +693,6 @@ financroo:
   ## Additional InitContainers to initialize the pod
   ##
   extraInitContainers: []
-
-  ## Define serviceAccount name. Defaults to component's fully qualified name.
-  ##
-  serviceAccount:
-    create: true
-    annotations: {}
-    name: ""
 
   ingress:
     ## If true, financroo Ingress will be created
