@@ -38,6 +38,14 @@ spec:
               value: /tls/tls.key
             - name: ROOT_CA
               value: /tls/ca.crt
+            - name: SYSTEM_ISSUER_URL
+              value: {{ .Values.acpURL }}/default/system
+            - name: BANK_URL
+              value: http://{{ template "openbanking.bank.fullname" . }}:8070
+            - name: LOGIN_AUTHORIZATION_SERVER_URL
+              value: {{ .Values.acpURL }}
+            - name: INTROSPECT_ISSUER_URL
+              value: {{ .Values.acpURL }}/default/bank-admins
 {{ toYaml .Values.consentAdmin.extraEnv | indent 12 }}
           args:
           {{- range $key, $value := .Values.consentAdmin.extraArgs }}

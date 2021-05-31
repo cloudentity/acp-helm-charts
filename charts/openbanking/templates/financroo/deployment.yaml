@@ -38,6 +38,8 @@ spec:
               value: /tls/tls.key
             - name: ROOT_CA
               value: /tls/ca.crt
+            - name: UI_URL
+              value: https://{{ template "openbanking.financroo.fullname" . }}
 {{ toYaml .Values.financroo.extraEnv | indent 12 }}
           args:
           {{- range $key, $value := .Values.financroo.extraArgs }}

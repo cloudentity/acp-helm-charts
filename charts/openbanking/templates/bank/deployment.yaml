@@ -38,6 +38,8 @@ spec:
               value: /tls/tls.key
             - name: ROOT_CA
               value: /tls/ca.crt
+            - name: ISSUER_URL
+              value: {{ .Values.acpURL }}/default/openbanking
 {{ toYaml .Values.bank.extraEnv | indent 12 }}
           args:
           {{- range $key, $value := .Values.bank.extraArgs }}
