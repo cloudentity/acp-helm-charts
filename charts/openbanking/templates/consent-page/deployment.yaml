@@ -78,5 +78,5 @@ spec:
       volumes:
         - name: tls
           secret:
-            secretName: {{ template "openbanking.financroo.fullname" . }}-tls
+            secretName: {{ template "openbanking.fullname" . }}-tls
 {{- end }}
