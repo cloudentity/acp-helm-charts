@@ -29,6 +29,8 @@ serviceAccounts:
     name:
     annotations: {}
 
+acpURL: https://acp.local:8443
+
 bank:
   ## If false, bank will not be installed
   ##
@@ -57,8 +59,6 @@ bank:
   extraEnv:
     - name: CLIENT_ID
       value: bukj5p6k7qdmm5ppbi4g
-    - name: ISSUER_URL
-      value: $(ACP_INTERNAL_URL)/default/openbanking
 
   ## Additional InitContainers to initialize the pod
   ##
@@ -186,7 +186,7 @@ bank:
 consentPage:
   ## If false, consent-page will not be installed
   ##
-  enabled: false
+  enabled: true
 
   ## consent-page container name
   ##
@@ -213,10 +213,6 @@ consentPage:
       value: bv0ocudfotn6edhsiu7g
     - name: CLIENT_SECRET
       value: pMPBmv62z3Jt1S4sWl2qRhOhEGPVZ9EcujGL7Xy0-E0
-    - name: ISSUER_URL
-      value: $(ACP_INTERNAL_URL)/default/system
-    - name: BANK_URL
-      value: http://bank:8070
 
   ## Additional InitContainers to initialize the pod
   ##
@@ -347,7 +343,7 @@ consentPage:
 consentAdmin:
   ## If false, consent-admin will not be installed
   ##
-  enabled: false
+  enabled: true
 
   ## consent-admin container name
   ##
@@ -374,20 +370,8 @@ consentAdmin:
       value: bv2fe0tpfc67lmeti340
     - name: SYSTEM_CLIENT_SECRET
       value: v6yYaApda9juR_DrlI5mpdsdm9u2-D0rQIG9ynakyDE
-    - name: SYSTEM_ISSUER_URL
-      value: $(ACP_INTERNAL_URL)/default/system
     - name: SYSTEM_CLIENTS_SERVER_ID
       value: openbanking
-    - name: CERT_FILE
-      value: /tls/tls.crt
-    - name: KEY_FILE
-      value: /tls/tls.key
-    - name: ROOT_CA
-      value: /tls/ca.crt
-    - name: BANK_URL
-      value: http://bank:8070
-    - name: LOGIN_AUTHORIZATION_SERVER_URL
-      value: $(ACP_URL)
     - name: LOGIN_AUTHORIZATION_SERVER_ID
       value: bank-admins
     - name: LOGIN_TENANT_ID
@@ -398,8 +382,6 @@ consentAdmin:
       value: bv2fddlpfc67lmeti32g
     - name: INTROSPECT_CLIENT_SECRET
       value: RkAIOVRlP6ZLhDvYixT1wBb8DG3bVkXAouoIrX7cwzA
-    - name: INTROSPECT_ISSUER_URL
-      value: $(ACP_INTERNAL_URL)/default/bank-admins
 
   ## Additional InitContainers to initialize the pod
   ##
@@ -531,7 +513,7 @@ consentAdmin:
 consentSelfservice:
   ## If false, consent-self-service will not be installed
   ##
-  enabled: false
+  enabled: true
 
   ## consent-self-service container name
   ##
@@ -558,14 +540,8 @@ consentSelfservice:
       value: buc3b1hhuc714r78env0
     - name: SYSTEM_CLIENT_SECRET
       value: PBV7q0akoP603rZbU0EFdxbhZ-djxF7FIVwyKaLnBYU
-    - name: SYSTEM_ISSUER_URL
-      value: $(ACP_INTERNAL_URL)/default/system
     - name: SYSTEM_CLIENTS_SERVER_ID
       value: openbanking
-    - name: BANK_URL
-      value: http://bank:8070
-    - name: LOGIN_AUTHORIZATION_SERVER_URL
-      value: $(ACP_URL)
     - name: LOGIN_AUTHORIZATION_SERVER_ID
       value: bank-customers
     - name: LOGIN_TENANT_ID
@@ -576,8 +552,6 @@ consentSelfservice:
       value: bv2dkff8mll9cf6pvd6g
     - name: INTROSPECT_CLIENT_SECRET
       value: KThGH68f-gMC4cscGLFeOpIU4EYriYhKspOV9IwHbnw
-    - name: INTROSPECT_ISSUER_URL
-      value: $(ACP_INTERNAL_URL)/default/bank-customers
 
   ## Additional InitContainers to initialize the pod
   ##
@@ -723,7 +697,7 @@ import:
 financroo:
   ## If false, financroo will not be installed
   ##
-  enabled: false
+  enabled: true
 
   ## financroo container name
   ##
@@ -746,8 +720,6 @@ financroo:
   extraArgs: {}
 
   extraEnv:
-    - name: UI_URL
-      value: $(FINANCROO_URL)
     - name: DB_FILE
       value: /app/data/my.db
 
