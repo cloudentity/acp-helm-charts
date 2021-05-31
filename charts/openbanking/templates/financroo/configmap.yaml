@@ -1,0 +1,19 @@
+{{- if and .Values.financroo.enabled (and (empty .Values.financroo.configMapOverrideName) (empty .Values.financroo.configFromSecret)) -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "openbanking.financroo.labels" . | nindent 4 }}
+  name: {{ template "openbanking.financroo.fullname" . }}
+{{ include "openbanking.namespace" . | indent 2 }}
+data:
+{{- $root := . -}}
+{{- range $key, $value := .Values.financrooFiles }}
+  {{- if $key | regexMatch ".*\\.ya?ml$" }}
+  {{ $key }}: |
+{{ toYaml $value | default "{}" | indent 4 }}
+  {{- else }}
+  {{ $key }}: {{ toYaml $value | indent 4 }}
+  {{- end }}
+{{- end -}}
+{{- end -}}

@@ -1,0 +1,41 @@
+{{- if .Values.financroo.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+{{- if .Values.financroo.service.annotations }}
+  annotations:
+{{ toYaml .Values.financroo.service.annotations | indent 4}}
+{{- end }}
+  labels:
+    {{- include "openbanking.financroo.labels" . | nindent 4 }}
+{{- if .Values.financroo.service.labels }}
+{{ toYaml .Values.financroo.service.labels | indent 4}}
+{{- end }}
+  name: {{ template "openbanking.financroo.fullname" . }}
+{{ include "openbanking.namespace" . | indent 2 }}
+spec:
+{{- if .Values.financroo.service.clusterIP }}
+  clusterIP: {{ .Values.financroo.service.clusterIP }}
+{{- end }}
+{{- if .Values.financroo.service.externalIPs }}
+  externalIPs:
+{{ toYaml .Values.financroo.service.externalIPs | indent 4 }}
+{{- end }}
+{{- if .Values.financroo.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.financroo.service.loadBalancerIP }}
+{{- end }}
+{{- if .Values.financroo.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{- range $cidr := .Values.financroo.service.loadBalancerSourceRanges }}
+    - {{ $cidr }}
+  {{- end }}
+{{- end }}
+  ports:
+    - name: http
+      port: {{ .Values.financroo.service.servicePort }}
+      protocol: TCP
+      targetPort: 8091
+  selector:
+    {{- include "openbanking.financroo.matchLabels" . | nindent 4 }}
+  type: "{{ .Values.financroo.service.type }}"
+{{- end }}

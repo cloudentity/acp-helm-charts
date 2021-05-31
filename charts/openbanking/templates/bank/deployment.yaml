@@ -47,6 +47,13 @@ spec:
             - containerPort: 8070
           resources:
 {{ toYaml .Values.bank.resources | indent 12 }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/config
+              readOnly: true
+            - mountPath: /tls
+              name: tls
+              readOnly: true
     {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
       {{ toYaml .Values.imagePullSecrets | indent 2 }}
@@ -67,4 +74,21 @@ spec:
       affinity:
 {{ toYaml .Values.bank.affinity | indent 8 }}
     {{- end }}
+      volumes:
+        - name: tls
+          secret:
+            secretName: {{ template "openbanking.financroo.fullname" . }}-tls
+        - name: config-volume
+          {{- if empty .Values.bank.configFromSecret }}
+          configMap:
+            name: {{ if .Values.bank.configMapOverrideName }}{{ .Release.Name }}-{{ .Values.bank.configMapOverrideName }}{{- else }}{{ template "openbanking.bank.fullname" . }}{{- end }}
+          {{- else }}
+          secret:
+            secretName: {{ .Values.bank.configFromSecret }}
+          {{- end }}
+      {{- range .Values.bank.extraSecretMounts }}
+        - name: {{ .name }}
+          secret:
+            secretName: {{ .secretName }}
+      {{- end }}
 {{- end }}

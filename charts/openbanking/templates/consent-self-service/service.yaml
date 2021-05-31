@@ -1,0 +1,41 @@
+{{- if .Values.consentSelfservice.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+{{- if .Values.consentSelfservice.service.annotations }}
+  annotations:
+{{ toYaml .Values.consentSelfservice.service.annotations | indent 4}}
+{{- end }}
+  labels:
+    {{- include "openbanking.consentSelfservice.labels" . | nindent 4 }}
+{{- if .Values.consentSelfservice.service.labels }}
+{{ toYaml .Values.consentSelfservice.service.labels | indent 4}}
+{{- end }}
+  name: {{ template "openbanking.consentSelfservice.fullname" . }}
+{{ include "openbanking.namespace" . | indent 2 }}
+spec:
+{{- if .Values.consentSelfservice.service.clusterIP }}
+  clusterIP: {{ .Values.consentSelfservice.service.clusterIP }}
+{{- end }}
+{{- if .Values.consentSelfservice.service.externalIPs }}
+  externalIPs:
+{{ toYaml .Values.consentSelfservice.service.externalIPs | indent 4 }}
+{{- end }}
+{{- if .Values.consentSelfservice.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.consentSelfservice.service.loadBalancerIP }}
+{{- end }}
+{{- if .Values.consentSelfservice.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{- range $cidr := .Values.consentSelfservice.service.loadBalancerSourceRanges }}
+    - {{ $cidr }}
+  {{- end }}
+{{- end }}
+  ports:
+    - name: http
+      port: {{ .Values.consentSelfservice.service.servicePort }}
+      protocol: TCP
+      targetPort: 8085
+  selector:
+    {{- include "openbanking.consentSelfservice.matchLabels" . | nindent 4 }}
+  type: "{{ .Values.consentSelfservice.service.type }}"
+{{- end }}

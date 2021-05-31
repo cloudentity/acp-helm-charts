@@ -1,0 +1,41 @@
+{{- if .Values.consentPage.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+{{- if .Values.consentPage.service.annotations }}
+  annotations:
+{{ toYaml .Values.consentPage.service.annotations | indent 4}}
+{{- end }}
+  labels:
+    {{- include "openbanking.consentPage.labels" . | nindent 4 }}
+{{- if .Values.consentPage.service.labels }}
+{{ toYaml .Values.consentPage.service.labels | indent 4}}
+{{- end }}
+  name: {{ template "openbanking.consentPage.fullname" . }}
+{{ include "openbanking.namespace" . | indent 2 }}
+spec:
+{{- if .Values.consentPage.service.clusterIP }}
+  clusterIP: {{ .Values.consentPage.service.clusterIP }}
+{{- end }}
+{{- if .Values.consentPage.service.externalIPs }}
+  externalIPs:
+{{ toYaml .Values.consentPage.service.externalIPs | indent 4 }}
+{{- end }}
+{{- if .Values.consentPage.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.consentPage.service.loadBalancerIP }}
+{{- end }}
+{{- if .Values.consentPage.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{- range $cidr := .Values.consentPage.service.loadBalancerSourceRanges }}
+    - {{ $cidr }}
+  {{- end }}
+{{- end }}
+  ports:
+    - name: http
+      port: {{ .Values.consentPage.service.servicePort }}
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    {{- include "openbanking.consentPage.matchLabels" . | nindent 4 }}
+  type: "{{ .Values.consentPage.service.type }}"
+{{- end }}
