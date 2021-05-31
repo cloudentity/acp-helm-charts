@@ -7,6 +7,26 @@ metadata:
   name: {{ template "openbanking.financroo.fullname" . }}
 {{ include "openbanking.namespace" . | indent 2 }}
 data:
+  config.yaml: |
+    login:
+      tenant_id: default
+      server_id: financroo
+      client_id: bv3p4uo557ouq8rha2bg
+      root_ca: "/tls/ca.crt"
+      timeout: 5s
+    banks:
+      - id: gobank
+        url: http://{{ template "openbanking.bank.fullname" . }}:8070
+        acp_client:
+          tenant_id: default
+          server_id: openbanking
+          client_id: bugkgm23g9kregtu051g
+          cert_file: "/tls/tls.crt"
+          key_file: "/tls/tls.key"
+          root_ca: "/tls/ca.crt"
+          timeout: 5s
+    feature_flags:
+      investments: false
 {{- $root := . -}}
 {{- range $key, $value := .Values.financrooFiles }}
   {{- if $key | regexMatch ".*\\.ya?ml$" }}
