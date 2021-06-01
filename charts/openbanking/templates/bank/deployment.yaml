@@ -50,9 +50,11 @@ spec:
           resources:
 {{ toYaml .Values.bank.resources | indent 12 }}
           volumeMounts:
-            - name: config-volume
-              mountPath: /etc/config
-              readOnly: true
+            - mountPath: /app/data
+              name: data
+            - mountPath: /app/data/data.json
+              subPath: data.json
+              name: config
             - mountPath: /tls
               name: tls
               readOnly: true
@@ -77,17 +79,14 @@ spec:
 {{ toYaml .Values.bank.affinity | indent 8 }}
     {{- end }}
       volumes:
+        - name: config
+          configMap:
+            name: {{ template "openbanking.bank.fullname" . }}
+        - name: data
+          emptyDir: {}
         - name: tls
           secret:
             secretName: {{ template "openbanking.fullname" . }}-tls
-        - name: config-volume
-          {{- if empty .Values.bank.configFromSecret }}
-          configMap:
-            name: {{ if .Values.bank.configMapOverrideName }}{{ .Release.Name }}-{{ .Values.bank.configMapOverrideName }}{{- else }}{{ template "openbanking.bank.fullname" . }}{{- end }}
-          {{- else }}
-          secret:
-            secretName: {{ .Values.bank.configFromSecret }}
-          {{- end }}
       {{- range .Values.bank.extraSecretMounts }}
         - name: {{ .name }}
           secret:
