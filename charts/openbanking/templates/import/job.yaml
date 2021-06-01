@@ -5,7 +5,7 @@ metadata:
   name: {{ template "openbanking.fullname" . -}}-import
 {{ include "openbanking.namespace" . | indent 2 }}
 spec:
-  backoffLimit: 3
+  backoffLimit: 0
   template:
     spec:
       containers:

@@ -52,6 +52,8 @@ spec:
           resources:
 {{ toYaml .Values.consentPage.resources | indent 12 }}
           volumeMounts:
+            - mountPath: /app/data
+              name: data
             - mountPath: /tls
               name: tls
               readOnly: true
@@ -76,6 +78,8 @@ spec:
 {{ toYaml .Values.consentPage.affinity | indent 8 }}
     {{- end }}
       volumes:
+        - name: data
+          emptyDir: {}
         - name: tls
           secret:
             secretName: {{ template "openbanking.fullname" . }}-tls
