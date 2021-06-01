@@ -39,7 +39,13 @@ spec:
             - name: ROOT_CA
               value: /tls/ca.crt
             - name: UI_URL
-              value: https://{{ template "openbanking.financroo.fullname" . }}
+              value: https://{{ template "openbanking.financroo.fullname" . }}:8091
+            - name: ACP_URL
+              value: {{ .Values.acpURL }}
+            - name: ACP_INTERNAL_URL
+              value: {{ .Values.acpURL }}
+            - name: APP_HOST
+              value: {{ template "openbanking.financroo.fullname" . }}
 {{ toYaml .Values.financroo.extraEnv | indent 12 }}
           args:
           {{- range $key, $value := .Values.financroo.extraArgs }}
@@ -50,8 +56,11 @@ spec:
           resources:
 {{ toYaml .Values.financroo.resources | indent 12 }}
           volumeMounts:
-            - name: config-volume
-              mountPath: /app/data
+            - mountPath: /app/data
+              name: data
+            - mountPath: /app/data/config.yaml
+              subPath: config.yaml
+              name: config
             - mountPath: /tls
               name: tls
               readOnly: true
@@ -85,17 +94,9 @@ spec:
         - name: tls
           secret:
             secretName: {{ template "openbanking.fullname" . }}-tls
-        - name: config-volume
-          {{- if empty .Values.financroo.configFromSecret }}
+        - name: config
           configMap:
-            name: {{ if .Values.financroo.configMapOverrideName }}{{ .Release.Name }}-{{ .Values.financroo.configMapOverrideName }}{{- else }}{{ template "openbanking.financroo.fullname" . }}{{- end }}
-          {{- else }}
-          secret:
-            secretName: {{ .Values.financroo.configFromSecret }}
-          {{- end }}
-      {{- range .Values.financroo.extraSecretMounts }}
-        - name: {{ .name }}
-          secret:
-            secretName: {{ .secretName }}
-      {{- end }}
+            name: {{ template "openbanking.financroo.fullname" . }}
+        - name: data
+          emptyDir: {}
 {{- end }}
