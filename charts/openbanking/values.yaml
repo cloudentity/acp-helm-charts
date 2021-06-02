@@ -220,7 +220,6 @@ consentPage:
     ##
     annotations:
       kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/proxy-ssl-secret: "acp/bank-tls"
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
@@ -382,7 +381,6 @@ consentAdmin:
     ##
     annotations:
       kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/proxy-ssl-secret: "acp/bank-tls"
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
@@ -545,7 +543,6 @@ consentSelfservice:
     ##
     annotations:
       kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/proxy-ssl-secret: "acp/bank-tls"
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
@@ -657,7 +654,6 @@ import:
   tenant: system
 
   verbose: true
-
 
 financroo:
   ## If false, financroo will not be installed
