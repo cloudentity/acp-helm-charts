@@ -39,7 +39,7 @@ spec:
             - name: ROOT_CA
               value: /tls/ca.crt
             - name: UI_URL
-              value: https://{{ template "openbanking.financroo.fullname" . }}:8091
+              value: https://{{ (index .Values.financroo.ingress.hosts 0) }}:8443
             - name: ACP_URL
               value: {{ .Values.acpURL }}
             - name: ACP_INTERNAL_URL
