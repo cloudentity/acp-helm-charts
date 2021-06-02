@@ -13,7 +13,7 @@ data:
     developer_tpp_url: https://financroo.local:8443
     financroo_tls_client_auth_subject_dn: CN=acp.local,OU= Authorization,O=Cloudentity,L=Seattle,ST=Washinghton,C=US
     bank_tls_client_auth_subject_dn: CN=acp.local,OU= Authorization,O=Cloudentity,L=Seattle,ST=Washinghton,C=US
-
+    example_web_client_url: https://example.local:8443
     financroo_jwks: |
       keys:
       - alg: RS256
@@ -33,5 +33,14 @@ metadata:
   name: {{ template "openbanking.fullname" . -}}-extra-templates
 {{ include "openbanking.namespace" . | indent 2 }}
 data:
+{{- $root := . -}}
+{{- range $key, $value := .Values.import.extraTemplate }}
+  {{- if $key | regexMatch ".*\\.ya?ml$" }}
+  {{ $key }}: |
+{{ toYaml $value | default "{}" | indent 4 }}
+  {{- else }}
+  {{ $key }}: {{ toYaml $value | indent 4 }}
+  {{- end }}
+{{- end -}}
 {{- end -}}
 {{- end -}}

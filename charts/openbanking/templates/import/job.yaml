@@ -11,6 +11,7 @@ spec:
       containers:
         - name: acp-import
           image: cloudentity/openbanking-quickstart-configuration:latest
+          imagePullPolicy: "IfNotPresent"
           args:
             - /app/main
             - --templates-dirs
