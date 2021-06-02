@@ -652,14 +652,12 @@ consentSelfservice:
   #   type: Recreate
 
 import:
-  enabled: false
+  enabled: true
 
   tenant: system
 
   verbose: true
 
-  variables:
-    developer_tpp_url: https://localhost:8090
 
 financroo:
   ## If false, financroo will not be installed
@@ -704,7 +702,6 @@ financroo:
     ## financroo Ingress annotations
     ##
     annotations:
-      nginx.ingress.kubernetes.io/proxy-ssl-secret: "acp/financroo-tls"
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"

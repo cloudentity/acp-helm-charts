@@ -6,10 +6,21 @@ metadata:
 {{ include "openbanking.namespace" . | indent 2 }}
 data:
   variables.yaml: |
-    consent_self_service_redirect_url: https://{{ template "openbanking.consentSelfservice.fullname" . }}:{{ .Values.consentSelfservice.service.servicePort }}/callback
-    consent_admin_portal_redirect_url: https://{{ template "openbanking.consentAdmin.fullname" . }}:{{ .Values.consentAdmin.service.servicePort }}/callback
+    consent_self_service_url: https://{{ template "openbanking.consentSelfservice.fullname" . }}:{{ .Values.consentSelfservice.service.servicePort }}/callback
+    consent_admin_portal_url: https://{{ template "openbanking.consentAdmin.fullname" . }}:{{ .Values.consentAdmin.service.servicePort }}/callback
     consent_page_url: https://{{ template "openbanking.consentPage.fullname" . }}:{{ .Values.consentPage.service.servicePort }}
-    financroo_tpp_url: https://{{ template "openbanking.financroo.fullname" . }}:{{ .Values.financroo.service.servicePort }}
+    financroo_tpp_url: https://{{ (index .Values.financroo.ingress.hosts 0) }}:8443
+    developer_tpp_url: https://{{ (index .Values.financroo.ingress.hosts 0) }}:8443
+    financroo_tls_client_auth_subject_dn: CN=acp.local,OU= Authorization,O=Cloudentity,L=Seattle,ST=Washinghton,C=US
+    bank_tls_client_auth_subject_dn: CN=acp.local,OU= Authorization,O=Cloudentity,L=Seattle,ST=Washinghton,C=US
+    financroo_jwks: |
+      keys:
+      - alg: RS256
+        e: AQAB
+        kid: "167467200346518873990055631921812347975180003245"
+        kty: RSA
+        "n": rcvUbtUo7hoNpzAMYDog6dxOBPSMhSW1L45Isf2R7mW0t8gpn5uN0xiO_stP3E4f1X2UjkdEy0zFuEOYtjL353JtYsHXmZzGb7PeWu6EEw9L9nFwa8N1lAguXcJR_fPol8kW3tzdxewl9y68GhAlxMKgrtHV8DVE94IohMAxwIT45pvruZCFkMLs0tyYnRQ5Epp5WGfaCGmJQgyI_66F0JoAazrzc_oCiHQ3XPXOx-tzqkkubjgjoTxxhRK3QqHiALwriK8mIMSllRU7pUUXNsYumYMm1DuzJxAJMr1ecgL4ksMGLy0kv8mWQTMjxPsUNCetpUSkj7de8qJaKcqVlQ
+        use: sig
     {{- range $key, $value := .Values.import.variables }}
     {{ $key }}: {{ $value }}
     {{- end }}
