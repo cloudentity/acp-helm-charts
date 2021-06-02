@@ -652,14 +652,12 @@ consentSelfservice:
   #   type: Recreate
 
 import:
-  enabled: false
+  enabled: true
 
   tenant: system
 
   verbose: true
 
-  variables:
-    developer_tpp_url: https://localhost:8090
 
 financroo:
   ## If false, financroo will not be installed
