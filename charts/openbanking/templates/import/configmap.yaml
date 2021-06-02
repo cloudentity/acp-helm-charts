@@ -6,13 +6,14 @@ metadata:
 {{ include "openbanking.namespace" . | indent 2 }}
 data:
   variables.yaml: |
-    consent_self_service_url: https://{{ template "openbanking.consentSelfservice.fullname" . }}:{{ .Values.consentSelfservice.service.servicePort }}/callback
-    consent_admin_portal_url: https://{{ template "openbanking.consentAdmin.fullname" . }}:{{ .Values.consentAdmin.service.servicePort }}/callback
-    consent_page_url: https://{{ template "openbanking.consentPage.fullname" . }}:{{ .Values.consentPage.service.servicePort }}
-    financroo_tpp_url: https://{{ (index .Values.financroo.ingress.hosts 0) }}:8443
-    developer_tpp_url: https://{{ (index .Values.financroo.ingress.hosts 0) }}:8443
+    consent_self_service_portal_url: https://consent-ss.local:8443
+    consent_admin_portal_url: https://consent-admin.local:8443
+    consent_page_url: https://consent.local:8443
+    financroo_tpp_url: https://financroo.local:8443
+    developer_tpp_url: https://financroo.local:8443
     financroo_tls_client_auth_subject_dn: CN=acp.local,OU= Authorization,O=Cloudentity,L=Seattle,ST=Washinghton,C=US
     bank_tls_client_auth_subject_dn: CN=acp.local,OU= Authorization,O=Cloudentity,L=Seattle,ST=Washinghton,C=US
+
     financroo_jwks: |
       keys:
       - alg: RS256
