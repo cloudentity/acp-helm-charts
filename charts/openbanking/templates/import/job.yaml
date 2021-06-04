@@ -33,6 +33,12 @@ spec:
             - --client-secret
             - {{ .Values.import.clientSecret }}
             {{- end }}
+          env:
+            - name: CLIENT_ROOT_CA
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "openbanking.fullname" . -}}-tls
+                  key: ca.crt
           volumeMounts:
             - name: variables
               mountPath: /app/vars
