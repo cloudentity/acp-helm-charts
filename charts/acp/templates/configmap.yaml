@@ -10,8 +10,8 @@ data:
       url: {{ .Values.serverURL }}
       {{- with .Values.certificate.cert }}
       certificate:
-        cert_path: "/data/acp.crt"
-        key_path: "/data/acp.key"
+        cert_path: "/tls/tls.crt"
+        key_path: "/tls/tls.key"
       {{- end }}
     sql:
       {{- with .Values.sql }}
@@ -32,9 +32,3 @@ data:
     features:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-  {{- with .Values.certificate.cert }}
-  acp.crt: {{ . | quote }}
-  {{- end }}
-  {{- with .Values.certificate.key }}
-  acp.key: {{ . | quote }}
-  {{- end }}

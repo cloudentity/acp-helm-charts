@@ -1,0 +1,20 @@
+{{- if .Values.certManager.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "acp.fullname" . }}
+  labels:
+    {{- include "acp.labels" . | nindent 4 }}
+spec:
+  dnsNames:
+    - {{ include "acp.fullname" . }}
+    - {{ include "acp.fullname" . }}.{{ .Release.Namespace }}
+    - {{ include "acp.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+    {{- with .Values.certManager.extraNames }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  secretName: {{ include "acp.fullname" . }}-tls
+  issuerRef:
+    name: {{ .Values.certManager.clusterIssuer | default "ca-issuer" }}
+    kind: {{ .Values.certManager.kind | default "ClusterIssuer" }}
+{{- end }}

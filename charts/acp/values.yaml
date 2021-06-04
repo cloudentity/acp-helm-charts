@@ -62,6 +62,10 @@ features:
   openbanking_file_payment_consents: false # enable openbanking file payment consent apis
   openbanking_jws_verification: false # enable verification middleware for POST payment consent endpoints
   web_rotation_keys: false # enable roatation keys in frontend
+
+certManager:
+  enabled: false
+
 certificate:
   # dummy cert and key
   cert: |
