@@ -6,6 +6,7 @@ metadata:
   labels:
     {{- include "openbanking.labels" . | nindent 4 }}
 spec:
+  subject: "CN=acp.local,OU= Authorization,O=Cloudentity,L=Seattle,ST=Washinghton,C=US"
   dnsNames:
     - {{ include "openbanking.fullname" . }}
     - {{ include "openbanking.fullname" . }}.{{ .Release.Namespace }}
