@@ -31,6 +31,9 @@ serviceAccounts:
 
 acpURL: https://acp.acp-system:8443
 
+certManager:
+  enabled: false
+
 bank:
   ## If false, bank will not be installed
   ##
