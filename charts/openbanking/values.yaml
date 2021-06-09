@@ -657,7 +657,7 @@ import:
   tenant: system
 
   verbose: true
-  read_client_certificate_from_header: false
+  readClientCertFromHeader: false
 
   # extraTemplate:
   #   example.tmpl: |
