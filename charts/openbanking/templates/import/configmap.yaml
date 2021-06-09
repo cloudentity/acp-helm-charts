@@ -17,8 +17,6 @@ data:
     {{- if .Values.import.read_client_certificate_from_header }}
     read_client_certificate_from_header: true
     client_certificate_header: X-SSL-CERT
-    {{- else -}}
-    read_client_certificate_from_header: false
     {{ end -}}
     financroo_jwks: |
       keys:
