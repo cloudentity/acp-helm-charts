@@ -14,6 +14,12 @@ data:
     financroo_tls_client_auth_subject_dn: CN=acp.local,OU= Authorization,O=Cloudentity,L=Seattle,ST=Washinghton,C=US
     bank_tls_client_auth_subject_dn: CN=acp.local,OU= Authorization,O=Cloudentity,L=Seattle,ST=Washinghton,C=US
     example_web_client_url: https://example.local:8443
+    {{- if .Values.import.read_client_certificate_from_header }}
+    read_client_certificate_from_header: true
+    client_certificate_header: X-SSL-CERT
+    {{- else -}}
+    read_client_certificate_from_header: false
+    {{ end -}}
     financroo_jwks: |
       keys:
       - alg: RS256
