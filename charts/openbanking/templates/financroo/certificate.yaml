@@ -1,0 +1,27 @@
+{{- if and .Values.financroo.enabled .Values.certManager.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ template "openbanking.financroo.fullname" . }}
+  labels:
+    {{- include "openbanking.labels" . | nindent 4 }}
+spec:
+  commonName: financroo
+  subject:
+    organizationalUnits: [ Authorization ]
+    organizations: [ Cloudentity ]
+    localities: [ Seattle ]
+    provinces: [ Washinghton ]
+    countries: [ US ]
+  dnsNames:
+    - {{ template "openbanking.financroo.fullname" . }}
+    - {{ template "openbanking.financroo.fullname" . }}.{{ .Release.Namespace }}
+    - {{ template "openbanking.financroo.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+    {{- with .Values.certManager.extraNames }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  secretName: {{ template "openbanking.financroo.fullname" . }}-tls
+  issuerRef:
+    name: {{ .Values.certManager.clusterIssuer | default "ca-issuer" }}
+    kind: {{ .Values.certManager.kind | default "ClusterIssuer" }}
+{{- end }}

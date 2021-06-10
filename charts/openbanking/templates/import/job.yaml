@@ -2,8 +2,13 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
+  labels:
+    {{- include "openbanking.labels" . | nindent 4 }}
   name: {{ template "openbanking.fullname" . -}}-import
 {{ include "openbanking.namespace" . | indent 2 }}
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-delete-policy: hook-succeeded,before-hook-creation
 spec:
   backoffLimit: 0
   template:
@@ -33,12 +38,6 @@ spec:
             - --client-secret
             - {{ .Values.import.clientSecret }}
             {{- end }}
-          env:
-            - name: CLIENT_ROOT_CA
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "openbanking.fullname" . -}}-tls
-                  key: ca.crt
           volumeMounts:
             - name: variables
               mountPath: /app/vars
@@ -52,7 +51,7 @@ spec:
       volumes:
         - name: tls
           secret:
-            secretName: {{ template "openbanking.fullname" . }}-tls
+            secretName: {{ template "openbanking.financroo.fullname" . }}-tls
         - name: variables
           configMap:
             name: {{ template "openbanking.fullname" . -}}-variables
