@@ -664,7 +664,9 @@ import:
   tenant: system
 
   verbose: true
+
   readClientCertFromHeader: false
+  clientCertificateHeader: X-SSL-CERT
 
   # extraTemplate:
   #   example.tmpl: |
