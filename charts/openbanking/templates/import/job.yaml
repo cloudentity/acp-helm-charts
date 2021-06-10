@@ -42,11 +42,17 @@ spec:
           volumeMounts:
             - name: variables
               mountPath: /app/vars
+            - mountPath: /tls
+              name: tls
+              readOnly: true
             {{- if .Values.import.extraTemplate }}
             - name: extra-templates
               mountPath: /app/extra-imports
             {{- end }}
       volumes:
+        - name: tls
+          secret:
+            secretName: {{ template "openbanking.fullname" . }}-tls
         - name: variables
           configMap:
             name: {{ template "openbanking.fullname" . -}}-variables
