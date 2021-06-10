@@ -666,7 +666,7 @@ import:
   verbose: true
 
   readClientCertFromHeader: false
-  clientCertificateHeader: X-SSL-CERT
+  clientCertHeader: X-SSL-CERT
 
   # extraTemplate:
   #   example.tmpl: |

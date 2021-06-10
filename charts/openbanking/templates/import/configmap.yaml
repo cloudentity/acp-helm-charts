@@ -17,7 +17,7 @@ data:
     financroo_pem_file: /tls/tls.key
     {{- if .Values.import.readClientCertFromHeader }}
     read_client_certificate_from_header: true
-    client_certificate_header: {{ .Values.import.clientCertificateHeader }}
+    client_certificate_header: {{ .Values.import.clientCertHeader }}
     {{ end -}}
     {{- range $key, $value := .Values.import.variables }}
     {{ $key }}: {{ $value }}
