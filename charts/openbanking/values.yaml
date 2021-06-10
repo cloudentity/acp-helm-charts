@@ -654,6 +654,13 @@ consentSelfservice:
 import:
   enabled: true
 
+  image:
+    repository: cloudentity/openbanking-quickstart-configuration
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  name: acp-import
+
   tenant: system
 
   verbose: true

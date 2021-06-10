@@ -9,9 +9,9 @@ spec:
   template:
     spec:
       containers:
-        - name: acp-import
-          image: cloudentity/openbanking-quickstart-configuration:latest
-          imagePullPolicy: "IfNotPresent"
+        - name: {{ template "openbanking.name" . }}-{{ .Values.import.name }}
+          image: "{{ .Values.import.image.repository }}:{{ .Values.import.image.tag }}"
+          imagePullPolicy: "{{ .Values.import.image.pullPolicy }}"
           args:
             - /app/main
             - --templates-dirs
