@@ -31,6 +31,8 @@ serviceAccounts:
 
 acpURL: https://acp.acp-system:8443
 
+appsIngressPort: 8443
+
 certManager:
   enabled: false
 
