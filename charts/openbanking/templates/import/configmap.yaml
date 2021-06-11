@@ -11,10 +11,11 @@ data:
     consent_page_url: https://consent.local:8443
     financroo_tpp_url: https://financroo.local:8443
     developer_tpp_url: https://financroo.local:8443
-    financroo_tls_client_auth_subject_dn: CN=acp.local,OU= Authorization,O=Cloudentity,L=Seattle,ST=Washinghton,C=US
-    bank_tls_client_auth_subject_dn: CN=acp.local,OU= Authorization,O=Cloudentity,L=Seattle,ST=Washinghton,C=US
+    financroo_tls_client_auth_subject_dn: CN=financroo,OU=Authorization,O=Cloudentity,L=Seattle,ST=Washinghton,C=US
+    bank_tls_client_auth_subject_dn: CN=bank,OU=Authorization,O=Cloudentity,L=Seattle,ST=Washinghton,C=US
     example_web_client_url: https://example.local:8443
-    financroo_pem_file: /tls/tls.key
+    financroo_pem_file: /tls/tls.crt
+    ca_pem_file: /tls/ca.crt
     {{- if .Values.import.readClientCertFromHeader }}
     read_client_certificate_from_header: true
     client_certificate_header: {{ .Values.import.clientCertHeader }}

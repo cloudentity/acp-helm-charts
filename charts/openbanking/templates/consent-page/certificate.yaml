@@ -1,0 +1,27 @@
+{{- if and .Values.consentPage.enabled .Values.certManager.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ template "openbanking.consentPage.fullname" . }}
+  labels:
+    {{- include "openbanking.labels" . | nindent 4 }}
+spec:
+  commonName: consent-page
+  subject:
+    organizationalUnits: [ Authorization ]
+    organizations: [ Cloudentity ]
+    localities: [ Seattle ]
+    provinces: [ Washinghton ]
+    countries: [ US ]
+  dnsNames:
+    - {{ template "openbanking.consentPage.fullname" . }}
+    - {{ template "openbanking.consentPage.fullname" . }}.{{ .Release.Namespace }}
+    - {{ template "openbanking.consentPage.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+    {{- with .Values.certManager.extraNames }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  secretName: {{ template "openbanking.consentPage.fullname" . }}-tls
+  issuerRef:
+    name: {{ .Values.certManager.clusterIssuer | default "ca-issuer" }}
+    kind: {{ .Values.certManager.kind | default "ClusterIssuer" }}
+{{- end }}

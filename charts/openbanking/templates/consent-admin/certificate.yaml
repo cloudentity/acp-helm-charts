@@ -1,12 +1,12 @@
-{{- if .Values.certManager.enabled }}
+{{- if and .Values.consentAdmin.enabled .Values.certManager.enabled }}
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: {{ include "openbanking.fullname" . }}
+  name: {{ template "openbanking.consentAdmin.fullname" . }}
   labels:
     {{- include "openbanking.labels" . | nindent 4 }}
 spec:
-  commonName: acp.local
+  commonName: consent-admin
   subject:
     organizationalUnits: [ Authorization ]
     organizations: [ Cloudentity ]
@@ -14,13 +14,13 @@ spec:
     provinces: [ Washinghton ]
     countries: [ US ]
   dnsNames:
-    - {{ include "openbanking.fullname" . }}
-    - {{ include "openbanking.fullname" . }}.{{ .Release.Namespace }}
-    - {{ include "openbanking.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+    - {{ template "openbanking.consentAdmin.fullname" . }}
+    - {{ template "openbanking.consentAdmin.fullname" . }}.{{ .Release.Namespace }}
+    - {{ template "openbanking.consentAdmin.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
     {{- with .Values.certManager.extraNames }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
-  secretName: {{ include "openbanking.fullname" . }}-tls
+  secretName: {{ template "openbanking.consentAdmin.fullname" . }}-tls
   issuerRef:
     name: {{ .Values.certManager.clusterIssuer | default "ca-issuer" }}
     kind: {{ .Values.certManager.kind | default "ClusterIssuer" }}
