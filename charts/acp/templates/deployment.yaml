@@ -31,6 +31,9 @@ spec:
         - name: tls
           secret:
             secretName: {{ include "acp.fullname" . }}-tls
+        - name: secret
+          secret:
+            secretName: {{ include "acp.secretConfig" . }}
       serviceAccountName: {{ include "acp.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -80,6 +83,9 @@ spec:
               readOnly: true
             - mountPath: /tls
               name: tls
+              readOnly: true
+            - mountPath: /secret
+              name: secret
               readOnly: true
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
