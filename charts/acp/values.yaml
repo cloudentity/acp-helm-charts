@@ -66,6 +66,12 @@ features:
 certManager:
   enabled: false
 
+importJob:
+  enabled: false
+  data:
+    clients:
+      - id: example
+
 certificate:
   # dummy cert and key
   cert: |
