@@ -9,7 +9,7 @@ args:
   - server
   - start
   - --config
-  - /config/reference.yaml,/data/config.yaml
+  - /data/config.yaml,/secret/config.yaml
   - --demo
   - --metrics
   - --create-default-tenant
@@ -65,6 +65,9 @@ features:
 
 certManager:
   enabled: false
+
+secretConfig:
+  create: true
 
 certificate:
   # dummy cert and key
