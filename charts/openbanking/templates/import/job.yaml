@@ -8,7 +8,7 @@ metadata:
 {{ include "openbanking.namespace" . | indent 2 }}
   annotations:
     helm.sh/hook: post-install,post-upgrade
-    helm.sh/hook-delete-policy: hook-succeeded,before-hook-creation
+    helm.sh/hook-delete-policy: before-hook-creation
 spec:
   backoffLimit: 0
   template:
