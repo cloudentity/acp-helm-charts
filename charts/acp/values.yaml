@@ -66,11 +66,14 @@ features:
 certManager:
   enabled: false
 
-importJob:
+importJob: 
   enabled: false
-  data:
-    clients:
-      - id: example
+  # the data should match import configuration endpoint request body 
+  # https://docs.authorization.cloudentity.com/api/system/#operation/importConfiguration 
+  data: 
+    tenants: []
+    servers: []
+    clients: []
 
 certificate:
   # dummy cert and key
