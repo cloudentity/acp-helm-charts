@@ -52,6 +52,21 @@ bank:
     tag: latest
     pullPolicy: IfNotPresent
 
+  ##
+  ## Setting data to a json structure allows to overwrite
+  ## mocked bank data - i.e. accounts, balances, transactions etc.
+  ## If this is not set default configuration is used
+  ##
+  ## see charts/openbanking/templates/bank/configmap.yaml for
+  ## default config
+  ##
+  # data: |
+  #   {
+  #     "sampleUser": {
+  #        .....
+  #       }
+  #   }
+
   ## bank priorityClassName
   ##
   priorityClassName: ""
