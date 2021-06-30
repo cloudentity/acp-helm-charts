@@ -7,6 +7,10 @@ metadata:
   name: {{ template "openbanking.bank.fullname" . }}
 {{ include "openbanking.namespace" . | indent 2 }}
 data:
+  {{- if .Values.bank.data }}
+  data.json: |
+{{ .Values.bank.data | indent 4 }}
+  {{ else }}
   data.json: |
     {
       "user": {
@@ -814,4 +818,5 @@ data:
         ]
       }
     }
+{{ end -}}
 {{- end -}}
