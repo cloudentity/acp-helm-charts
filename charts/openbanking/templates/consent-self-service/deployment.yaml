@@ -41,7 +41,11 @@ spec:
             - name: SYSTEM_ISSUER_URL
               value: {{ .Values.acpURL }}/default/system
             - name: BANK_URL
+            {{- if .Values.bankURL }}
+              value: {{ .Values.bankURL }}
+            {{- else }}
               value: http://{{ template "openbanking.bank.fullname" . }}:8070
+            {{- end }}
             - name: LOGIN_AUTHORIZATION_SERVER_URL
               value: {{ .Values.acpURL }}
             - name: INTROSPECT_ISSUER_URL

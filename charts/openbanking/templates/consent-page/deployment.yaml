@@ -41,7 +41,11 @@ spec:
             - name: ISSUER_URL
               value: {{ .Values.acpURL }}/default/system
             - name: BANK_URL
+            {{- if .Values.bankURL }}
+              value: {{ .Values.bankURL }}
+            {{- else }}
               value: http://{{ template "openbanking.bank.fullname" . }}:8070
+            {{- end }}
 {{ toYaml .Values.consentPage.extraEnv | indent 12 }}
           args:
           {{- range $key, $value := .Values.consentPage.extraArgs }}

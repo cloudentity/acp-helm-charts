@@ -60,3 +60,14 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the secret config to use
+*/}}
+{{- define "acp.secretConfig" -}}
+{{- if .Values.secretConfig.create }}
+{{- default (include "acp.fullname" .) .Values.secretConfig.name }}
+{{- else }}
+{{- default "default" .Values.secretConfig.name }}
+{{- end }}
+{{- end }}

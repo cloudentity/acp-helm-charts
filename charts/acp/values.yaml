@@ -1,25 +1,79 @@
+## ACP image parameters
+##
 image:
+  ## Image repository
+  ##
   repository: acp.artifactory.cloudentity.com/acp
+
+  ## Image pull policy
+  ##
   pullPolicy: IfNotPresent
+
+  ## Image tag (immutable tags are recommended)
+  ##
+  tag:
+
+## Global Docker registry secret names as an array
+##
 imagePullSecrets:
   - name: artifactory
+
+## Public ACP URL
+##
+serverURL: "https://acp.local:8443"
+
+## String to partially override acp.name
+##
+#nameOverride: ""
+
+## String to fully override acp.fullname
+##
+# fullnameOverride: ""
+
+# Additional labels to apply to all Kubernetes resources created by this chart.
+labels: {}
+
 serviceAccount:
+  ## Specifies whether a service account should be created
   create: true
+  ## Annotations to add to the service account
+  annotations: {}
+  ## The name of the service account to use.
+  ## If not set and create is true, a name is generated using the fullname template
+  # name: ""
+
+## Array with container arguments to add to the ACP container
+##
 args:
   - server
   - start
   - --config
-  - /config/reference.yaml,/data/config.yaml
+  - /data/config.yaml,/secret/config.yaml
   - --demo
   - --metrics
   - --create-default-tenant
   - --create-default-workspaces
-serverURL: "https://acp.local:8443"
+
+## Array with extra environment variables to add to the ACP container
+##
+# extraEnvVars: []
+
 service:
+  ## ACP service type
+  ##
   type: ClusterIP
+
+  ## ACP service HTTP port
+  ##
   port: 8443
+
 ingress:
+  ## Enables the Ingress for ACP
+  ##
   enabled: true
+
+  ## Ingress annotations
+  ##
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
@@ -33,15 +87,34 @@ ingress:
       ssl_verify_client optional_no_ca;
     nginx.ingress.kubernetes.io/configuration-snippet: |
       proxy_set_header X-SSL-CERT $ssl_client_escaped_cert;
+
+  ## Ingress hostnames with paths
+  ##
   hosts:
     - host: acp.local
       paths:
         - path: /
+
+  ## Ingress TLS configuration
+  ## Secrets must be manually created in the namespace
+  tls: []
+  #  - secretName: acp-tls
+  #    hosts:
+  #      - acp.domain.com
+
 autoscaling:
   enabled: false
+
+## Number of ACP replicas to deploy
+##
 replicaCount: 1
 
-# feature flags
+## acp resource requests and limits
+## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+##
+resources: {}
+
+# ACP feature flags
 features:
   integration_endpoints: false # enables import, export, global accept, deny, introspect endpoints
   dev_mode: false # realod templates, adds local redirects urls to frontend apps
@@ -63,20 +136,28 @@ features:
   openbanking_jws_verification: false # enable verification middleware for POST payment consent endpoints
   web_rotation_keys: false # enable roatation keys in frontend
 
+## Enables the cert-manager integration
+##
 certManager:
   enabled: false
 
-importJob: 
+importJob:
   enabled: false
-  # the data should match import configuration endpoint request body 
-  # https://docs.authorization.cloudentity.com/api/system/#operation/importConfiguration 
-  data: 
+  # the data should match import configuration endpoint request body
+  # https://docs.authorization.cloudentity.com/api/system/#operation/importConfiguration
+  data:
     tenants: []
     servers: []
     clients: []
 
+## Additional ACP config file from secret
+##
+secretConfig:
+  create: true
+
 certificate:
-  # dummy cert and key
+  ## Dummy cert and key
+  ##
   cert: |
     -----BEGIN CERTIFICATE-----
     MIIEDjCCAvagAwIBAgIUFLUGb+Ux3LbyTAdP3Zskt0iCbQIwDQYJKoZIhvcNAQEL
