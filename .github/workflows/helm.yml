@@ -67,3 +67,20 @@ jobs:
 
       - name: Publish
         run: jfrog rt u *.tgz acp-helm-charts
+
+  istio-authorizer:
+    needs: lint
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Helm package charts/istio-authorizer
+        run: helm package charts/istio-authorizer
+
+      - uses: jfrog/setup-jfrog-cli@v1
+        env:
+          JF_ARTIFACTORY_1: ${{ secrets.JF_ARTIFACTORY_SECRET_1 }}
+
+      - name: Publish
+        run: jfrog rt u *.tgz acp-helm-charts
