@@ -1,0 +1,58 @@
+{{- if .Values.importJob.enabled -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    {{- include "acp.labels" . | nindent 4 }}
+  name: {{ include "acp.fullname" . }}-import
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-delete-policy: hook-succeeded,before-hook-creation
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - import
+            - --config
+            - config/reference.yaml,config/config.yaml
+            - --format
+            - yaml
+            - --input
+            - /import/seed.yaml
+          volumeMounts:
+            - mountPath: /data
+              name: data
+              readOnly: true
+            - mountPath: /tls
+              name: tls
+              readOnly: true
+            - mountPath: /import
+              name: import
+              readOnly: true
+      volumes:
+        - name: data
+          configMap:
+            name: {{ .Release.Name }}-acp
+        - name: tls
+          secret:
+            secretName: {{ include "acp.fullname" . }}-tls
+        - name: import
+          configMap:
+            name: {{ include "acp.fullname" . }}-import
+      restartPolicy: Never
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "acp.fullname" . }}-import
+data:
+  seed.yaml: |
+    {{- with .Values.importJob.data }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+{{- end }}

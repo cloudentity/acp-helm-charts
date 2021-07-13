@@ -141,13 +141,20 @@ features:
 certManager:
   enabled: false
 
+importJob:
+  enabled: false
+  # the data should match import configuration endpoint request body
+  # https://docs.authorization.cloudentity.com/api/system/#operation/importConfiguration
+  data:
+    tenants: []
+    servers: []
+    clients: []
+
 ## Additional ACP config file from secret
 ##
 secretConfig:
   create: true
 
-## Number of ACP replicas to deploy
-##
 certificate:
   ## Dummy cert and key
   ##
