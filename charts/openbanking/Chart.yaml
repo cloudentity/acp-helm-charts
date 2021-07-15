@@ -2,6 +2,7 @@ apiVersion: v2
 name: openbanking
 description: Openbanking collects Cloudentity Openbanking apps to provide easy to operate end-to-end Kubernetes cluster
 type: application
-version: 0.1.7
+version: 0.1.8
+appVersion: "1.10.0"
 sources:
   - https://github.com/cloudentity/acp-helm-charts

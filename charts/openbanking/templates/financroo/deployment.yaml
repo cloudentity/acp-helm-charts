@@ -29,7 +29,7 @@ spec:
 {{- end }}
       containers:
         - name: {{ template "openbanking.name" . }}-{{ .Values.financroo.name }}
-          image: "{{ .Values.financroo.image.repository }}:{{ .Values.financroo.image.tag }}"
+          image: "{{ .Values.financroo.image.repository }}:{{ .Values.financroo.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: "{{ .Values.financroo.image.pullPolicy }}"
           env:
             - name: CERT_FILE

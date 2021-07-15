@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: {{ template "openbanking.name" . }}-{{ .Values.import.name }}
-          image: "{{ .Values.import.image.repository }}:{{ .Values.import.image.tag }}"
+          image: "{{ .Values.import.image.repository }}:{{ .Values.import.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: "{{ .Values.import.image.pullPolicy }}"
           args:
             - /app/main

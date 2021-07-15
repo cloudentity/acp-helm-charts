@@ -29,7 +29,7 @@ spec:
 {{- end }}
       containers:
         - name: {{ template "openbanking.name" . }}-{{ .Values.consentPage.name }}
-          image: "{{ .Values.consentPage.image.repository }}:{{ .Values.consentPage.image.tag }}"
+          image: "{{ .Values.consentPage.image.repository }}:{{ .Values.consentPage.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: "{{ .Values.consentPage.image.pullPolicy }}"
           env:
             - name: CERT_FILE
