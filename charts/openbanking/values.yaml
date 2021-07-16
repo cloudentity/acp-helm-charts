@@ -49,7 +49,6 @@ bank:
   ##
   image:
     repository: cloudentity/openbanking-quickstart-bank
-    tag: latest
     pullPolicy: IfNotPresent
 
   ##
@@ -209,7 +208,6 @@ consentPage:
   ##
   image:
     repository: cloudentity/openbanking-quickstart-consent-page
-    tag: latest
     pullPolicy: IfNotPresent
 
   ## consent-page priorityClassName
@@ -358,7 +356,6 @@ consentAdmin:
   ##
   image:
     repository: cloudentity/openbanking-quickstart-consent-admin-portal
-    tag: latest
     pullPolicy: IfNotPresent
 
   ## consent-admin priorityClassName
@@ -520,7 +517,6 @@ consentSelfservice:
   ##
   image:
     repository: cloudentity/openbanking-quickstart-consent-self-service-portal
-    tag: latest
     pullPolicy: IfNotPresent
 
   ## consent-self-service priorityClassName
@@ -673,7 +669,6 @@ import:
 
   image:
     repository: cloudentity/openbanking-quickstart-configuration
-    tag: latest
     pullPolicy: IfNotPresent
 
   name: acp-import
@@ -720,7 +715,6 @@ financroo:
   ##
   image:
     repository: cloudentity/openbanking-quickstart-financroo-tpp
-    tag: latest
     pullPolicy: IfNotPresent
 
   ## financroo priorityClassName
