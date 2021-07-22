@@ -64,10 +64,10 @@ Create the name of the service account to use
 {{/*
 Create the name of the client secret to use
 */}}
-{{- define "istio-authorizer.clientSecretName" -}}
-{{- if .Values.clientSecret.create }}
-{{- default (include "istio-authorizer.fullname" .) .Values.clientSecret.name }}
+{{- define "istio-authorizer.clientCredentialsName" -}}
+{{- if .Values.clientCredentials.create }}
+{{- default (include "istio-authorizer.fullname" .) .Values.clientCredentials.name }}
 {{- else }}
-{{- default "default" .Values.clientSecret.name }}
+{{- default "default" .Values.clientCredentials.name }}
 {{- end }}
 {{- end }}

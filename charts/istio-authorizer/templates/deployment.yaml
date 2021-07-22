@@ -46,12 +46,12 @@ spec:
             - name: CLIENT_ID
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "istio-authorizer.clientSecretName" . }}
+                  name: {{ include "istio-authorizer.clientCredentialsName" . }}
                   key: clientID
             - name: CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "istio-authorizer.clientSecretName" . }}
+                  name: {{ include "istio-authorizer.clientCredentialsName" . }}
                   key: clientSecret
           ports:
             - name: grpc
