@@ -3,7 +3,7 @@
 image:
   ## Image repository
   ##
-  repository: docker.cloudentity.io/istio-authorizer
+  repository: acp.artifactory.cloudentity.com/istio-authorizer
 
   ## Image pull policy
   ##
@@ -43,7 +43,7 @@ serviceAccount:
 ## to the `system` workspace of your `system` tenant.
 ## i.e. "http://yourdomain.com/system/system"
 ##
-issuerURL: "http://localhost:8443/default/system"
+issuerURL: "https://acp.acp-system:8443/default/system"
 
 ## Credentials for your ACP istio-authorizer
 ##
