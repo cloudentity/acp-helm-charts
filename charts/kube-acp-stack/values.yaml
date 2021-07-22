@@ -1,6 +1,8 @@
-hazelcast:
-  enabled: true
 cockroachdb:
   enabled: true
+redis:
+  enabled: true
+  auth:
+    enabled: false
 acp:
   enabled: true
