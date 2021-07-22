@@ -3,7 +3,7 @@
 image:
   ## Image repository
   ##
-  repository: acp.artifactory.cloudentity.com/istio-authorizer
+  repository: docker.cloudentity.io/istio-authorizer
 
   ## Image pull policy
   ##
