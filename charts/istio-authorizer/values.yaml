@@ -18,10 +18,6 @@ image:
 imagePullSecrets:
   - name: artifactory
 
-## String to partially override istio-authorizer.name
-##
-#nameOverride: ""
-
 ## String to fully override istio-authorizer.fullname
 ##
 # fullnameOverride: ""
@@ -44,19 +40,29 @@ issuerURL: "http://localhost:8443/default/system"
 ## Secret with client_id and client_secret
 ##
 clientSecret:
-  # Specifies whether a secret should be created
+  # Specifies whether a secret should be created.
+  # For production setup please create secret manually and use name
+  # parameter to integrate with istio-authorizer
   create: true
+
   # The name of the client secret to use
   # If not set and create is true, a name is generated using the fullname template
   name: ""
-  # Default values
+
+  # Default dummy values
   clientID: "YnZnN2h2YzA1NnV0YmdpaHF1OWcK"
   clientSecret: "aE0wdmYwZHNBMHkxSHBHZW1WXzlDa21iYmlOclp2NW92S1JDTm5hd2pJbwo="
 
-## istio-authorizer ConfigMap entries
+## Additional istio-authorizer container arguments
+##
+## for example: root-ca: /data/ca.crt
+extraArgs:
+  root-ca: /data/ca.crt
+
+## Additional istio-authorizer ConfigMap entries
 ##
 data:
-  # root CA used by istio-authorizer http client
+  # Example root CA used by istio-authorizer http client
   ca.crt: |
     -----BEGIN CERTIFICATE-----
     MIIDfjCCAmagAwIBAgIUHOLlcMhX8uJyFafYYNXYBMBJr2swDQYJKoZIhvcNAQEL

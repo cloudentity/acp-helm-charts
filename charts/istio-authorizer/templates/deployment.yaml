@@ -37,8 +37,9 @@ spec:
             - "$(CLIENT_SECRET)"
             - --issuer-url
             - {{ .Values.issuerURL }}
-            - --root-ca
-            - /data/ca.crt
+          {{- range $key, $value := .Values.extraArgs }}
+            - --{{ $key }}={{ $value }}
+          {{- end }}
           env:
             - name: LOGGING_LEVEL
               value: "INFO"
