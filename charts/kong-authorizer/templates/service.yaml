@@ -5,9 +5,10 @@ metadata:
   labels:
     {{- include "kong-authorizer.labels" . | nindent 4 }}
 spec:
-  type: ClusterIP
+  type: {{ .Values.service.type }}
   ports:
-    - port: 9003
-      name: http
+    - port: {{ .Values.service.port }}
+      name: {{ .Values.service.name }}
+      protocol: TCP
   selector:
     {{- include "kong-authorizer.selectorLabels" . | nindent 4 }}
