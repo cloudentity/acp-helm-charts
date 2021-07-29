@@ -31,10 +31,10 @@ spec:
         - name: tls
           secret:
             secretName: {{ include "acp.fullname" . }}-tls
+            defaultMode: 384
         - name: secret
           secret:
             secretName: {{ include "acp.secretConfig" . }}
-            defaultMode: 384
       serviceAccountName: {{ include "acp.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
