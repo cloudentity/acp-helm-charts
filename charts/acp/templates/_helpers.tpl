@@ -71,3 +71,14 @@ Create the name of the secret config to use
 {{- default "default" .Values.secretConfig.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the config to use
+*/}}
+{{- define "acp.configName" -}}
+{{- if .Values.config.create }}
+{{- default (include "acp.fullname" .) .Values.config.name }}
+{{- else }}
+{{- default "default" .Values.config.name }}
+{{- end }}
+{{- end }}

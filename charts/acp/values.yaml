@@ -155,6 +155,11 @@ importJob:
 secretConfig:
   create: true
 
+## Default ACP config file
+##
+config:
+  create: true
+
 certificate:
   ## Dummy cert and key
   ##

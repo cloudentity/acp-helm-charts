@@ -1,7 +1,8 @@
+{{- if .Values.config.create -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-acp
+  name: {{ include "acp.configName" . }}
   labels:
     {{- include "acp.labels" . | nindent 4 }}
 data:
@@ -33,3 +34,4 @@ data:
     features:
       {{- toYaml . | nindent 6 }}
     {{- end }}
+{{- end }}
