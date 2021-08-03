@@ -3,7 +3,7 @@
 image:
   ## Image repository
   ##
-  repository: acp.artifactory.cloudentity.com/kong-authorizer
+  repository: docker.cloudentity.io/kong-authorizer
 
   ## Image pull policy
   ##
@@ -63,9 +63,11 @@ clientCredentials:
   clientID: "c3uscb4jou8qd3u1r1m0"
   clientSecret: "xUttPjjxctpHsTNe6IGDOzYZqBLG44LKwjxhT66T8wU"
 
-## Additional kong-authorizer container arguments
+## Additional kong-authorizer container arguments, eg:
 ##
-## for example: root-ca: /data/ca.crt
+## cert:     /data/cert.pem
+## cert-key: /data/cert-key.pem
+## root-ca:  /data/ca.crt
 extraArgs:
   dangerous: true
   do-not-fail-on-non-matching-requests: true
