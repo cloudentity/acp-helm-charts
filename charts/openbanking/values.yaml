@@ -229,6 +229,12 @@ consentPage:
   ##
   extraInitContainers: []
 
+  ## ConfigMap override where fullname is {{.Release.Name}}-{{.Values.consentPage.configMapOverrideName}}
+  ## Defining templatesConfigMapOverrideName will cause templates/consent-page/configmap.yaml
+  ## to NOT generate a ConfigMap resource
+  ##
+  templatesConfigMapOverrideName: ""
+
   ingress:
     ## If true, consent-page Ingress will be created
     ##
@@ -848,3 +854,7 @@ financroo:
   ## financroo Deployment Strategy type
   # strategy:
   #   type: Recreate
+
+## consentPage templates ConfigMap entries
+##
+consentPageTemplates: {}

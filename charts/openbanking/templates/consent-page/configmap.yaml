@@ -1,0 +1,18 @@
+{{- if and .Values.consentPage.enabled (empty .Values.consentPage.templatesConfigMapOverrideName) -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "openbanking.labels" . | nindent 4 }}
+  name: {{ template "openbanking.consentPage.fullname" . }}-templates
+data:
+{{- $root := . -}}
+{{- range $key, $value := .Values.consentPageTemplates }}
+  {{- if $key | regexMatch ".*\\.ya?ml$" }}
+  {{ $key }}: |
+{{ toYaml $value | default "{}" | indent 4 }}
+  {{- else }}
+  {{ $key }}: {{ toYaml $value | indent 4 }}
+  {{- end }}
+{{- end -}}
+{{- end -}}
