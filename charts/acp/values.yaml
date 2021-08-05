@@ -114,6 +114,11 @@ replicaCount: 1
 ##
 resources: {}
 
+## A security context defines privilege and access control settings for a Pod or Container
+## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+securityContext:
+  runAsUser: 0
+
 # ACP feature flags
 features:
   integration_endpoints: false # enables import, export, global accept, deny, introspect endpoints
