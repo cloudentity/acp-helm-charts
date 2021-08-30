@@ -20,6 +20,8 @@ spec:
             - import
             - --config
             - /data/config.yaml,/secret/config.yaml
+            - --mode
+            - update
             - --format
             - yaml
             - --input
