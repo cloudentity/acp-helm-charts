@@ -9,7 +9,7 @@ metadata:
     helm.sh/hook: post-install,post-upgrade
     helm.sh/hook-delete-policy: hook-succeeded,before-hook-creation
 spec:
-  backoffLimit: 0
+  backoffLimit: 4
   template:
     spec:
       containers:
@@ -19,7 +19,9 @@ spec:
           args:
             - import
             - --config
-            - config/reference.yaml,config/config.yaml
+            - /data/config.yaml,/secret/config.yaml
+            - --mode
+            - update
             - --format
             - yaml
             - --input
@@ -34,17 +36,23 @@ spec:
             - mountPath: /import
               name: import
               readOnly: true
+            - mountPath: /secret
+              name: secret
+              readOnly: true
       volumes:
         - name: data
           configMap:
-            name: {{ .Release.Name }}-acp
+            name: {{ include "acp.configName" . }}
         - name: tls
           secret:
             secretName: {{ include "acp.fullname" . }}-tls
         - name: import
           configMap:
             name: {{ include "acp.fullname" . }}-import
-      restartPolicy: Never
+        - name: secret
+          secret:
+            secretName: {{ include "acp.secretConfig" . }}
+      restartPolicy: OnFailure
 ---
 apiVersion: v1
 kind: ConfigMap
