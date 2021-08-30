@@ -37,7 +37,7 @@ spec:
       volumes:
         - name: data
           configMap:
-            name: {{ .Release.Name }}-acp
+            name: {{ include "acp.configName" . }}
         - name: tls
           secret:
             secretName: {{ include "acp.fullname" . }}-tls
