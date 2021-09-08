@@ -12,20 +12,50 @@ spec:
   backoffLimit: 4
   template:
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: data
+          configMap:
+            name: {{ include "acp.configName" . }}
+        - name: tls
+          secret:
+            secretName: {{ include "acp.fullname" . }}-tls
+            defaultMode: 384
+        - name: import
+          configMap:
+            name: {{ include "acp.fullname" . }}-import
+        - name: secret
+          secret:
+            secretName: {{ include "acp.secretConfig" . }}
+      serviceAccountName: {{ include "acp.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
             - import
             - --config
-            - /data/config.yaml,/secret/config.yaml
+            - {{ join "," .Values.importJob.config }}
             - --mode
-            - update
+            - {{ .Values.importJob.mode }}
             - --format
-            - yaml
+            - {{ .Values.importJob.format }}
             - --input
-            - /import/seed.yaml
+            - {{ .Values.importJob.input }}
+            {{- with .Values.importJob.extraArgs }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+          {{- with .Values.env }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - mountPath: /data
               name: data
@@ -39,19 +69,20 @@ spec:
             - mountPath: /secret
               name: secret
               readOnly: true
-      volumes:
-        - name: data
-          configMap:
-            name: {{ include "acp.configName" . }}
-        - name: tls
-          secret:
-            secretName: {{ include "acp.fullname" . }}-tls
-        - name: import
-          configMap:
-            name: {{ include "acp.fullname" . }}-import
-        - name: secret
-          secret:
-            secretName: {{ include "acp.secretConfig" . }}
+          resources:
+            {{- toYaml .Values.importJob.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       restartPolicy: OnFailure
 ---
 apiVersion: v1

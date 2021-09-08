@@ -148,12 +148,25 @@ certManager:
 
 importJob:
   enabled: false
+  # path to config files
+  config:
+    - /data/config,yaml
+    - /secret/config.yaml
+  # import mode (update, fail, ignore)
+  mode: update
+  # input file format: yaml or json
+  format: yaml
+  # path to the input file
+  input: /import/seed.yaml
+  # extra args for import command
+  extraArgs: []
   # the data should match import configuration endpoint request body
   # https://docs.authorization.cloudentity.com/api/system/#operation/importConfiguration
   data:
     tenants: []
     servers: []
     clients: []
+  resources: {}
 
 ## Additional ACP config file from secret
 ##
