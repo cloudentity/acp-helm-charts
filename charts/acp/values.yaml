@@ -150,7 +150,7 @@ importJob:
   enabled: false
   # path to config files
   config:
-    - /data/config,yaml
+    - /data/config.yaml
     - /secret/config.yaml
   # import mode (update, fail, ignore)
   mode: update
