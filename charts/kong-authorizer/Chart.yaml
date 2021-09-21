@@ -1,0 +1,6 @@
+apiVersion: v2
+name: kong-authorizer
+description: A Helm chart for kong-authorizer
+type: application
+version: 0.9.0
+appVersion: "0.9.0"
