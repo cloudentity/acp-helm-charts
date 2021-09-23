@@ -21,7 +21,7 @@ data:
       url: "postgres://root@{{ .Release.Name }}-cockroachdb:26257/defaultdb?sslmode=disable"
       {{- end }}
     hazelcast:
-      {{- with .Values.redis }}
+      {{- with .Values.hazelcast }}
         {{- toYaml . | nindent 6 }}
       {{- else }}
       enabled: false
