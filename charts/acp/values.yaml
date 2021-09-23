@@ -48,7 +48,7 @@ args:
   - server
   - start
   - --config
-  - /data/config.yaml,/secret/config.yaml
+  - /data/config.yaml,/data/extraconfig.yaml,/secret/config.yaml
   - --demo
   - --metrics
   - --create-default-tenant
@@ -151,6 +151,7 @@ importJob:
   # path to config files
   config:
     - /data/config.yaml
+    - /data/extraconfig.yaml
     - /secret/config.yaml
   # import mode (update, fail, ignore)
   mode: update
@@ -168,15 +169,25 @@ importJob:
     clients: []
   resources: {}
 
-## Additional ACP config file from secret
-##
-secretConfig:
-  create: true
-
 ## Default ACP config file
 ##
 config:
   create: true
+  # the data should match acp configuration options
+  # https://docs.operations.cloudentity.com/reference/acp-configuration/
+  data:
+  #  logging:
+  #     level: debug
+
+## Additional ACP config file from secret
+##
+secretConfig:
+  create: true
+  # the data should match acp configuration options
+  # https://docs.operations.cloudentity.com/reference/acp-configuration/
+  data: {}
+  #  system:
+  #     secret: mysecret
 
 certificate:
   ## Dummy cert and key

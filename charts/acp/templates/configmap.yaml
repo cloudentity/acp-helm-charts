@@ -16,15 +16,19 @@ data:
       {{- end }}
     sql:
       {{- with .Values.sql }}
-      {{- toYaml . | nindent 6 }}
+        {{- toYaml . | nindent 6 }}
       {{- else }}
       url: "postgres://root@{{ .Release.Name }}-cockroachdb:26257/defaultdb?sslmode=disable"
       {{- end }}
     hazelcast:
+      {{- with .Values.redis }}
+        {{- toYaml . | nindent 6 }}
+      {{- else }}
       enabled: false
+      {{- end }}
     redis:
       {{- with .Values.redis }}
-      {{- toYaml . | nindent 6 }}
+        {{- toYaml . | nindent 6 }}
       {{- else }}
       enabled: true
       addrs:
@@ -33,5 +37,9 @@ data:
     {{- with .Values.features }}
     features:
       {{- toYaml . | nindent 6 }}
+    {{- end }}
+  extraconfig.yaml: |
+    {{- with .Values.config.data }}
+      {{- toYaml . | nindent 4 }}
     {{- end }}
 {{- end }}
