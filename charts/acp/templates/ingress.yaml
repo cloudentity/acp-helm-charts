@@ -1,6 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "acp.fullname" . -}}
-{{- $svcPort := .Values.service.port -}}
+{{- $svcPort := include "acp.portNumber" . -}}
 {{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1beta1
 {{- else -}}
@@ -11,10 +11,26 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- include "acp.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
   annotations:
+    kubernetes.io/ingress.class: nginx
+    {{- if .Values.tlsDisabled }}
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    {{- else }}
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    {{- end }}
+    nginx.ingress.kubernetes.io/proxy-ssl-ciphers: "EECDH+AESGCM:EDH+AESGCM"
+    nginx.ingress.kubernetes.io/proxy-ssl-protocols: "TLSv1.2"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "8k"
+    nginx.ingress.kubernetes.io/ssl-ciphers: "EECDH+AESGCM:EDH+AESGCM"
+    nginx.ingress.kubernetes.io/server-snippet: |
+      ssl_verify_client optional_no_ca;
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header X-SSL-CERT $ssl_client_escaped_cert;
+    {{- with .Values.ingress.customAnnotations }}
     {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- end }}
 spec:
   {{- if .Values.ingress.tls }}
   tls:

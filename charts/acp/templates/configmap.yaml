@@ -14,6 +14,10 @@ data:
         cert_path: "/tls/tls.crt"
         key_path: "/tls/tls.key"
       {{- end }}
+      {{- if .Values.tlsDisabled }}
+      dangerous_disable_tls: true
+      {{- end }}
+      port: {{ include "acp.portNumber" . }}
     sql:
       {{- with .Values.sql }}
         {{- toYaml . | nindent 6 }}
