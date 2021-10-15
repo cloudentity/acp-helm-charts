@@ -82,3 +82,14 @@ Create the name of the config to use
 {{- default "default" .Values.config.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the port number to use
+*/}}
+{{- define "acp.portNumber" -}}
+{{- if .Values.tlsDisabled }}
+{{- default 8080 }}
+{{- else }}
+{{- default 8443 }}
+{{- end }}
+{{- end }}

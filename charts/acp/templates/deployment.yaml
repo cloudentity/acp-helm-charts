@@ -58,13 +58,17 @@ spec:
           {{- end }}
           ports:
             - name: http
-              containerPort: 8443
+              containerPort: {{ include "acp.portNumber" . }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /alive
+              {{- if .Values.tlsDisabled }}
+              scheme: HTTP
+              {{- else }}
               scheme: HTTPS
-              port: 8443
+              {{- end }}
+              port: {{ include "acp.portNumber" . }}
             initialDelaySeconds: 3
             failureThreshold: 1
             periodSeconds: 10
@@ -72,16 +76,24 @@ spec:
           startupProbe:
             httpGet:
               path: /alive
+              {{- if .Values.tlsDisabled }}
+              scheme: HTTP
+              {{- else }}
               scheme: HTTPS
-              port: 8443
+              {{- end }}
+              port: {{ include "acp.portNumber" . }}
             failureThreshold: 10
             periodSeconds: 10
             timeoutSeconds: 10
           readinessProbe:
             httpGet:
               path: /alive
+              {{- if .Values.tlsDisabled }}
+              scheme: HTTP
+              {{- else }}
               scheme: HTTPS
-              port: 8443
+              {{- end }}
+              port: {{ include "acp.portNumber" . }}
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 10
