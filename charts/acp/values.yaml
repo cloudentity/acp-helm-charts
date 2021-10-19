@@ -129,6 +129,10 @@ features:
 ##
 certManager:
   enabled: false
+  privateKey:
+    size: 4096
+  issuerRef:
+    kind: ClusterIssuer
 
 ## Disables TLS in ACP
 ##
