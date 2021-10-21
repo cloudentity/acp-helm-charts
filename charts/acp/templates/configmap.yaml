@@ -18,6 +18,7 @@ data:
       dangerous_disable_tls: true
       {{- end }}
       port: {{ include "acp.portNumber" . }}
+      client_certificate_header: "X-SSL-CERT"
     sql:
       {{- with .Values.sql }}
         {{- toYaml . | nindent 6 }}
