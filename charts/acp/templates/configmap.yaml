@@ -19,6 +19,10 @@ data:
       {{- end }}
       port: {{ include "acp.portNumber" . }}
       client_certificate_header: "X-SSL-CERT"
+      {{- if .Values.tlsDisabled }}
+      security:
+        sslredirect: false
+      {{- end }}
     sql:
       {{- with .Values.sql }}
         {{- toYaml . | nindent 6 }}
