@@ -6,9 +6,9 @@ metadata:
   annotations:
      {{ toYaml .annotations | indent 8 }}
 spec:
-  version: 1
+  version: {{ .version }}
   imagepullsecret: {{ .imagepullsecret }}
-  poolsize: 3
+  poolsize: {{ .pollsize }}
   terminationGracePeriod: 1
   runtime:
     image: {{ .image }}
@@ -17,23 +17,16 @@ spec:
         - name: {{ .name }}
           imagePullPolicy: {{ .imagePullPolicy }}
       affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: fission
-                    operator: In
-                    values:
-                      - "true"
+        {{- with .affinity }}
+          {{- toYaml . | nindent 4 }}
+        {{- end }}
       tolerations:
-        - key: fission
-          value: "true"
-          effect: NoSchedule
+      {{- with .tolerations }}
+          {{ toYaml . | nindent 8 }}
+      {{- end }}
   resources:
-    requests:
-      cpu: 10m
-      memory: 48Mi
-    limits:
-      cpu: 100m
-      memory: 96Mi
+    {{- with .resources }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+
 {{- end }}

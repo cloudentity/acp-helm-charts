@@ -245,31 +245,118 @@ fission:
     annotations: {
       cluster-autoscaler.kubernetes.io/safe-to-evict: true
     }
-      
+    version: 1
     imagepullsecret: "artifactory"
+    pollsize: 3
     image: docker.cloudentity.io/node-env:latest
     imagePullPolicy: Always
-    
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: fission
+                  operator: In
+                  values:
+                    - "true"
+    tolerations:
+      - key: fission
+        value: "true"
+        effect: NoSchedule
+    resources:
+      requests:
+        cpu: 10m
+        memory: 48Mi
+      limits:
+        cpu: 100m
+        memory: 96Mi
+
     annotations: {
       cluster-autoscaler.kubernetes.io/safe-to-evict: true
     }
     name: rego
+    version: 1
     imagepullsecret: "artifactory"
+    pollsize: 3
     image: docker.cloudentity.io/rego-env:latest
     imagePullPolicy: Always
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: fission
+                  operator: In
+                  values:
+                    - "true"
+    tolerations:
+      - key: fission
+        value: "true"
+        effect: NoSchedule
+    resources:
+      requests:
+        cpu: 10m
+        memory: 16Mi
+      limits:
+        cpu: 100m
+        memory: 32Mi
 
     annotations: {
       cluster-autoscaler.kubernetes.io/safe-to-evict: true
     }
     name: nodejs-v2
+    version: 1
     imagepullsecret: "artifactory"
+    pollsize: 3
     image: docker.cloudentity.io/rego-env-v2:latest
     imagePullPolicy: Always
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: fission
+                  operator: In
+                  values:
+                    - "true"
+    tolerations:
+      - key: fission
+        value: "true"
+        effect: NoSchedule
+    resources:
+      requests:
+        cpu: 10m
+        memory: 48Mi
+      limits:
+        cpu: 100m
+        memory: 96Mi
 
     annotations: {
       cluster-autoscaler.kubernetes.io/safe-to-evict: true
     }
     name: rego-v2
+    version: 1
     imagepullsecret: "artifactory"
+    pollsize: 3
     image: docker.cloudentity.io/rego-env-v2:latest
     imagePullPolicy: Always
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: fission
+                  operator: In
+                  values:
+                    - "true"
+    tolerations:
+      - key: fission
+        value: "true"
+        effect: NoSchedule
+    resources:
+      requests:
+        cpu: 10m
+        memory: 16Mi
+      limits:
+        cpu: 100m
+        memory: 32Mi
