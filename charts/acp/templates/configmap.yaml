@@ -41,7 +41,7 @@ data:
       {{- else }}
       enabled: true
       addrs:
-      - "{{ .Release.Name }}-redis-master:6379"
+      - "{{ .Release.Name }}-redis-cluster:6379"
       {{- end }}
     {{- with .Values.features }}
     features:
