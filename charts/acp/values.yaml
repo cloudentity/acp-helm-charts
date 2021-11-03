@@ -238,3 +238,38 @@ certificate:
     U78GmaVTXcGTrMt8QBt6fFUVbVpuW2Cf/aDH/6UelkwsobZaWQy58d2Nv0NSkguO
     DbIu9KRAOP+2TVg8uTYg1Y+PqAuAbQAauYpc+wb48EbMgXx1a294fuI=
     -----END RSA PRIVATE KEY-----
+
+
+fission:
+  environments:
+    annotations: {
+      cluster-autoscaler.kubernetes.io/safe-to-evict: true
+    }
+      
+    imagepullsecret: "artifactory"
+    image: docker.cloudentity.io/node-env:latest
+    imagePullPolicy: Always
+    
+    annotations: {
+      cluster-autoscaler.kubernetes.io/safe-to-evict: true
+    }
+    name: rego
+    imagepullsecret: "artifactory"
+    image: docker.cloudentity.io/rego-env:latest
+    imagePullPolicy: Always
+
+    annotations: {
+      cluster-autoscaler.kubernetes.io/safe-to-evict: true
+    }
+    name: nodejs-v2
+    imagepullsecret: "artifactory"
+    image: docker.cloudentity.io/rego-env-v2:latest
+    imagePullPolicy: Always
+
+    annotations: {
+      cluster-autoscaler.kubernetes.io/safe-to-evict: true
+    }
+    name: rego-v2
+    imagepullsecret: "artifactory"
+    image: docker.cloudentity.io/rego-env-v2:latest
+    imagePullPolicy: Always

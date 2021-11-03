@@ -1,0 +1,39 @@
+{{- with .Values.fission.environments }}
+apiVersion: fission.io/v1
+kind: Environment
+metadata:
+  name: {{ .name }}
+  annotations:
+     {{ toYaml .annotations | indent 8 }}
+spec:
+  version: 1
+  imagepullsecret: {{ .imagepullsecret }}
+  poolsize: 3
+  terminationGracePeriod: 1
+  runtime:
+    image: {{ .image }}
+    podspec:
+      containers:
+        - name: {{ .name }}
+          imagePullPolicy: {{ .imagePullPolicy }}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: fission
+                    operator: In
+                    values:
+                      - "true"
+      tolerations:
+        - key: fission
+          value: "true"
+          effect: NoSchedule
+  resources:
+    requests:
+      cpu: 10m
+      memory: 48Mi
+    limits:
+      cpu: 100m
+      memory: 96Mi
+{{- end }}
