@@ -64,7 +64,7 @@ _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documen
 
 ### From 0.14.x to 0.15.x
 
-Dependency redis helm chart was replaced by redis-cluster helm chart. The old redis instances will be destroyed in favour of new redis-cluster. Data migration is not supported but can me done manually which is out of the scope of this chart.
+Dependency redis helm chart was replaced by redis-cluster helm chart. The old redis instances will be destroyed in favour of new redis-cluster. Data migration is not supported but could be done manually which is out of the scope of this chart.
 
 ### From 0.6.x to 0.7.x
 
