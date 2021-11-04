@@ -1,32 +1,31 @@
-{{- with .Values.fission.environments }}
+{{- range $environments := .Values.fission.environments }}
+
 apiVersion: fission.io/v1
 kind: Environment
 metadata:
-  name: {{ .name }}
+  name: {{ $environments.name }}
   annotations:
-     {{ toYaml .annotations | indent 8 }}
 spec:
-  version: {{ .version }}
-  imagepullsecret: {{ .imagepullsecret }}
-  poolsize: {{ .pollsize }}
+  version: {{ $environments.version }}
+  imagepullsecret: {{ $environments.imagepullsecret }}
+  poolsize: {{ $environments.pollsize }}
   terminationGracePeriod: 1
   runtime:
-    image: {{ .image }}
+    image: {{ $environments.image }}
     podspec:
       containers:
-        - name: {{ .name }}
-          imagePullPolicy: {{ .imagePullPolicy }}
+        - name: {{ $environments.name }}
+          imagePullPolicy: {{ $environments.imagePullPolicy }}
       affinity:
-        {{- with .affinity }}
+        {{- with $environments.affinity }}
           {{- toYaml . | nindent 4 }}
         {{- end }}
       tolerations:
-      {{- with .tolerations }}
+      {{- with $environments.tolerations }}
           {{ toYaml . | nindent 8 }}
       {{- end }}
   resources:
-    {{- with .resources }}
+    {{- with $environments.resources }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
-
 {{- end }}
