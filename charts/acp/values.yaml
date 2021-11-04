@@ -239,16 +239,55 @@ certificate:
     DbIu9KRAOP+2TVg8uTYg1Y+PqAuAbQAauYpc+wb48EbMgXx1a294fuI=
     -----END RSA PRIVATE KEY-----
 
+## Fission chart configuration
+##
 fission:
-  environments:
-    - name: nodejs
-      version: 1
-      pollsize: 3
-      image: docker pull fission/node-env:latest
-      imagePullPolicy: Always
-    - name: rego
-      version: 1
-      imagepullsecret: "artifactory"
-      pollsize: 3
-      image: docker.cloudentity.io/rego-env:latest3
-      imagePullPolicy: Always
+  ## Enables the Fission for ACP
+  ##
+  enabled: false
+
+  ## Define namespace where the Fission Environment can be deployed
+  ##
+  namespace: acp-saas
+
+  ## Annotations to add to the Environment resource created for Fission
+  annotations: []
+  # cluster-autoscaler.kubernetes.io/safe-to-evict: true
+
+  ## Define the pool size
+  ##
+  poolsize: 3
+  
+  ## Specify a imagePullPolicy
+  ##
+  imagePullPolicy: IfNotPresent
+
+  ## Docker registry secret name
+  ##
+  imagepullsecret: artifactory
+
+  ## Affinity for pod assignment
+  affinity: [] 
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #         - matchExpressions:
+  #             - key: fission
+  #               operator: In
+  #              values:
+  #                 - "true"  
+
+  ## Tolerations for pod assignment
+  tolerations: []
+  # - key: fission
+  #   value: "true"
+  #   effect: NoSchedule
+
+  ## Pod resources definition
+  resources: {}
+  #   requests:
+  #     cpu: 10m
+  #     memory: 48Mi
+  #   limits:
+  #     cpu: 100m
+  #     memory: 96Mi

@@ -18,7 +18,7 @@ dependencies:
   version: "0.15.0"
   repository: https://charts.cloudentity.io
   condition: acp.enabled
-- name: fission
+- name: fission-core
   version: "1.14.1"
   repository: https://fission.github.io/fission-charts/
-  condition: fission.enabled
+  condition: fission-core.enabled
