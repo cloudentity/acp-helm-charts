@@ -1,9 +1,9 @@
 acp:
   enabled: true
-  secretConfig:
-    data:
-      redis:
-        password: p@ssw0rd!
+    #  secretConfig:
+    #    data:
+    #      redis:
+    #        password: p@ssw0rd!
 cockroachdb:
   enabled: true
 redis-cluster:
@@ -11,8 +11,9 @@ redis-cluster:
   cluster:
     nodes: 3
     replicas: 0
+  usePassword: false
+    #    password: p@ssw0rd!
   redis:
-    password: p@ssw0rd!
     configmap: |
       loadmodule /redismodules/redisearch.so
     initContainers:
