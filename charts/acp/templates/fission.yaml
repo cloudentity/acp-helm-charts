@@ -4,7 +4,10 @@ apiVersion: fission.io/v1
 kind: Environment
 metadata:
   name: {{ $environments.name }}
+    {{- with $environments.annotations }}
   annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   version: {{ $environments.version }}
   imagepullsecret: {{ $environments.imagepullsecret }}
@@ -16,16 +19,16 @@ spec:
       containers:
         - name: {{ $environments.name }}
           imagePullPolicy: {{ $environments.imagePullPolicy }}
+      {{- with $environments.affinity }}
       affinity:
-        {{- with $environments.affinity }}
-          {{- toYaml . | nindent 4 }}
-        {{- end }}
-      tolerations:
-      {{- with $environments.tolerations }}
-          {{ toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
-  resources:
+      {{- with $environments.tolerations }}
+      tolerations:
+          {{- toYaml . | nindent 8 }}
+      {{- end }}
     {{- with $environments.resources }}
+    resources:
       {{- toYaml . | nindent 4 }}
     {{- end }}
 {{- end }}

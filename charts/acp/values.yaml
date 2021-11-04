@@ -239,61 +239,16 @@ certificate:
     DbIu9KRAOP+2TVg8uTYg1Y+PqAuAbQAauYpc+wb48EbMgXx1a294fuI=
     -----END RSA PRIVATE KEY-----
 
-
 fission:
   environments:
     - name: nodejs
-      annotations:
       version: 1
-      imagepullsecret: "artifactory"
       pollsize: 3
       image: docker pull fission/node-env:latest
       imagePullPolicy: Always
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: fission
-                    operator: In
-                    values:
-                      - "true"
-      tolerations:
-        - key: fission
-          value: "true"
-          effect: NoSchedule
-      resources:
-        requests:
-          cpu: 10m
-          memory: 48Mi
-        limits:
-          cpu: 100m
-          memory: 96Mi
-
     - name: rego
-      annotations:
       version: 1
       imagepullsecret: "artifactory"
       pollsize: 3
-      image: docker.cloudentity.io/rego-env:latest
+      image: docker.cloudentity.io/rego-env:latest3
       imagePullPolicy: Always
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: fission
-                    operator: In
-                    values:
-                      - "true"
-      tolerations:
-        - key: fission
-          value: "true"
-          effect: NoSchedule
-      resources:
-        requests:
-          cpu: 10m
-          memory: 16Mi
-        limits:
-          cpu: 100m
-          memory: 32Mi
