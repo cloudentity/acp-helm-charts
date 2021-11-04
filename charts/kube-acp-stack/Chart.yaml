@@ -16,6 +16,5 @@ dependencies:
   condition: redis-cluster.enabled
 - name: acp
   version: "0.15.0"
-    #repository: https://charts.cloudentity.io
-  repository: file://../acp
+  repository: https://charts.cloudentity.io
   condition: acp.enabled
