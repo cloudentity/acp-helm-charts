@@ -70,7 +70,7 @@ ACP defines Pod that uses a Secret to pull an image from a private Docker regist
 To manually configure Docker credentials, first createreate a Secret by providing credentials on the command line:
 
 ```console
-kubectl create secret docker-registry artifactory --docker-server=acp.artifactory.cloudentity.com --docker-username=<your-name> --docker-password=<your-password>
+kubectl create secret docker-registry artifactory --docker-server=docker.cloudentity.io --docker-username=<your-name> --docker-password=<your-password>
 ```
 
 ### RBAC Configuration

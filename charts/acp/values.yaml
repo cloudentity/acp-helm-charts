@@ -3,7 +3,7 @@
 image:
   ## Image repository
   ##
-  repository: acp.artifactory.cloudentity.com/acp
+  repository: docker.cloudentity.io/acp
 
   ## Image pull policy
   ##
