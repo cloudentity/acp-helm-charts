@@ -3,7 +3,7 @@
 image:
   ## Image repository
   ##
-  repository: acp.artifactory.cloudentity.com/acp
+  repository: docker.cloudentity.io/acp
 
   ## Image pull policy
   ##
@@ -244,15 +244,15 @@ certificate:
 fission:
   ## Enables the Fission for ACP
   ##
-  enabled: false
+  enabled: true
 
   ## Define namespace where the Fission Environment can be deployed
   ##
-  namespace: acp-saas
+  namespace: acp-faas
 
   ## Annotations to add to the Environment resource created for Fission
-  annotations: []
-  # cluster-autoscaler.kubernetes.io/safe-to-evict: true
+  annotations: {}
+  # cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
 
   ## Define the pool size
   ##
@@ -267,7 +267,7 @@ fission:
   imagepullsecret: artifactory
 
   ## Affinity for pod assignment
-  affinity: [] 
+  affinity: {} 
   #   nodeAffinity:
   #     requiredDuringSchedulingIgnoredDuringExecution:
   #       nodeSelectorTerms:
