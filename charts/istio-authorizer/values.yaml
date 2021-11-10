@@ -16,7 +16,7 @@ image:
 ## istio-authorizer image registry secret names as an array
 ##
 imagePullSecrets:
-  - name: artifactory
+  - name: docker.cloudentity.io
 
 ## String to fully override istio-authorizer.fullname
 ##

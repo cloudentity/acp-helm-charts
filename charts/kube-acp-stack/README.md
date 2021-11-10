@@ -52,7 +52,6 @@ This removes all the Kubernetes components associated with the chart and deletes
 
 _See [helm uninstall](https://helm.sh/docs/helm/helm_uninstall/) for command documentation._
 
-
 ## Upgrading Chart
 
 ```console
@@ -61,6 +60,12 @@ $ helm upgrade [RELEASE_NAME] acp/kube-acp-stack
 ```
 
 _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
+
+### From 0.15.0 to 0.15.1
+
+Version 0.15.1 of ACP kube stack helm chart uses `docker.cloudentity.io` as the secret name referencing Cloudentity registry.
+If you're using the `artifactory` and haven't overridden `imagePullSecrets` before, you have to create a new secret with the name `docker.cloudentity.io`
+See [Docker Pull Credentials](#docker-pull-credentials).
 
 ### From 0.14.x to 0.15.x
 
@@ -85,8 +90,8 @@ helm show values acp/kube-acp-stack
 You may also `helm show values` on this chart's [dependencies](#dependencies) for additional options.
 
 ## Work-Arounds for Known Issues
-TBD
 
+TBD
 
 ## Further Information
 

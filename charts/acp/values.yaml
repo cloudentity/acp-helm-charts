@@ -16,7 +16,7 @@ image:
 ## Global Docker registry secret names as an array
 ##
 imagePullSecrets:
-  - name: artifactory
+  - name: docker.cloudentity.io
 
 ## Public ACP URL
 ##
