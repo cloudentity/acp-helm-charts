@@ -49,6 +49,12 @@ $ helm upgrade [RELEASE_NAME] [CHART] --install
 
 _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
 
+### From 1.15.x to 1.16.x
+
+Version 1.16.0 of istio authorizer helm chart uses `docker.cloudentity.io` as the secret name referencing Cloudentity registry.
+If you're using the `artifactory` and haven't overridden `imagePullSecrets` before, you have to create a new secret with the name `docker.cloudentity.io`
+See [Docker Pull Credentials](#docker-pull-credentials).
+
 ## Configuration
 
 See [Customizing the Chart Before Installing](https://helm.sh/docs/intro/using_helm/#customizing-the-chart-before-installing). To see all configurable options with detailed comments, visit the chart's [values.yaml](./values.yaml), or run these configuration commands:
