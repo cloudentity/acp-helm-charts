@@ -51,7 +51,7 @@ _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documen
 
 ### From 0.15.x to 0.16.x
 
-Version 1.16.0 of ACP helm chart uses `docker.cloudentity.io` as the secret name referencing Cloudentity registry.
+Version 0.16.0 of ACP helm chart uses `docker.cloudentity.io` as the secret name referencing Cloudentity registry.
 If you're using the `artifactory` and haven't overridden `imagePullSecrets` before, you have to create a new secret with the name `docker.cloudentity.io`
 See [Docker Pull Credentials](#docker-pull-credentials).
 
