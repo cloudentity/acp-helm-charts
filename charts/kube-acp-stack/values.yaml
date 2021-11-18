@@ -1,10 +1,43 @@
-cockroachdb:
-  enabled: true
-redis:
-  enabled: true
-  auth:
-    enabled: false
 acp:
   enabled: true
+  secretConfig:
+    data:
+      redis:
+        password: p@ssw0rd!
+  config:
+    data:
+      redis:
+        redis_search: true
+cockroachdb:
+  enabled: true
+  tls:
+    enabled: false
+redis-cluster:
+  enabled: true
+  cluster:
+    nodes: 3
+    replicas: 0
+  password: p@ssw0rd!
+  redis:
+    configmap: |
+      loadmodule /redismodules/redisearch.so
+    initContainers:
+      - name: redisearch
+        image: redislabs/redisearch:2.2.0
+        command:
+          [
+            "sh",
+            "-c",
+            "cp /usr/lib/redis/modules/redisearch.so /redismodules/redisearch.so",
+          ]
+        volumeMounts:
+          - mountPath: /redismodules
+            name: redismodules
+    extraVolumes:
+      - name: redismodules
+        emptyDir: {}
+    extraVolumeMounts:
+      - mountPath: /redismodules
+        name: redismodules
 fission-core:
   enabled: true

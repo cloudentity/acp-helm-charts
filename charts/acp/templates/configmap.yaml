@@ -27,7 +27,7 @@ data:
       {{- with .Values.sql }}
         {{- toYaml . | nindent 6 }}
       {{- else }}
-      url: "postgres://root@{{ .Release.Name }}-cockroachdb:26257/defaultdb?sslmode=disable"
+      url: "postgres://root@{{ .Release.Name }}-cockroachdb-public:26257/defaultdb?sslmode=disable"
       {{- end }}
     hazelcast:
       {{- with .Values.hazelcast }}
@@ -41,7 +41,9 @@ data:
       {{- else }}
       enabled: true
       addrs:
-      - "{{ .Release.Name }}-redis-master:6379"
+      - "{{ .Release.Name }}-redis-cluster-0.{{ .Release.Name }}-redis-cluster-headless:6379"
+      - "{{ .Release.Name }}-redis-cluster-1.{{ .Release.Name }}-redis-cluster-headless:6379"
+      - "{{ .Release.Name }}-redis-cluster-2.{{ .Release.Name }}-redis-cluster-headless:6379"
       {{- end }}
     {{- with .Values.features }}
     features:

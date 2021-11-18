@@ -1,6 +1,6 @@
 # kube-acp-stack
 
-Installs the [acp](https://github.com/cloudentity/acp-helm-charts/tree/master/charts/acp), a collection of Kubernetes manifests, [CockroachDB](https://www.cockroachlabs.com/) open source, cloud-native distributed SQL database, and [Hazelcast](https://hazelcast.com/) in-memory data grid combined with documentation and scripts to provide easy to operate end-to-end Authorization Control Plane cluster.
+Installs the [acp](https://github.com/cloudentity/acp-helm-charts/tree/master/charts/acp), a collection of Kubernetes manifests, [CockroachDB](https://www.cockroachlabs.com/) open source, cloud-native distributed SQL database, and [Redis](https://redis.io/) in-memory data grid combined with documentation and scripts to provide easy to operate end-to-end Authorization Control Plane cluster.
 
 See the [acp](https://github.com/cloudentity/acp-helm-charts/tree/master/charts/acp) README for details about components, capabilities of OAuth/OIDC server with an advanced authorization, consent management, and developer enablement.
 
@@ -35,7 +35,7 @@ By default this chart installs additional, dependent charts:
 
 - [acp/acp](https://github.com/cloudentity/acp-helm-charts/tree/master/charts/acp)
 - [cockroachdb/cockroachdb](https://github.com/cockroachdb/helm-charts/tree/master/cockroachdb)
-- [hazelcast/hazelcast](https://github.com/hazelcast/charts/tree/master/stable/hazelcast)
+- [redis-cluster/redis-cluster](https://github.com/bitnami/charts/tree/master/bitnami/redis-cluster)
 
 To disable dependencies during installation, see [multiple releases](#multiple-releases) below.
 
@@ -52,7 +52,6 @@ This removes all the Kubernetes components associated with the chart and deletes
 
 _See [helm uninstall](https://helm.sh/docs/helm/helm_uninstall/) for command documentation._
 
-
 ## Upgrading Chart
 
 ```console
@@ -61,6 +60,16 @@ $ helm upgrade [RELEASE_NAME] acp/kube-acp-stack
 ```
 
 _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
+
+### From 0.15.0 to 0.15.1
+
+Version 0.15.1 of ACP kube stack helm chart uses `docker.cloudentity.io` as the secret name referencing Cloudentity registry.
+If you're using the `artifactory` and haven't overridden `imagePullSecrets` before, you have to create a new secret with the name `docker.cloudentity.io`
+See [Docker Pull Credentials](#docker-pull-credentials).
+
+### From 0.14.x to 0.15.x
+
+Dependency redis helm chart was replaced by redis-cluster helm chart. The old redis instances will be destroyed in favour of new redis-cluster. Data migration is not supported but could be done manually which is out of the scope of this chart.
 
 ### From 0.6.x to 0.7.x
 
@@ -81,8 +90,8 @@ helm show values acp/kube-acp-stack
 You may also `helm show values` on this chart's [dependencies](#dependencies) for additional options.
 
 ## Work-Arounds for Known Issues
-TBD
 
+TBD
 
 ## Further Information
 
@@ -90,4 +99,4 @@ For more in-depth documentation of configuration options meanings, please see
 
 - [ACP](https://github.com/cloudentity/acp-helm-charts)
 - [CockroachDB](https://github.com/cockroachdb/helm-charts)
-- [Hazelcast](https://github.com/hazelcast/charts)
+- [redis-cluster](https://github.com/bitnami/charts)
