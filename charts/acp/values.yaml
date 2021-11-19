@@ -81,10 +81,107 @@ ingress:
 
   ## Ingress TLS configuration
   ## Secrets must be manually created in the namespace
+  ## or automatically using `tlsSecrets` variable
   tls: []
-  #  - secretName: acp-tls
+  #  - secretName: ingress-tls
   #    hosts:
-  #      - acp.domain.com
+  #      - acp.acp-system
+
+  ## Ingress TLS secrets
+  ## List of certificates to be created for Ingress
+  tlsSecrets: []
+  # - name: ingress-tls
+  #   cert: |
+  #     -----BEGIN CERTIFICATE-----
+  #     MIIF0TCCA7mgAwIBAgIURZQXkBj00t1NPANZDmbBvVv7jSgwDQYJKoZIhvcNAQEL
+  #     BQAweDELMAkGA1UEBhMCVVMxEzARBgNVBAgMCldhc2hpbmd0b24xEDAOBgNVBAcM
+  #     B1NlYXR0bGUxFDASBgNVBAoMC0Nsb3VkZW50aXR5MRMwEQYDVQQLDApPcGVyYXRp
+  #     b25zMRcwFQYDVQQDDA5hY3AuYWNwLXN5c3RlbTAeFw0yMTExMTkwODEzMTRaFw0z
+  #     MTExMTcwODEzMTRaMHgxCzAJBgNVBAYTAlVTMRMwEQYDVQQIDApXYXNoaW5ndG9u
+  #     MRAwDgYDVQQHDAdTZWF0dGxlMRQwEgYDVQQKDAtDbG91ZGVudGl0eTETMBEGA1UE
+  #     CwwKT3BlcmF0aW9uczEXMBUGA1UEAwwOYWNwLmFjcC1zeXN0ZW0wggIiMA0GCSqG
+  #     SIb3DQEBAQUAA4ICDwAwggIKAoICAQCkvZdNHTXwjVUp60SisvIpabD5mpT0ot5k
+  #     IxECbzkoE14+kaHyIOt7u28FuTtGO8KMjaBsxD4KZ6ot5Mm7t/BZdDmCdPLJzIfu
+  #     OIqG/j1eguaacHM4sMQqyipzlDbn0VAtpAsQBHyiZoaTKQH3AtqFOLfCg03MUqy7
+  #     jRAJLBwg55AuVyQCjUZlMyzDk62lO4SgR96YjO7b8Dj1ne0i0ouRpinDWfJGsZqT
+  #     kEPUh+VKASNPn7jrCMSo0TpkNi0mmmDwiAfcjxjy+gW9acvvEezHt4zpRRCQL6lJ
+  #     mo/g5KhsLr1blwe8lCOManZqqKwk5tokOApOWsLWILraJbQIU8w5Nwx4IR9o/enk
+  #     Fx/o3gPUm4Me3GRS6Xm95HKBCje3KRyCI1Mzj9L9pVhYZThWX42Zf78AAdxYk5Oz
+  #     F2p5ryvHzaX25fuY/HXz82UCls69wlF9IJz45yxsYET9pvcL/X3Lf0j+eWTMaIDc
+  #     YKBONZPX+m4yvAzjOToFQtWmMcQt3v//zAV1Y+LDs1Ut9z0PFuHVC8lkGhc4D7Q2
+  #     oFycrzuTALv5akvFzF6MnrqB9jJc0CawiYsOvJRWEYP8TgDbXzlV200putxguKWe
+  #     OwkmX2N2KY1lNFV6QVRQSBShgCQDlQ+zq0l0CyPot4JF62HjRPc3kIGaoWx2dUTH
+  #     vG2pBmrHswIDAQABo1MwUTAdBgNVHQ4EFgQUepQBJIyqUslBTtv8Fsf/UCFi9Sow
+  #     HwYDVR0jBBgwFoAUepQBJIyqUslBTtv8Fsf/UCFi9SowDwYDVR0TAQH/BAUwAwEB
+  #     /zANBgkqhkiG9w0BAQsFAAOCAgEAUK79JNoBeAM/TKAfM0V73NrzIzgnqoKVGBS+
+  #     8KW4D0PvbqX0SfYSF5Ub8YYLiYT0ueTimt8p+FjrAaULxgy7m3CBRhOXz3I5TQYs
+  #     CNah4zvy4v7oYlp2lf2yDjd0u3txyVo5Z+PBTMQL512TXpT+I9Be1c9h7w6Hdo0G
+  #     GoXeUnMKa3N/rJsson5HwWr6qR5MSyw6TtQXA0ettgcmLgbD8CXZKLm+9PmEyEBM
+  #     ytY5TCQgUVJbna7M8W5w+0ub1Akr9K5XaluBpyU8sbh8T4s8VJcYja84I1mzhulD
+  #     8UHKQ/gv3ccnGKKTAFrA/HzJZQO0b2KUENT0twdHdjC73uthP5RUefGBaCO/jSq6
+  #     +UTYbleNSLpnYlbhgYffjYIP+/ikQueNX4Fv85aTTvjkJB8beGnTF0NgNAxfCSUD
+  #     o48UMTRpBgCAs/pnsDUwKOEHYRnvzBFBu9MFv15Gg+GtEj1ANZN199HWmDKLnNm7
+  #     gWz/WYxr+qwex3qzDD0Nwtg1iQTne1JWnY5yHi3JWo8hVUrolmjv1t/MUh+iHxpE
+  #     sLCeWiLu2q1RW/AWBUaqUdh/yaxywU5ZcuZz/sGPoct35TnFGTJOg5bOz4FY1qDU
+  #     wWtmbbuosX6mh4jSl5PUSDmZ1oHA8I8Pz75w4FmklD1B6EjfmcKZHO0z/vC0UI5L
+  #     thTNKjM=
+  #     -----END CERTIFICATE-----
+  #   key: |
+  #     -----BEGIN ENCRYPTED PRIVATE KEY-----
+  #     MIIJnDBOBgkqhkiG9w0BBQ0wQTApBgkqhkiG9w0BBQwwHAQI22yDw/z6eNkCAggA
+  #     MAwGCCqGSIb3DQIJBQAwFAYIKoZIhvcNAwcECC9G5Yx7Z/AlBIIJSKKSJ+e6rN4W
+  #     jzXdcUizyGfvb0QMFNiMEj19xTwTViHqT0K3WwqGSIVP35O4QsuQSFVLZhi3aWxW
+  #     Y7webPGkRMhVxQlxGMtz5kJb7W8E49IF/E/0o0jKAWu2M9CkDocsNjR7HAvy7Pu4
+  #     I5tbGquw0VEO2El+dAiJ0tldbF/VNXm3fWvW3lZ6TBPon3uAOhughXDH5gr9615u
+  #     6G3NZpNS2JjAGPeks15juYSvX8zxNmj28H8njclKjKi6EV7urx6aGTn513wM3pJ/
+  #     C8fEkhjggbOFkhfwaKZX+9v3zKCcGEWHUkFacVdJ8Yg9LaNX9O7nnh7HOSxEsduO
+  #     716oeshYTtl8vwjo4h+PaEPCQOKNfELpjwVe0T4dS2YGF+VgBki3/af/Fgw8DkZq
+  #     UHELhEzWsXB/Rz1ydsbgAUZBOtFtYJbcmFxcCHT/Pm+C8/phQaQOHlIuMI9fh9Gh
+  #     HEMQiohXPsy+m3JNc0W++hFMFVPuNb/cSWVucM3XusdPGFlNNO7aqJMFzNejY7Vo
+  #     g1py6cIPOzhTutg4Fqb3upT+pxD6NNM1liUbXlb+PCgJ39AB0xd7rkkgi5PUDpAx
+  #     yAVH50/P8ALXvtIbbhMBCt+UaWBjvMEYLMnUnheM+r6+RnheNt4sBfCVKqoUBfOu
+  #     g9jVs2CPTLdFZ07vtuPHDwnjsi77up4rLVtXb0cJ1/a/mzpMZY18OzvQFnW8lvpA
+  #     w9vr12CsG4Xm3MtvgxefcKCS3A3YHj1QHLPlreNzMYPlFQzPb01d1mv2vvHl3N5u
+  #     Ym04L8yCoVOqTurzQl16zvTokh2xeHe/5k30WVCt5R+5IxcQVKEH9mj5wYfmdcRF
+  #     JrnwmS7v+KfqqNjldsvDbzoh+FPyIUmQvGjb7AQ0FZmOJZilCOx7vBrnmQT+iFP2
+  #     GGlQLAO0xUSce6ShWZOa1tan2kHm5tQZ9+IXXk5erjU7md0rcZBuNHXNaAWCL1rC
+  #     Dgk/6GpIEc7eAEe+95GPqdnBFqsKS2wyHn2sRcwznnRp1piH8FqXJAM6ULvqpKgW
+  #     z6MDX+7Mg175nCrgVrs93A7ModEwDpbqq/y5oNv67T7UpCW1LJ8O9oWRqIzadqXw
+  #     E0CPADycZ7vDg6Kb+ss5LxRnVOak6P4ZfMQJLJ/FvSirDd7ctxa6f3QFSY1/V6UH
+  #     /foTY2kChFxa8HqvMSDqr+v7UHiwbl1EQUD+5zsTg2swMHpkU4wSKS5yHzCxoHNy
+  #     lS5Pd3XXrz9gMWzRTs5/5UeiQFCmIVMZtBZjfYQMFxr6QOKWLkC5/6qdUEXEENmy
+  #     EeB/45mUh9g6MQUQ9rJnGagf4UumD37ZFn9vZYZfTI3d5R0G+daSBtQWC9TYyW1C
+  #     H232TM9X4Ko99mxIJmj4dNj1T8XGJxU3Yc7sQpjJnof/HJYi4HwApKbYW865lz5X
+  #     sI8txTGzmJFqRlg9kYttnadJ4nU3P+VM3bidBEC/N+F7TbLSYXnb50VA5ccizg0r
+  #     fBrTp/FxrpLPMC5sKhp7J05JxxBLZcQ6RSKREe0wIlQGyRD8iuNZoBbgBakM0Srq
+  #     qsA5Ajquu1/Ndt4XS2sgwvtdS1ZQrH9Am7RFIdg9oluVTZ4hAN9xeIncL3d85r0z
+  #     Pz+lJlIkN2O6lAwK4LZeLLBWr/idSLfJ/1zZIZgpZMj5//55GkLdgpXM7BAZpgJ1
+  #     vtECMX5vxlpe4qp1Av3CaDgQMN+MSl5trSIN3J4zNsJDX/vbdH3J7d7CfZ7hjqbj
+  #     GlM3iW0MdtmwAabL2uItHO29vEYn2RdSEC/QWpc0DCSPVQyXSxkAKLcozyUOpIry
+  #     cJLo+JTYLUA33aAMlzOFEKFwsgjZ34GnoQfZhWWTuqmUqpmYdK2QspMIKup6CYiy
+  #     /GyUNGBBskLXkSUF2urZwCLN3my4rcQrntuInXvRPEKN9rnaOJxz6S1zXXyzociE
+  #     Q8fXDrpN2XCw539eBtzxX7q5+UfwO4JzYI1sgkCS5mUmB0QflR07RWvn3hZ9oGpI
+  #     P8YyAdoYjcBn74zhV9gicO2jHH3yXCYqKmGInuFwS/bR6DkSyV/SSzFjsoApOygt
+  #     DBm/Pgd9GI3HO1OkEoUo/1+et0K4oFvvyCoP9lceB2rtbw6lCygMUWt0HsZQqjr8
+  #     XUsD18mq4sOselH6nUNcpxuBNEQNUwYhCXLhOTMRBYE/e/CeKRVcWSiI+BBc8gsj
+  #     iDpBlpWGyChTuNdJNQScUXKGEyHv5G0jkuPXYoqDaxIV7l1bcGS+f4j0eBLFcyUN
+  #     w/9vuxoNUkW5EEQrgth+4xDUYNdjz21RZ0r0OU2wQi0J0ehsoIiG9hxaQEBxChKU
+  #     5IEhfLDoZPMPTenXEpJpFhr7hmlCpOzxIx9bf49F6PEmRfS5ycgB/Ev0JMKesN3B
+  #     tXVRPAh1T63uG1S6c02CTXwjh3/YVv4fiAoth4aWJItWWvw31NZSDUUF0rqh3R3q
+  #     /QLlnu3taKmCOJ2LyqgoX0sl7hBVJLDHfaJnxjPS0RFYUmGvGuFPEyBvWARh0yKa
+  #     L52kS7mectxEUVS/4mm6ZxJXUO5U4d1BwnSPxdoUL6Sw8uH7u7IgSpYekPzQQPmy
+  #     JCaTEa+t9bsr0XGde/QdcY9V4v0Oc8brzSaV7X0E4QuhpuWqNNqMcVwoGA+bcKAy
+  #     bKUGzgPEtOB39XSStorrI3Kb8/r+CB1TsXBIRKqtZPTNZMEppBWwxTYnN8kENRRP
+  #     hG9n92UFy4w2gq6Xy1BssMXGWMRZjfu6DhRzW0rWGylsxW9tt1D/OhqXZFrlnRQi
+  #     eEGlIh8u056Lz5MLc6BfglLjGNj1lv8C+LpegMQBXsDJzmtEOZUkpP/oHfIlklI/
+  #     hjMggc8c6mXV9nxypIDwjLz05j8K1c4vRjXnpYYobUfyxYWTaOR7KfBlfQbAvGFS
+  #     51KGmX2TFlLf/5SYc5lKFMF2LdNHystQ3yTnMyR/NIkqHOUORWy6HCLVyzSfz72O
+  #     jgasMS29NNv8RsQ43Dp2cwlJ0Gq6PnP2y5/UuhN02UgjVVWMHJwY2vnHVq3F8Y7J
+  #     WfM2os6dfrXqIxYXzetM2OU6s5t/nLz+FVmsRuX1JuiOK08ELaGUwJbn4JWcFHhV
+  #     nXMN1awKFkzqu+1wqI+Fy8YpKGZ2SYOtcSZ8nmdiBpwqvVFa6U30rtKuzKZDbyVM
+  #     pYFJXDY2ce6SEoRzr/DgLw==
+  #     -----END ENCRYPTED PRIVATE KEY-----
+
 
 autoscaling:
   enabled: false
