@@ -250,6 +250,16 @@ fission:
   ##
   namespace: acp-faas
 
+  ## Define NetworkPolicy Egress rules for Fission deployment
+  ##
+  networkPolicy:
+    ipBlock:
+      cidr: 0.0.0.0/0
+      except: 
+        - 10.0.0.0/8
+        - 192.168.0.0/16
+        - 172.16.0.0/20
+
   ## Annotations to add to the Environment resource created for Fission
   annotations: {}
   # cluster-autoscaler.kubernetes.io/safe-to-evict: "true"

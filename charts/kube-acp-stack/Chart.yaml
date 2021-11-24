@@ -15,11 +15,7 @@ dependencies:
   repository: https://charts.bitnami.com/bitnami
   condition: redis-cluster.enabled
 - name: acp
-<<<<<<< HEAD
-  version: "0.15.1"
-=======
   version: "0.15.2"
->>>>>>> ba94835979ecd6ebeca5a5d959ee926965a8bba2
   repository: https://charts.cloudentity.io
   condition: acp.enabled
 - name: fission-core

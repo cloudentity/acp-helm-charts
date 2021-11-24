@@ -1,4 +1,22 @@
 {{- if .Values.fission.enabled -}}
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: only-allow-internet
+  namespace: {{ .Values.fission.namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector: {}
+  egress:
+    - to:
+        - ipBlock:
+            cidr: {{ .Values.fission.networkPolicy.ipBlock.cidr }}
+            {{- with .Values.fission.networkPolicy.ipBlock.except }}
+            except:
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
+---
 apiVersion: fission.io/v1
 kind: Environment
 metadata:
