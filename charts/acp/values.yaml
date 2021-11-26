@@ -274,7 +274,7 @@ fission:
 
   ## Docker registry secret name
   ##
-  imagepullsecret: artifactory
+  imagepullsecret: docker.cloudentity.io
 
   ## Affinity for pod assignment
   affinity: {} 
