@@ -24,7 +24,7 @@ serverURL: "https://acp.local:8443"
 
 ## String to partially override acp.name
 ##
-#nameOverride: ""
+# nameOverride: ""
 
 ## String to fully override acp.fullname
 ##
@@ -33,10 +33,16 @@ serverURL: "https://acp.local:8443"
 # Additional labels to apply to all Kubernetes resources created by this chart.
 labels: {}
 
+## Define serviceAccount
+##
 serviceAccount:
   ## Specifies whether a service account should be created
+  ##
+  
   create: true
+
   ## Annotations to add to the service account
+  ##
   annotations: {}
   ## The name of the service account to use.
   ## If not set and create is true, a name is generated using the fullname template
@@ -81,19 +87,36 @@ ingress:
 
   ## Ingress TLS configuration
   ## Secrets must be manually created in the namespace
+  ##
   tls: []
   #  - secretName: acp-tls
   #    hosts:
   #      - acp.domain.com
 
+## Deployment annotations
+##
+# annotations: {}
+
+## Autoscaling parameters
+##
 autoscaling:
+  ## Enable autoscaling
+  ##
   enabled: false
 
 ## Number of ACP replicas to deploy
 ##
 replicaCount: 1
 
-## acp resource requests and limits
+## Pod annotations
+##
+# podAnnotations: {}
+
+## Pod security context
+##
+# podSecurityContext: {}
+
+## Acp resource requests and limits
 ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
 ##
 resources: {}
@@ -103,27 +126,84 @@ resources: {}
 securityContext:
   runAsUser: 0
 
-# ACP feature flags
+## ACP feature flags
+##
 features:
-  integration_endpoints: false # enables import, export, global accept, deny, introspect endpoints
-  dev_mode: false # realod templates, adds local redirects urls to frontend apps
-  demo_app: false # enables demo app endpoints
-  swagger_ui: false # enables swagger ui
-  script_transformer: false # enable javascript transformer
-  system_openbanking_consents_management: false # enable system openbanking consent management apis
-  system_clients_management: false # enable system client management apis
-  jwt_bearer_grant_type: false # enable jwt bearer grant type
-  pyron_on_prem: false # enable, when ACP is running on-prem, and Pyron is used as gateway
-  faas_provider: "" # default not secure embedded script runtime or fission
-  openbanking_domestic_scheduled_payment_consents: false # enable openbanking domestic scheduled payment consent apis
-  openbanking_domestic_payment_consents: false # enable openbanking domestic payment consent apis
-  openbanking_domestic_standing_order_consents: false # enable openbanking domestic standing order consent apis
-  openbanking_international_payment_consents: false # enable openbanking international payment consent apis
-  openbanking_international_scheduled_payment_consents: false # enable openbanking international scheduled payment consent apis
-  openbanking_international_standing_order_consents: false # enable openbanking international standing order consent apis
-  openbanking_file_payment_consents: false # enable openbanking file payment consent apis
-  openbanking_jws_verification: false # enable verification middleware for POST payment consent endpoints
-  web_rotation_keys: false # enable roatation keys in frontend
+  ## Enables import, export, global accept, deny, introspect endpoints
+  ##
+  integration_endpoints: false
+  
+  ## Realod templates, adds local redirects urls to frontend apps
+  ##
+  dev_mode: false
+  
+  ## Enables demo app endpoints 
+  ##
+  demo_app: false
+
+  ## Enables swagger ui
+  ##
+  swagger_ui: false
+  
+  ## Enable javascript transformer
+  ##
+  script_transformer: false
+  
+  ## Enable system openbanking consent management apis
+  ##
+  system_openbanking_consents_management: false
+  
+  ## Enable system client management apis
+  ##
+  system_clients_management: false
+  
+  ## Enable jwt bearer grant type
+  ##
+  jwt_bearer_grant_type: false
+  
+  ## Enable, when ACP is running on-prem, and Pyron is used as gateway
+  ##
+  pyron_on_prem: false
+  
+  ## Default not secure embedded script runtime or fission
+  ##
+  faas_provider: ""
+  
+  ## Enable openbanking domestic scheduled payment consent apis
+  ##
+  openbanking_domestic_scheduled_payment_consents: false
+  
+  ## Enable openbanking domestic payment consent apis
+  ##
+  openbanking_domestic_payment_consents: false
+  
+  ## Enable openbanking domestic standing order consent apis
+  ##
+  openbanking_domestic_standing_order_consents: false
+  
+  ## Enable openbanking international payment consent apis
+  ##
+  openbanking_international_payment_consents: false
+  
+  ## Enable openbanking international scheduled payment consent apis
+  ##
+  openbanking_international_scheduled_payment_consents: false
+  
+  ## Enable openbanking international standing order consent apis
+  ##
+  openbanking_international_standing_order_consents: false
+  
+  ## Enable openbanking file payment consent apis
+  ##
+  openbanking_file_payment_consents: false
+  
+  ## Enable verification middleware for POST payment consent endpoints
+  ##
+  openbanking_jws_verification: false
+  
+  ## Enable roatation keys in frontend
+  ##
+  web_rotation_keys: false
 
 ## Cert-manager configuration
 ##
@@ -180,28 +260,34 @@ importJob:
     clients: []
   resources: {}
 
-## Default ACP config file
+## Enable Default ACP config 
 ##
 config:
   create: true
-  # the data should match acp configuration options
-  # https://docs.operations.cloudentity.com/reference/acp-configuration/
+  
+  ## The data should match acp configuration options
+  ## https://docs.operations.cloudentity.com/reference/acp-configuration/
+  ##
   data:
   #  logging:
   #     level: debug
 
-## Additional ACP config file from secret
+## Enable additional ACP config file from secret
 ##
 secretConfig:
   create: true
-  # the data should match acp configuration options
-  # https://docs.operations.cloudentity.com/reference/acp-configuration/
+
+  ## The data should match acp configuration options
+  ## https://docs.operations.cloudentity.com/reference/acp-configuration/
+  ##
   data: {}
   #  system:
   #     secret: mysecret
 
+## Dummy cert and key
+##
 certificate:
-  ## Dummy cert and key
+  ## Certyficate
   ##
   cert: |
     -----BEGIN CERTIFICATE-----
@@ -228,7 +314,9 @@ certificate:
     oNc+cr++xId6h1jO768jq0OiK5G/oQQXZPD/wL+TXF0W/dw6F58EwHeQcD/H7wAs
     Z1hQb51e/+bSJxWMogTVPTEClXz0NpMIV9Xrcxfhk71Rjw==
     -----END CERTIFICATE-----
-
+  
+  ## Key
+  ##
   key: |
     -----BEGIN RSA PRIVATE KEY-----
     MIIEpQIBAAKCAQEArcvUbtUo7hoNpzAMYDog6dxOBPSMhSW1L45Isf2R7mW0t8gp
@@ -257,3 +345,21 @@ certificate:
     U78GmaVTXcGTrMt8QBt6fFUVbVpuW2Cf/aDH/6UelkwsobZaWQy58d2Nv0NSkguO
     DbIu9KRAOP+2TVg8uTYg1Y+PqAuAbQAauYpc+wb48EbMgXx1a294fuI=
     -----END RSA PRIVATE KEY-----
+  
+  ## SQL client
+  ## The data should match acp configuration options
+  ## https://docs.operations.cloudentity.com/reference/acp-configuration/
+  ##
+  #  sql: {}
+  
+  ## Hazelcast client
+  ## The data should match acp configuration options
+  ## https://docs.operations.cloudentity.com/reference/acp-configuration/
+  ##
+  #  hazelcast: {}
+  
+  ## Redis client
+  ## The data should match acp configuration options
+  ## https://docs.operations.cloudentity.com/reference/acp-configuration/
+  ##
+  #  redis: {}
