@@ -125,13 +125,32 @@ features:
   openbanking_jws_verification: false # enable verification middleware for POST payment consent endpoints
   web_rotation_keys: false # enable roatation keys in frontend
 
-## Enables the cert-manager integration
+## Cert-manager configuration
 ##
 certManager:
+  ## Enables the cert-manager integration
+  ##
   enabled: false
+
+  ## The requested ‘duration’ (i.e. lifetime) of the Certificate
+  ##
+  duration: 8760h
+
+  ## How long before the currently issued certificate’s expiry cert-manager should renew the certificate.
+  ##
+  renewBefore: 168h
+
+  ## Options to control private keys used for the Certificate.
   privateKey:
-    size: 4096
+    size: 2048
+    algorithm: RSA
+  
+  ## extraNames is a list of DNS subjectAltNames to be set on the Certificate.
+  extraNames: []
+
+  ## IssuerRef is a reference to the issuer for this certificate
   issuerRef:
+    name: ca-issuer
     kind: ClusterIssuer
 
 ## Disables TLS in ACP
