@@ -22,13 +22,14 @@ redis-cluster:
     configmap: |
       loadmodule /redismodules/redisearch.so
     initContainers:
-      - name: redisearch
-        image: redislabs/redisearch:2.2.0
+      - name: redismodules
+        image: alpine
         command:
           [
             "sh",
             "-c",
-            "cp /usr/lib/redis/modules/redisearch.so /redismodules/redisearch.so",
+            "wget https://redismodules.s3.amazonaws.com/redisearch-oss/redisearch-oss.Linux-buster-x86_64.2.2.0.zip -O /tmp/redisearch-oss.zip &&
+            unzip /tmp/redisearch-oss.zip -d /redismodules/"
           ]
         volumeMounts:
           - mountPath: /redismodules
