@@ -244,7 +244,7 @@ certificate:
 fission:
   ## Enables the Fission for ACP
   ##
-  enabled: true
+  enabled: false
 
   ## Define namespace where the Fission Environment can be deployed
   ##
