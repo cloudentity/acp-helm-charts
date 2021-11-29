@@ -30,7 +30,8 @@ serverURL: "https://acp.local:8443"
 ##
 # fullnameOverride: ""
 
-# Additional labels to apply to all Kubernetes resources created by this chart.
+## Additional labels to apply to all Kubernetes resources created by this chart.
+##
 labels: {}
 
 ## Define serviceAccount
@@ -38,12 +39,12 @@ labels: {}
 serviceAccount:
   ## Specifies whether a service account should be created
   ##
-  
   create: true
 
   ## Annotations to add to the service account
   ##
   annotations: {}
+
   ## The name of the service account to use.
   ## If not set and create is true, a name is generated using the fullname template
   # name: ""
@@ -60,15 +61,19 @@ args:
   - --create-default-tenant
   - --create-default-workspaces
 
-## Array with extra environment variables to add to the ACP container
+## Array with environment variables to add to the ACP container
 ##
-# extraEnvVars: []
+# env: []
 
+## Define service
+##
 service:
   ## ACP service type
   ##
   type: ClusterIP
 
+## Define ingress
+##
 ingress:
   ## Enables the Ingress for ACP
   ##
@@ -103,6 +108,22 @@ autoscaling:
   ## Enable autoscaling
   ##
   enabled: false
+  
+  ## Define mix replica count
+  ##
+  # minReplicas: 0
+
+  ## Define max replica count
+  ##
+  # maxReplicas: 1
+  
+  ## The average CPU usage of a all pods in a deployment
+  ##
+  # targetCPUUtilizationPercentage: ""
+  
+  ## The average memory usage of a all pods in a deployment
+  ##
+  # targetMemoryUtilizationPercentage: ""
 
 ## Number of ACP replicas to deploy
 ##
@@ -116,13 +137,26 @@ replicaCount: 1
 ##
 # podSecurityContext: {}
 
-## Acp resource requests and limits
+## ACP resource requests and limits
 ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
 ##
 resources: {}
 
+## ACP node selector
+##
+# nodeSelector: {}
+
+## ACP pod affinity
+##
+# affinity: {}
+
+## ACP pod tolerations
+##
+# tolerations: {}
+
 ## A security context defines privilege and access control settings for a Pod or Container
 ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+##
 securityContext:
   runAsUser: 0
 
@@ -221,14 +255,17 @@ certManager:
   renewBefore: 168h
 
   ## Options to control private keys used for the Certificate.
+  ##
   privateKey:
     size: 2048
     algorithm: RSA
   
   ## extraNames is a list of DNS subjectAltNames to be set on the Certificate.
+  ##
   extraNames: []
 
   ## IssuerRef is a reference to the issuer for this certificate
+  ##
   issuerRef:
     name: ca-issuer
     kind: ClusterIssuer
@@ -237,27 +274,47 @@ certManager:
 ##
 tlsDisabled: false
 
+## Import Job configuration
+##
 importJob:
+  ## Enables the import job
+  ##
   enabled: false
-  # path to config files
+  
+  ## Config files path
+  ##
   config:
     - /data/config.yaml
     - /data/extraconfig.yaml
     - /secret/config.yaml
-  # import mode (update, fail, ignore)
+  
+  ## Import mode (update, fail, ignore)
+  ##
   mode: update
-  # input file format: yaml or json
+  
+  ## Input file format: yaml or json
+  ##
   format: yaml
-  # path to the input file
+  
+  ## Path to the input file
+  ##
   input: /import/seed.yaml
-  # extra args for import command
+  
+  ## Extra args for import command
+  ##
   extraArgs: []
-  # the data should match import configuration endpoint request body
-  # https://docs.authorization.cloudentity.com/api/system/#operation/importConfiguration
+  
+  ## The data should match import configuration endpoint request body
+  ## https://docs.authorization.cloudentity.com/api/system/#operation/importConfiguration
+  ##
   data:
     tenants: []
     servers: []
     clients: []
+
+  ## ACP import job resource requests and limits
+  ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+  ##
   resources: {}
 
 ## Enable Default ACP config 
@@ -272,10 +329,16 @@ config:
   #  logging:
   #     level: debug
 
-## Enable additional ACP config file from secret
+## ACP config file from secret
 ##
 secretConfig:
+  ## Enable secret config
+  ##
   create: true
+
+  ## Secret annotations
+  ##
+  # annotations: {}
 
   ## The data should match acp configuration options
   ## https://docs.operations.cloudentity.com/reference/acp-configuration/
@@ -363,3 +426,4 @@ certificate:
   ## https://docs.operations.cloudentity.com/reference/acp-configuration/
   ##
   #  redis: {}
+  
