@@ -61,13 +61,25 @@ $ helm upgrade [RELEASE_NAME] acp/kube-acp-stack
 
 _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
 
-### From 0.15.0 to 0.15.1
+### From 0.14.x to 0.15.3
 
 Version 0.15.1 of ACP kube stack helm chart uses `docker.cloudentity.io` as the secret name referencing Cloudentity registry.
 If you're using the `artifactory` and haven't overridden `imagePullSecrets` before, you have to create a new secret with the name `docker.cloudentity.io`
 See [Docker Pull Credentials](#docker-pull-credentials).
 
-### From 0.14.x to 0.15.x
+### From 0.15.x to 0.15.3
+
+Due to bug in ACP, redis-cluster implementation was reverted back to redis helm chart. Redis multi-master instances will be destroyed and recreated as master-replica. Data migration is not supported but could be done manually which is out of the scope of this chart.
+
+### From 0.15.0 to 0.15.1 
+
+Version 0.15.1 of ACP kube stack helm chart uses `docker.cloudentity.io` as the secret name referencing Cloudentity registry.
+If you're using the `artifactory` and haven't overridden `imagePullSecrets` before, you have to create a new secret with the name `docker.cloudentity.io`
+See [Docker Pull Credentials](#docker-pull-credentials).
+
+### From 0.14.x to 0.15.0, 0.15.1, 0.15.2
+
+!Releases 0.15.0, 0.15.1 and 0.15.2 shloud not be used due connectivity issues with redis. ACP might randomly fail to connect to redis. This will be fixed in upcomming ACP release!
 
 Dependency redis helm chart was replaced by redis-cluster helm chart. The old redis instances will be destroyed in favour of new redis-cluster. Data migration is not supported but could be done manually which is out of the scope of this chart.
 
