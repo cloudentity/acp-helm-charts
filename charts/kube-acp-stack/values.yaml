@@ -58,5 +58,3 @@ redis:
     extraVolumeMounts:
       - mountPath: /redismodules
         name: redismodules
-fission-core:
-  enabled: true
