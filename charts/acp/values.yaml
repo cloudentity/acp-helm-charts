@@ -81,10 +81,25 @@ ingress:
 
   ## Ingress TLS configuration
   ## Secrets must be manually created in the namespace
+  ## or automatically using `tlsSecrets` variable
   tls: []
-  #  - secretName: acp-tls
-  #    hosts:
-  #      - acp.domain.com
+  # - secretName: ingress-tls
+  #   hosts:
+  #     - acp.acp-system
+
+  ## Ingress TLS secrets
+  ## List of certificates to be created for Ingress
+  tlsSecrets: []
+  # - name: ingress-tls
+  #   cert: |
+  #     -----BEGIN CERTIFICATE-----
+  #
+  #     -----END CERTIFICATE-----
+  #   key: |
+  #     -----BEGIN RSA PRIVATE KEY-----
+  #
+  #     -----END RSA PRIVATE KEY-----
+
 
 autoscaling:
   enabled: false
