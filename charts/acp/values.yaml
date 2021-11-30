@@ -350,7 +350,7 @@ secretConfig:
 ## Dummy cert and key
 ##
 certificate:
-  ## Certyficate
+  ## Certificate:
   ##
   cert: |
     -----BEGIN CERTIFICATE-----
