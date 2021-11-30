@@ -148,7 +148,7 @@ Create namespace for Fission Environments
 
 Fission environment defines Pod that uses a Secret to pull an image from a private Docker registry or repository, please refer to the documentation for that mechanism ([Pull an Image from a Private Registry](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/))
 
-To manually configure Docker credentials, first creatre a Secret by providing credentials on the command line:
+To manually configure Docker credentials, first create a Secret by providing credentials on the command line:
 
 ```console
 kubectl create secret -n <fission.namespace> docker-registry docker.cloudentity.io --docker-server=docker.cloudentity.io --docker-username=<your-name> --docker-password=<your-password>
@@ -164,7 +164,7 @@ kubectl create secret -n <fission.namespace> docker-registry docker.cloudentity.
 
 ### Configuration
 
-To see all configurable options with detailed comments, visit the chart's [values.yaml](./values.yaml), fission sectosection. By default Fission Environment for ACP is disabled. To enable switch the flag `fission.enabled` to `true`:
+To see all configurable options with detailed comments, visit the chart's [values.yaml](./values.yaml), fission section. By default Fission Environment for ACP is disabled. To enable switch the flag `fission.enabled` to `true`:
 
 ```yaml
 ## Fission chart configuration
