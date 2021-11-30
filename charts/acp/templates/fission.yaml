@@ -20,7 +20,7 @@ spec:
 apiVersion: fission.io/v1
 kind: Environment
 metadata:
-  name: nodejs
+  name: nodejs-v2
   namespace: {{ .Values.fission.namespace }}
     {{- with .Values.fission.annotations }}
   annotations:
@@ -35,7 +35,7 @@ spec:
     image: docker.cloudentity.io/node-env:2
     podspec:
       containers:
-        - name: nodejs
+        - name: nodejs-v2
           imagePullPolicy: {{ .Values.fission.imagePullPolicy }}
       {{- with .Values.fission.affinity }}
       affinity:
@@ -53,7 +53,7 @@ spec:
 apiVersion: fission.io/v1
 kind: Environment
 metadata:
-  name: rego
+  name: rego-v2
   namespace: {{ .Values.fission.namespace }}
     {{- with .Values.fission.annotations }}
   annotations:
@@ -68,7 +68,7 @@ spec:
     image: docker.cloudentity.io/rego-env:2
     podspec:
       containers:
-        - name: rego
+        - name: rego-v2
           imagePullPolicy: {{ .Values.fission.imagePullPolicy }}
       {{- with .Values.fission.affinity }}
       affinity:
