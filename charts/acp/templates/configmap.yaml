@@ -43,6 +43,13 @@ data:
       addrs:
       - "{{ .Release.Name }}-redis-master:6379"
       {{- end }}
+    {{- if .Values.fission.enabled }}
+    faas:                      
+      provider: fission       
+    fission:       
+      function_settings:
+        idle_timeout: {{ .Values.fission.idleTimeout }}    
+    {{- end }}
     {{- with .Values.features }}
     features:
       {{- toYaml . | nindent 6 }}

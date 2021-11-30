@@ -124,3 +124,53 @@ acp:
         hosts:
           - acp.domain.com
 ```
+
+## Fission
+
+Install the [fission](https://fission.io/docs/installation/), version [v1.14.1](https://github.com/fission/fission/releases/tag/1.14.1).
+
+### Namespace
+Create namespace for Fission Environments
+
+```console
+ kubectl create namespace <fission.namespace>
+```
+
+> **Note**: `fission.namespace` can be defined in [values.yaml](./values.yaml):
+>
+>```yaml
+>  ## Define namespace where the Fission Environment can be deployed
+>  ##
+>  namespace: acp-faas
+>```
+
+### Docker Pull Credentials
+
+Fission environment defines Pod that uses a Secret to pull an image from a private Docker registry or repository, please refer to the documentation for that mechanism ([Pull an Image from a Private Registry](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/))
+
+To manually configure Docker credentials, first create a Secret by providing credentials on the command line:
+
+```console
+kubectl create secret -n <fission.namespace> docker-registry docker.cloudentity.io --docker-server=docker.cloudentity.io --docker-username=<your-name> --docker-password=<your-password>
+```
+
+> **Note**: `fission.namespace` can be defined in [values.yaml](./values.yaml):
+>
+>```yaml
+>  ## Define namespace where the Fission Environment can be deployed
+>  ##
+>  namespace: acp-faas
+>```
+
+### Configuration
+
+To see all configurable options with detailed comments, visit the chart's [values.yaml](./values.yaml), fission section. By default Fission Environment for ACP is disabled. To enable switch the flag `fission.enabled` to `true`:
+
+```yaml
+## Fission chart configuration
+##
+fission:
+  ## Enables the Fission for ACP
+  ##
+  enabled: true
+```

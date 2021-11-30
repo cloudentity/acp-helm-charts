@@ -1,0 +1,85 @@
+{{- if .Values.fission.enabled -}}
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: only-allow-internet
+  namespace: {{ .Values.fission.namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector: {}
+  egress:
+    - to:
+        - ipBlock:
+            cidr: {{ .Values.fission.networkPolicy.ipBlock.cidr }}
+            {{- with .Values.fission.networkPolicy.ipBlock.except }}
+            except:
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
+---
+apiVersion: fission.io/v1
+kind: Environment
+metadata:
+  name: nodejs-v2
+  namespace: {{ .Values.fission.namespace }}
+    {{- with .Values.fission.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  version: 1
+  imagepullsecret: {{ .Values.fission.imagepullsecret }}
+  poolsize: {{ .Values.fission.poolsize }}
+  terminationGracePeriod: 1
+  runtime:
+    image: docker.cloudentity.io/node-env:2
+    podspec:
+      containers:
+        - name: nodejs-v2
+          imagePullPolicy: {{ .Values.fission.imagePullPolicy }}
+      {{- with .Values.fission.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.fission.tolerations }}
+      tolerations:
+          {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.fission.resources }}
+    resources:
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+---
+apiVersion: fission.io/v1
+kind: Environment
+metadata:
+  name: rego-v2
+  namespace: {{ .Values.fission.namespace }}
+    {{- with .Values.fission.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  version: 1
+  imagepullsecret: {{ .Values.fission.imagepullsecret }}
+  poolsize: {{ .Values.fission.poolsize }}
+  terminationGracePeriod: 1
+  runtime:
+    image: docker.cloudentity.io/rego-env:2
+    podspec:
+      containers:
+        - name: rego-v2
+          imagePullPolicy: {{ .Values.fission.imagePullPolicy }}
+      {{- with .Values.fission.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.fission.tolerations }}
+      tolerations:
+          {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.fission.resources }}
+    resources:
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+{{- end }}
