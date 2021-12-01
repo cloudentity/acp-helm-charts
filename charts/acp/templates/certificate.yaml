@@ -6,16 +6,16 @@ metadata:
   labels:
     {{- include "acp.labels" . | nindent 4 }}
 spec:
-  duration: {{ .Values.certManager.duration | default "8760h" }}
-  renewBefore: {{ .Values.certManager.renewBefore | default "168h" }}
+  duration: {{ .Values.certManager.duration }}
+  renewBefore: {{ .Values.certManager.renewBefore }}
   usages:
     - digital signature
     - key encipherment
     - server auth
     - client auth
   privateKey:
-    size: {{ .Values.certManager.privateKey.size | default "2048" }}
-    algorithm: {{ .Values.certManager.privateKey.algorithm | default "RSA" }}
+    size: {{ .Values.certManager.privateKey.size }}
+    algorithm: {{ .Values.certManager.privateKey.algorithm }}
   dnsNames:
     - {{ include "acp.fullname" . }}
     - {{ include "acp.fullname" . }}.{{ .Release.Namespace }}
@@ -25,6 +25,6 @@ spec:
     {{- end }}
   secretName: {{ include "acp.fullname" . }}-tls
   issuerRef:
-    name: {{ .Values.certManager.issuerRef.name | default "ca-issuer" }}
-    kind: {{ .Values.certManager.issuerRef.kind | default "ClusterIssuer" }}
+    name: {{ .Values.certManager.issuerRef.name }}
+    kind: {{ .Values.certManager.issuerRef.kind }}
 {{- end }}
