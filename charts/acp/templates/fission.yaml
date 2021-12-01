@@ -45,10 +45,10 @@ spec:
       tolerations:
           {{- toYaml . | nindent 8 }}
       {{- end }}
-    {{- with .Values.fission.resources }}
-    resources:
-      {{- toYaml . | nindent 4 }}
-    {{- end }}
+  {{- with .Values.fission.resources }}
+  resources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 ---
 apiVersion: fission.io/v1
 kind: Environment
@@ -78,8 +78,8 @@ spec:
       tolerations:
           {{- toYaml . | nindent 8 }}
       {{- end }}
-    {{- with .Values.fission.resources }}
-    resources:
-      {{- toYaml . | nindent 4 }}
-    {{- end }}
+  {{- with .Values.fission.resources }}
+  resources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 {{- end }}
