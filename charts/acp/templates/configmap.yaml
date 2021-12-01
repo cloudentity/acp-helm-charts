@@ -41,10 +41,15 @@ data:
       {{- else }}
       enabled: true
       addrs:
-      - "{{ .Release.Name }}-redis-cluster-0.{{ .Release.Name }}-redis-cluster-headless:6379"
-      - "{{ .Release.Name }}-redis-cluster-1.{{ .Release.Name }}-redis-cluster-headless:6379"
-      - "{{ .Release.Name }}-redis-cluster-2.{{ .Release.Name }}-redis-cluster-headless:6379"
+      - "{{ .Release.Name }}-redis-master:6379"
       {{- end }}
+    {{- if .Values.fission.enabled }}
+    faas:                      
+      provider: fission       
+    fission:       
+      function_settings:
+        idle_timeout: {{ .Values.fission.idleTimeout }}    
+    {{- end }}
     {{- with .Values.features }}
     features:
       {{- toYaml . | nindent 6 }}

@@ -92,11 +92,26 @@ ingress:
 
   ## Ingress TLS configuration
   ## Secrets must be manually created in the namespace
+  ## or automatically using `tlsSecrets` variable
   ##
   tls: []
-  #  - secretName: acp-tls
-  #    hosts:
-  #      - acp.domain.com
+  # - secretName: ingress-tls
+  #   hosts:
+  #     - acp.acp-system
+
+  ## Ingress TLS secrets
+  ## List of certificates to be created for Ingress
+  tlsSecrets: []
+  # - name: ingress-tls
+  #   cert: |
+  #     -----BEGIN CERTIFICATE-----
+  #
+  #     -----END CERTIFICATE-----
+  #   key: |
+  #     -----BEGIN RSA PRIVATE KEY-----
+  #
+  #     -----END RSA PRIVATE KEY-----
+
 
 ## Deployment annotations
 ##
@@ -427,3 +442,70 @@ certificate:
   ##
   #  redis: {}
   
+
+## Fission chart configuration
+##
+fission:
+  ## Enables the Fission for ACP
+  ##
+  enabled: false
+
+  ## Define namespace where the Fission Environment can be deployed
+  ##
+  namespace: acp-faas
+
+  ## Define NetworkPolicy Egress rules for Fission deployment
+  ##
+  networkPolicy:
+    ipBlock:
+      cidr: 0.0.0.0/0
+      except: 
+        - 10.0.0.0/8
+        - 192.168.0.0/16
+        - 172.16.0.0/20
+
+  ## Annotations to add to the Environment resource created for Fission
+  annotations: {}
+  # cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+
+  ## Define the pool size
+  ##
+  poolsize: 3
+  
+  ## Specify a imagePullPolicy
+  ##
+  imagePullPolicy: IfNotPresent
+
+  ## Docker registry secret name
+  ##
+  imagepullsecret: docker.cloudentity.io
+
+  ## Affinity for pod assignment
+  affinity: {} 
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #         - matchExpressions:
+  #             - key: fission
+  #               operator: In
+  #              values:
+  #                 - "true"  
+
+  ## Tolerations for pod assignment
+  tolerations: []
+  # - key: fission
+  #   value: "true"
+  #   effect: NoSchedule
+
+  ## Pod resources definition
+  resources: {}
+  #   requests:
+  #     cpu: 10m
+  #     memory: 48Mi
+  #   limits:
+  #     cpu: 100m
+  #     memory: 96Mi
+
+  ## Fission function idle timeout
+  ##
+  idleTimeout: 3m0s
