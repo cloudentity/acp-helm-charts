@@ -100,6 +100,36 @@ ingress:
   #
   #     -----END RSA PRIVATE KEY-----
 
+ingressMtls:
+  ## Enables mTLS Ingress for ACP
+  ## This is an independent instance from the one above.
+  enabled: false
+
+  ## mTLS Ingress additional custom annotations
+  ##
+  customAnnotations:
+
+  ## mTLS Ingress hostnames with paths
+  ##
+  hosts:
+    - host: mtls.acp.local
+      paths:
+        - path: /
+
+  ## TLS certificates to be created for mTLS Ingress
+  ##
+  secret:
+    name: ingress-mtls
+    cert: |
+      -----BEGIN CERTIFICATE-----
+      -----END CERTIFICATE-----
+    key: |
+      -----BEGIN PRIVATE KEY-----
+      -----END PRIVATE KEY-----
+    caCert: |
+      -----BEGIN CERTIFICATE-----
+      -----END CERTIFICATE-----
+
 
 autoscaling:
   enabled: false
