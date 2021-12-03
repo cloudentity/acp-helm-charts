@@ -103,6 +103,7 @@ ingress:
 ingressMtls:
   ## Enables mTLS Ingress for ACP
   ## This is an independent instance from the one above.
+  ##
   enabled: false
 
   ## mTLS Ingress additional custom annotations
@@ -119,13 +120,21 @@ ingressMtls:
   ## TLS certificates to be created for mTLS Ingress
   ##
   secret:
+    ## Name of the Kubernetes secret
+    ##
     name: ingress-mtls
+    ## Domain certificate
+    ##
     cert: |
       -----BEGIN CERTIFICATE-----
       -----END CERTIFICATE-----
+    ## Domain certificate key
+    ##
     key: |
       -----BEGIN PRIVATE KEY-----
       -----END PRIVATE KEY-----
+    ## CA certificate of the domain certificate and client certificates
+    ##
     caCert: |
       -----BEGIN CERTIFICATE-----
       -----END CERTIFICATE-----
