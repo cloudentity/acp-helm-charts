@@ -41,9 +41,8 @@ data:
       {{- else }}
       enabled: true
       addrs:
-      - "{{ .Release.Name }}-redis-cluster-0.{{ .Release.Name }}-redis-cluster-headless:6379"
-      - "{{ .Release.Name }}-redis-cluster-1.{{ .Release.Name }}-redis-cluster-headless:6379"
-      - "{{ .Release.Name }}-redis-cluster-2.{{ .Release.Name }}-redis-cluster-headless:6379"
+      - "{{ .Release.Name }}-redis-cluster-headless:6379"
+      - "{{ .Release.Name }}-redis-cluster-headless:6379"
       {{- end }}
     {{- if .Values.fission.enabled }}
     faas:                      
