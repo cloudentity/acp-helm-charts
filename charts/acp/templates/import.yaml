@@ -9,7 +9,7 @@ metadata:
     helm.sh/hook: post-install,post-upgrade
     helm.sh/hook-delete-policy: hook-succeeded,before-hook-creation
 spec:
-  backoffLimit: 4
+  backoffLimit: 8
   template:
     spec:
       {{- with .Values.imagePullSecrets }}
