@@ -12,33 +12,15 @@ cockroachdb:
   enabled: true
   tls:
     enabled: false
-redis:
+redis-cluster:
   enabled: true
-  auth:
-    password: p@ssw0rd!
-  commonConfiguration: |
-    loadmodule /redismodules/redisearch.so
-  master:
-    initContainers:
-      - name: redismodules
-        image: alpine
-        command:
-          [
-            "sh",
-            "-c",
-            "wget https://redismodules.s3.amazonaws.com/redisearch-oss/redisearch-oss.Linux-buster-x86_64.2.2.0.zip -O /tmp/redisearch-oss.zip &&
-            unzip /tmp/redisearch-oss.zip -d /redismodules/"
-          ]
-        volumeMounts:
-          - mountPath: /redismodules
-            name: redismodules
-    extraVolumes:
-      - name: redismodules
-        emptyDir: {}
-    extraVolumeMounts:
-      - mountPath: /redismodules
-        name: redismodules
-  replica:
+  cluster:
+    nodes: 3
+    replicas: 0
+  password: p@ssw0rd!
+  redis:
+    configmap: |
+      loadmodule /redismodules/redisearch.so
     initContainers:
       - name: redismodules
         image: alpine
