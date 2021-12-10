@@ -10,7 +10,7 @@ data:
     server:
       url: {{ .Values.serverURL }}
       {{- if .Values.ingressMtls.enabled }}
-      mtls_url: "{{ .Values.serverULRMtls }}"
+      mtls_url: "{{ .Values.serverURLMtls }}"
       {{- end }}
       {{- with .Values.certificate.cert }}
       certificate:
