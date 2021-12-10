@@ -22,6 +22,10 @@ imagePullSecrets:
 ##
 serverURL: "https://acp.local:8443"
 
+## Public ACP URL for Ingress working in mTLS
+##
+serverULRMtls: "https://mtls.acp.local:8443"
+
 ## String to partially override acp.name
 ##
 # nameOverride: ""
