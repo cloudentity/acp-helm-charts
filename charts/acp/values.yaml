@@ -155,7 +155,6 @@ ingressMtls:
       -----BEGIN CERTIFICATE-----
       -----END CERTIFICATE-----
 
-
 ## Deployment annotations
 ##
 # annotations: {}
@@ -166,19 +165,16 @@ autoscaling:
   ## Enable autoscaling
   ##
   enabled: false
-  
+
   ## Define mix replica count
   ##
   # minReplicas: 0
-
   ## Define max replica count
   ##
   # maxReplicas: 1
-  
   ## The average CPU usage of a all pods in a deployment
   ##
   # targetCPUUtilizationPercentage: ""
-  
   ## The average memory usage of a all pods in a deployment
   ##
   # targetMemoryUtilizationPercentage: ""
@@ -221,7 +217,7 @@ securityContext:
 ## ACP feature flags
 ## To enable a feature, enter its key-value pair, as in:
 ## https://docs.operations.cloudentity.com/reference/acp-configuration/
-## 
+##
 # features: {}
 
 ## Cert-manager configuration
@@ -244,7 +240,7 @@ certManager:
   privateKey:
     size: 2048
     algorithm: RSA
-  
+
   ## extraNames is a list of DNS subjectAltNames to be set on the Certificate.
   ##
   extraNames: []
@@ -259,36 +255,43 @@ certManager:
 ##
 tlsDisabled: false
 
+## ACP http client configuration
+client:
+  rootCa: ""
+  #   -----BEGIN RSA PRIVATE KEY-----
+  #
+  #   -----END RSA PRIVATE KEY-----
+
 ## Import Job configuration
 ##
 importJob:
   ## Enables the import job
   ##
   enabled: false
-  
+
   ## Config files path
   ##
   config:
     - /data/config.yaml
     - /data/extraconfig.yaml
     - /secret/config.yaml
-  
+
   ## Import mode (update, fail, ignore)
   ##
   mode: update
-  
+
   ## Input file format: yaml or json
   ##
   format: yaml
-  
+
   ## Path to the input file
   ##
   input: /import/seed.yaml
-  
+
   ## Extra args for import command
   ##
   extraArgs: []
-  
+
   ## The data should match import configuration endpoint request body
   ## https://docs.authorization.cloudentity.com/api/system/#operation/importConfiguration
   ##
@@ -302,11 +305,11 @@ importJob:
   ##
   resources: {}
 
-## Enable Default ACP config 
+## Enable Default ACP config
 ##
 config:
   create: true
-  
+
   ## The data should match acp configuration options
   ## https://docs.operations.cloudentity.com/reference/acp-configuration/
   ##
@@ -336,13 +339,13 @@ secretConfig:
 ##
 certificate:
   ## If true certificate will be taken from files/ folder stored in this chart
-  ## root folder. 
+  ## root folder.
   ##
   create: true
-  
-  ## Enable if want to take certificate and key from values instead of 
+
+  ## Enable if want to take certificate and key from values instead of
   ## files/ folder
-  ## 
+  ##
   # cert: |
   #   -----BEGIN CERTIFICATE-----
   #
@@ -356,25 +359,21 @@ certificate:
   #   -----BEGIN RSA PRIVATE KEY-----
   #
   #   -----END RSA PRIVATE KEY-----
-  
   ## SQL client
   ## The data should match acp configuration options
   ## https://docs.operations.cloudentity.com/reference/acp-configuration/
   ##
   #  sql: {}
-  
   ## Hazelcast client
   ## The data should match acp configuration options
   ## https://docs.operations.cloudentity.com/reference/acp-configuration/
   ##
   #  hazelcast: {}
-  
   ## Redis client
   ## The data should match acp configuration options
   ## https://docs.operations.cloudentity.com/reference/acp-configuration/
   ##
   #  redis: {}
-  
 
 ## Fission chart configuration
 ##
@@ -392,7 +391,7 @@ fission:
   networkPolicy:
     ipBlock:
       cidr: 0.0.0.0/0
-      except: 
+      except:
         - 10.0.0.0/8
         - 192.168.0.0/16
         - 172.16.0.0/20
@@ -404,7 +403,7 @@ fission:
   ## Define the pool size
   ##
   poolsize: 3
-  
+
   ## Specify a imagePullPolicy
   ##
   imagePullPolicy: IfNotPresent
@@ -414,7 +413,7 @@ fission:
   imagepullsecret: docker.cloudentity.io
 
   ## Affinity for pod assignment
-  affinity: {} 
+  affinity: {}
   #   nodeAffinity:
   #     requiredDuringSchedulingIgnoredDuringExecution:
   #       nodeSelectorTerms:
@@ -422,7 +421,7 @@ fission:
   #             - key: fission
   #               operator: In
   #              values:
-  #                 - "true"  
+  #                 - "true"
 
   ## Tolerations for pod assignment
   tolerations: []
