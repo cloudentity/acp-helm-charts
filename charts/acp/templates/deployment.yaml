@@ -60,6 +60,9 @@ spec:
             - name: http
               containerPort: {{ include "acp.portNumber" . }}
               protocol: TCP
+            - name: metrics
+              containerPort: 9000
+              protocol: TCP
           livenessProbe:
             httpGet:
               path: /alive
