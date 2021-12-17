@@ -12,7 +12,7 @@ spec:
       protocol: TCP
       name: http
     - port: 9000
-      targetPort: 9000
+      targetPort: metrics
       protocol: TCP
       name: metrics
   selector:
