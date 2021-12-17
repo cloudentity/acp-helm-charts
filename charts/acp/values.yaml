@@ -335,14 +335,13 @@ secretConfig:
 ## ACP certificate
 ##
 certificate:
-  ## Set to true if want to user self-generate certificate. If false
-  ## certificate will be taken from certificate/ folder stored in this chart
-  ## root folder.
-  
-  generate: false
+  ## If true certificate will be taken from files/ folder stored in this chart
+  ## root folder. 
+  ##
+  create: true
   
   ## Enable if want to take certificate and key from values instead of 
-  ## certificate/ folder
+  ## files/ folder
   ## 
   # cert: |
   #   -----BEGIN CERTIFICATE-----
@@ -350,6 +349,10 @@ certificate:
   #   -----END CERTIFICATE-----
   #
   # key: |
+  #   -----BEGIN RSA PRIVATE KEY-----
+  #
+  #   -----END RSA PRIVATE KEY-----
+  # ca: |
   #   -----BEGIN RSA PRIVATE KEY-----
   #
   #   -----END RSA PRIVATE KEY-----
