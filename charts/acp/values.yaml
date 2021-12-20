@@ -330,11 +330,11 @@ secretConfig:
 
 ## ACP http client configuration
 ##
-client:
-  rootCa: ""
-  #   -----BEGIN RSA PRIVATE KEY-----
+# client:
+  # rootCa: |
+  #   -----BEGIN CERTIFICATE-----
   #
-  #   -----END RSA PRIVATE KEY-----
+  #   -----END CERTIFICATE-----
 
 ## ACP certificate
 ##
