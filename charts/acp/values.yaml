@@ -255,13 +255,6 @@ certManager:
 ##
 tlsDisabled: false
 
-## ACP http client configuration
-client:
-  rootCa: ""
-  #   -----BEGIN RSA PRIVATE KEY-----
-  #
-  #   -----END RSA PRIVATE KEY-----
-
 ## Import Job configuration
 ##
 importJob:
@@ -335,6 +328,13 @@ secretConfig:
   #  system:
   #     secret: mysecret
 
+## ACP http client configuration
+client:
+  rootCa: ""
+  #   -----BEGIN RSA PRIVATE KEY-----
+  #
+  #   -----END RSA PRIVATE KEY-----
+
 ## ACP certificate
 ##
 certificate:
@@ -355,10 +355,7 @@ certificate:
   #   -----BEGIN RSA PRIVATE KEY-----
   #
   #   -----END RSA PRIVATE KEY-----
-  # ca: |
-  #   -----BEGIN RSA PRIVATE KEY-----
-  #
-  #   -----END RSA PRIVATE KEY-----
+
   ## SQL client
   ## The data should match acp configuration options
   ## https://docs.operations.cloudentity.com/reference/acp-configuration/
