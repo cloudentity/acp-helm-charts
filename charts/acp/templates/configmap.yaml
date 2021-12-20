@@ -7,6 +7,10 @@ metadata:
     {{- include "acp.labels" . | nindent 4 }}
 data:
   config.yaml: |
+    {{- if ((.Values.client).rootCa) }}
+    client:
+      root_ca: /tls/client-ca.crt
+    {{- end }}
     server:
       url: {{ .Values.serverURL }}
       {{- if .Values.ingressMtls.enabled }}
