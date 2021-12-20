@@ -329,6 +329,7 @@ secretConfig:
   #     secret: mysecret
 
 ## ACP http client configuration
+##
 client:
   rootCa: ""
   #   -----BEGIN RSA PRIVATE KEY-----
