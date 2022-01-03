@@ -229,11 +229,11 @@ certManager:
 
   ## The requested ‘duration’ (i.e. lifetime) of the Certificate
   ##
-  duration: 8760h
+  duration: 2160h
 
   ## How long before the currently issued certificate’s expiry cert-manager should renew the certificate.
   ##
-  renewBefore: 168h
+  renewBefore: 720h
 
   ## Options to control private keys used for the Certificate.
   ##
