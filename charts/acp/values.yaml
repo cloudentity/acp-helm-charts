@@ -221,7 +221,7 @@ containerSecurityContext:
   allowPrivilegeEscalation: false
   capabilities:
     drop:
-      - all
+      - ALL
 
 ## ACP feature flags
 ## To enable a feature, enter its key-value pair, as in:
