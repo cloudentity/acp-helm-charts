@@ -187,10 +187,6 @@ replicaCount: 1
 ##
 # podAnnotations: {}
 
-## Pod security context
-##
-# podSecurityContext: {}
-
 ## ACP resource requests and limits
 ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
 ##
@@ -211,8 +207,22 @@ resources: {}
 ## A security context defines privilege and access control settings for a Pod or Container
 ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 ##
-securityContext:
-  runAsUser: 0
+## Pod security context
+##
+podSecurityContext:
+  fsGroup: 1000
+  runAsGroup: 1000
+  runAsNonRoot: true
+  runAsUser: 1000
+
+## Container security context
+##
+containerSecurityContext:
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
 
 ## ACP feature flags
 ## To enable a feature, enter its key-value pair, as in:
