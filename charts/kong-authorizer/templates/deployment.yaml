@@ -30,29 +30,27 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          args:
-            - --client-id
-            - "$(CLIENT_ID)"
-            - --client-secret
-            - "$(CLIENT_SECRET)"
-            - --issuer-url
-            - {{ .Values.issuerURL }}
-          {{- range $key, $value := .Values.extraArgs }}
-            - --{{ $key }}={{ $value }}
-          {{- end }}
           env:
-            - name: LOGGING_LEVEL
-              value: "INFO"
-            - name: CLIENT_ID
+            - name: ACP_CLIENT_ID
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kong-authorizer.clientCredentialsName" . }}
                   key: clientID
-            - name: CLIENT_SECRET
+            - name: ACP_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kong-authorizer.clientCredentialsName" . }}
                   key: clientSecret
+            - name: ACP_ISSUER_URL
+              value: "{{ .Values.issuerURL }}"
+            - name: ACP_TENANT_ID
+              value: "{{ .Values.tenantID }}"
+            - name: ACP_SERVER_ID
+              value: "{{ .Values.serverID }}"
+          {{- range $key, $value := .Values.extraEnvVars }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+          {{- end }}
           ports:
             - name: http
               containerPort: 9003
