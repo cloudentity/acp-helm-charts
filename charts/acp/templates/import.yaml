@@ -21,9 +21,15 @@ spec:
           configMap:
             name: {{ include "acp.configName" . }}
         - name: tls
-          secret:
-            secretName: {{ include "acp.fullname" . }}-tls
+          projected:
             defaultMode: 384
+            sources:
+            - secret:
+                name: {{ include "acp.fullname" . }}-tls
+            {{- if ((.Values.client).rootCa) }}
+            - secret:
+                name: {{ include "acp.fullname" . }}-client-tls
+            {{- end }}
         - name: import
           configMap:
             name: {{ include "acp.fullname" . }}-import
