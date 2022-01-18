@@ -18,6 +18,23 @@ image:
 imagePullSecrets:
   - name: docker.cloudentity.io
 
+## Pod security context
+##
+podSecurityContext:
+  fsGroup: 1000
+  runAsGroup: 1000
+  runAsNonRoot: true
+  runAsUser: 1000
+
+## Container security context
+##
+containerSecurityContext:
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+
 ## String to fully override istio-authorizer.fullname
 ##
 # fullnameOverride: ""
