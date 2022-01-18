@@ -404,6 +404,23 @@ fission:
         - 192.168.0.0/16
         - 172.16.0.0/20
 
+  ## Pod security context
+  ##
+  podSecurityContext:
+    fsGroup: 1000
+    runAsGroup: 1000
+    runAsNonRoot: true
+    runAsUser: 1000
+
+  ## Container security context
+  ##
+  containerSecurityContext:
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+
   ## Annotations to add to the Environment resource created for Fission
   annotations: {}
   # cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
