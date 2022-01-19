@@ -29,7 +29,7 @@ install-acp:
 
 install-ingress-controller:
 	helm upgrade ingress-nginx ingress-nginx/ingress-nginx \
-		--values ./values/ingress-nginx.yaml \
+		--values ./config/ingress-nginx.yaml \
 		--namespace nginx \
 		--timeout 1m \
 		--install \
