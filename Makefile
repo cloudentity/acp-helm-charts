@@ -17,6 +17,7 @@ prepare-helm:
 	helm repo update
 
 prepare-cluster:
+	kubectl create namespace nginx
 	kubectl create namespace acp-system
 
 install-acp:
