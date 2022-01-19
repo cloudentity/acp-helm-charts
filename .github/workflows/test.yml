@@ -1,0 +1,26 @@
+name: Test
+on:
+  push:
+    branches-ignore:
+      - "master"
+    tags-ignore:
+      - "*"
+
+jobs:
+  deploy:
+    if: "!contains(github.event.head_commit.message, '[no-test]')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Lint
+        run: make lint
+      - name: Prepare
+        run: make prepare
+      - name: Deploy
+        run: make deploy
+      - name: Wait
+        run: make wait
+      - name: Debug
+        if: failure()
+        run: make debug
