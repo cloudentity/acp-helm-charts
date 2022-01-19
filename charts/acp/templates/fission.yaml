@@ -37,6 +37,14 @@ spec:
       containers:
         - name: nodejs-v2
           imagePullPolicy: {{ .Values.fission.imagePullPolicy }}
+          {{- with .Values.fission.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.fission.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.fission.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
@@ -70,6 +78,14 @@ spec:
       containers:
         - name: rego-v2
           imagePullPolicy: {{ .Values.fission.imagePullPolicy }}
+          {{- with .Values.fission.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.fission.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.fission.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
