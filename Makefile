@@ -32,7 +32,7 @@ install-ingress-controller:
 	helm upgrade ingress-nginx ingress-nginx/ingress-nginx \
 		--values ./config/ingress-nginx.yaml \
 		--namespace nginx \
-		--timeout 1m \
+		--timeout 2m \
 		--install \
 		--wait
 
