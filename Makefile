@@ -3,7 +3,7 @@ prepare: create-cluster prepare-helm prepare-cluster
 
 deploy: install-ingress-controller install-acp
 
-clean: uninstall-acp uninstall-ingress-controller delete-cluster
+clean: uninstall-acp uninstall-ingress-controller delete-cluster clean-helm
 
 ### AUXILIARIES ###
 create-cluster:
@@ -15,13 +15,22 @@ prepare-helm:
 	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 	helm repo add jetstack https://charts.jetstack.io
 	helm repo update
+	mkdir ./charts/.kube-acp-stack-test
+	cp ./charts/kube-acp-stack/{Chart,values}.yaml ./charts/.kube-acp-stack-test/
+	yq eval '(.dependencies[]|select(.name == "acp").repository) |= "file://../acp"' ./charts/.kube-acp-stack-test/Chart.yaml --inplace
+	helm dependency update ./charts/.kube-acp-stack-test
 
 prepare-cluster:
 	kubectl create namespace nginx
 	kubectl create namespace acp-system
+	kubectl create secret docker-registry docker.cloudentity.io \
+		--namespace acp-system \
+		--docker-server=docker.cloudentity.io \
+		--docker-username=${DOCKER_USER} \
+		--docker-password=${DOCKER_PWD}
 
 install-acp:
-	helm upgrade acp ./charts/kube-acp-stack \
+	helm upgrade acp ./charts/.kube-acp-stack-test \
 		--values ./config/kube-acp-stack.yaml \
 		--namespace acp-system \
 		--timeout 5m \
@@ -41,6 +50,10 @@ uninstall-acp:
 
 uninstall-ingress-controller:
 	helm uninstall ingress-nginx --namespace nginx
+
+clean-helm:
+	rm --recursive --force ./charts/.kube-acp-stack-test
+	helm repo remove ingress-nginx jetstack cockroachdb
 
 delete-cluster:
 	kind delete cluster --name=acp
