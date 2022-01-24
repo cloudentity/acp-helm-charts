@@ -17,6 +17,9 @@ jobs:
       - name: Lint
         run: make lint
       - name: Prepare
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PWD: ${{ secrets.DOCKER_PWD }}
         run: make prepare
       - name: Deploy
         run: make deploy
