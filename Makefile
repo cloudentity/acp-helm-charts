@@ -1,7 +1,11 @@
+SERVER_URL := $(shell yq eval '.acp.serverURL' ./config/kube-acp-stack.yaml)
+
 ### MAIN TARGETS ###
 prepare: create-cluster prepare-helm prepare-cluster
 
 deploy: install-ingress-controller install-acp
+
+verify: wait-acp check-acp-server
 
 clean: uninstall-acp uninstall-ingress-controller delete-cluster clean-helm
 
@@ -34,8 +38,7 @@ install-acp:
 		--values ./config/kube-acp-stack.yaml \
 		--namespace acp-system \
 		--timeout 5m \
-		--install \
-		--wait
+		--install
 
 install-ingress-controller:
 	helm upgrade ingress-nginx ingress-nginx/ingress-nginx \
@@ -44,6 +47,18 @@ install-ingress-controller:
 		--timeout 2m \
 		--install \
 		--wait
+
+wait-acp:
+	kubectl wait deploy/acp \
+		--for condition=available \
+		--namespace acp-system \
+		--timeout=5m
+
+check-acp-server:
+	curl "${SERVER_URL}"/alive \
+		--resolve "$(shell echo $${SERVER_URL##*/})":127.0.0.1 \
+		--insecure \
+		--fail
 
 uninstall-acp:
 	helm uninstall acp --namespace acp-system
@@ -69,4 +84,4 @@ debug:
 	-kubectl logs deploy/ingress-nginx-controller --namespace nginx
 	-kubectl logs deploy/coredns --namespace kube-system
 	-kubectl logs deploy/local-path-provisioner --namespace local-path-storage
-	-kubectl describe pods/acp --namespace acp
+	-kubectl describe pod --selector app.kubernetes.io/name=acp --namespace acp-system
