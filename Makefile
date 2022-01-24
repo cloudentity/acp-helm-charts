@@ -16,7 +16,7 @@ prepare-helm:
 	helm repo add jetstack https://charts.jetstack.io
 	helm repo update
 	mkdir ./charts/.kube-acp-stack-test
-	cp ./charts/kube-acp-stack/{Chart,values}.yaml ./charts/.kube-acp-stack-test/
+	cp ./charts/kube-acp-stack/Chart.yaml ./charts/kube-acp-stack/values.yaml ./charts/.kube-acp-stack-test/
 	yq eval '(.dependencies[]|select(.name == "acp").repository) |= "file://../acp"' ./charts/.kube-acp-stack-test/Chart.yaml --inplace
 	helm dependency update ./charts/.kube-acp-stack-test
 
