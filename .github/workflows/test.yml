@@ -17,13 +17,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-          with:
-            path: ./acp-helm-charts
+        with:
+          path: ./acp-helm-charts
       - name: Checkout acp-on-k8s
         uses: actions/checkout@v2
-          with:
-            name: cloudentity/acp-on-k8s
-            path: ./acp-on-k8s
+        with:
+          name: cloudentity/acp-on-k8s
+          path: ./acp-on-k8s
       - name: Lint
         run: make lint
       - name: Prepare
