@@ -11,9 +11,19 @@ jobs:
     name: Deploy ACP chart
     if: "!contains(github.event.head_commit.message, '[no-test]')"
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./acp-helm-charts
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+          with:
+            path: ./acp-helm-charts
+      - name: Checkout acp-on-k8s
+        uses: actions/checkout@v2
+          with:
+            name: cloudentity/acp-on-k8s
+            path: ./acp-on-k8s
       - name: Lint
         run: make lint
       - name: Prepare
