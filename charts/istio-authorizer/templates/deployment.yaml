@@ -30,10 +30,9 @@ spec:
             {{- toYaml .Values.containerSecurityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- with .Values.args }}
           args:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+            - --config
+            - /data/config.yaml
           env:
             - name: ACP_ISSUER_URL
               value: {{ .Values.issuerURL }}
@@ -47,10 +46,6 @@ spec:
                 secretKeyRef:
                   name: {{ include "istio-authorizer.clientCredentialsName" . }}
                   key: clientSecret
-            {{- range $key, $value := .Values.extraEnvVars }}
-            - name: {{ $key }}
-              value: "{{ $value }}"
-            {{- end }}
           ports:
             - name: grpc
               containerPort: 9001
