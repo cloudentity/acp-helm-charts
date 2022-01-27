@@ -74,6 +74,21 @@ resources: {}
   #   cpu: 100m
   #   memory: 96Mi
 
+## Define EnvoyFilter
+## Detailed configuration is available here
+## https://istio.io/latest/docs/reference/config/networking/envoy-filter/
+envoyFilter:
+  ## Enables EnvoyFilter
+  ##
+  enabled: false
+  ## Maximum number of requested bytes 
+  ##
+  maxRequestBytes: 8192
+
+## Enables the Envoyfilter for ACP istio-authorizer
+## Configuration options are available here
+## https://istio.io/latest/docs/reference/config/networking/envoy-filter/
+
 ## Credentials for your ACP istio-authorizer
 ##
 clientCredentials:
