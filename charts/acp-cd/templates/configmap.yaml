@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "acp-cd.fullname" . }}
+  labels:
+    {{- include "acp-cd.labels" . | nindent 4 }}
+data:
+  seed.yaml: |
+    {{- if .Values.policies.enabled }}
+    policies:
+      {{- with .Values.policies }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+    {{- end }}
+    {{- if .Values.gateway_api_groups.enabled }}
+    gateway_api_groups:
+      {{- with .Values.gateway_api_groups }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+    {{- end }}
+    {{- if .Values.services.enabled }}
+    services:
+      {{- with .Values.services }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+    {{- end }}
