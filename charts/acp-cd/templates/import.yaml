@@ -1,0 +1,56 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    {{- include "acp-cd.labels" . | nindent 4 }}
+  name: {{ include "acp-cd.fullname" . }}
+spec:
+  backoffLimit: 4
+  template:
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: import
+          configMap: {{ include "acp-cd.fullname" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - import
+            - --client-id
+            - "$(CLIENT_ID)"
+            - --client-secret
+            - "$(CLIENT_SECRET)"
+            - --issuer-url
+            - "$(ISSUER_URL)"
+            - --mode
+            - update
+            - --format
+            - yaml
+            - --input
+            - /import/seed.yaml
+          env:
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "acp-cd.clientCredentialsName" . }}
+                  key: importJobClientID
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "acp-cd.clientCredentialsName" . }}
+                  key: importJobClientSecret
+            - name: ISSUER_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "acp-cd.clientCredentialsName" . }}
+                  key: importJobIssiuerURL
+          volumeMounts:
+            - mountPath: /import
+              name: import
+              readOnly: true
+      restartPolicy: Never
