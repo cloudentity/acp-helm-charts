@@ -20,58 +20,66 @@ imagePullSecrets:
 
 ## Credentials for your ACP-CD
 ##
-##
 clientCredentials:
-
+  ## Specifies whether a kubernetes secret should be created from the provided clientID and clientSecret.
+  ## For production setup please create secret manually and use name
+  ## parameter to integrate with istio-authorizer
+  ##
   create: true
-
+  
+  ## The name of the client secret to use
+  ## If not set and create is true, a name is generated using the fullname template
+  ##
   name: ""
 
-  clientID: "YnZnN2h2YzA1NnV0YmdpaHF1OWcK"
-  clientSecret: "aE0wdmYwZHNBMHkxSHBHZW1WXzlDa21iYmlOclp2NW92S1JDTm5hd2pJbwo="
+  ## Import Client ID must point to the client identifier 
+  ## of the client application that you have created in the System workspace for your tenant
+  ##  
+  importClientID: ""
+  
+  ## Import Client Secret must point to the client secret 
+  ## of the client application that you have created in the System workspace for your tenant
+  ##
+  importClientSecret: ""
+
+  ## Issuer URL must point to the issuer URL of the System workspace of your tenan
+  ##
   issiuerURL: "https://acp.acp-system:8443/default/system"
 
-policies:
-  - tenant_id: "{tid}"
-    server_id: "{aid}"
-    id: block_test_policy
-    policy_name: block_test
-    language: cloudentity
-    type: api
-    validators:
-      - name: "false"
-  - tenant_id: "{tid}"
-    server_id: "{aid}"
-    id: allow_test_policy
-    policy_name: allow_test
-    language: cloudentity
-    type: api
-    validators:
-      - name: "true"
-gateway_api_groups:
-  - tenant_id: "{tid}"
-    server_id: "{aid}"
-    service_id: httpbin
-    gateway_id: sample-istio-authorizer
-    name: "default/httpbin"
-    id: test
-    apis:
-      - method: GET
-        path: /deny
-      - method: GET
-        path: /anything
-services:
-  - id: httpbin
-    tenant_id: "{tid}"
-    authorization_server_id: "{aid}"
-    gateway_id: sample-istio-authorizer
-    name: default/httpbin
-    apis:
-      - method: GET
-        path: /deny
-        can_have_policy: true
-        policy_id: block_test_policy
-      - method: GET
-        path: /anything
-        can_have_policy: true
-        policy_id: allow_test_policy   
+## ACP-CD declarative configuration import for tenant
+## Ref: https://docs.authorization.cloudentity.com/api/system/#operation/importTenantConfiguration
+##
+data:
+  apis: []
+  audit_events: [] 
+  cdr_arrangements: []
+  ciba_authentication_services: []
+  claims: []
+  clients: []
+  consent_actions: []
+  consent_grants: []
+  consents: []
+  cross_tenant_api_policy_bindings: []
+  gateway_api_groups: []
+  gateways: []
+  idps: []
+  mfa_methods: []
+  openbanking_br_consents: []
+  openbanking_file_payment_consent_file_resources: []
+  openbanking_uk_consents: []
+  policies: []
+  policy_execution_points: []
+  privacy_ledger_events: []
+  quota_usage: []
+  recurring_jobs: []
+  scope_grants: []
+  scopes_without_service: []
+  script_execution_points: []
+  scripts: []
+  secrets: []
+  server_consents: []
+  servers: []
+  servers_bindings: []
+  services: []
+  tenant": {}
+  vanity_domains: []

@@ -6,15 +6,6 @@ metadata:
     {{- include "acp-cd.labels" . | nindent 4 }}
 data:
   seed.yaml: |
-    policies:
-      {{- with .Values.policies }}
-        {{- toYaml . | nindent 6 }}
-      {{- end }}
-    gateway_api_groups:
-      {{- with .Values.gateway_api_groups }}
-        {{- toYaml . | nindent 6 }}
-      {{- end }}
-    services:
-      {{- with .Values.services }}
-        {{- toYaml . | nindent 6 }}
-      {{- end }}
+    {{- with .Values.data }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
