@@ -18,6 +18,10 @@ image:
 imagePullSecrets:
   - name: docker.cloudentity.io
 
+## Import mode (update, fail, ignore)
+##
+mode: update
+
 ## Credentials for your ACP-CD
 ##
 clientCredentials:
@@ -32,15 +36,15 @@ clientCredentials:
   ##
   name: ""
 
-  ## Import Client ID must point to the client identifier 
+  ## Client ID must point to the client identifier 
   ## of the client application that you have created in the System workspace for your tenant
   ##  
-  importClientID: ""
+  clientID: ""
   
-  ## Import Client Secret must point to the client secret 
+  ## Client Secret must point to the client secret 
   ## of the client application that you have created in the System workspace for your tenant
   ##
-  importClientSecret: ""
+  clientSecret: ""
 
   ## Issuer URL must point to the issuer URL of the System workspace of your tenan
   ##

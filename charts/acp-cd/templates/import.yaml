@@ -28,7 +28,7 @@ spec:
             - --issuer-url
             - "$(ISSUER_URL)"
             - --mode
-            - update
+            - {{ .Values.mode }}
             - --format
             - yaml
             - --input
@@ -38,17 +38,17 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ include "acp-cd.clientCredentialsName" . }}
-                  key: importJobClientID
+                  key: clientID
             - name: CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: {{ include "acp-cd.clientCredentialsName" . }}
-                  key: importJobClientSecret
+                  key: clientSecret
             - name: ISSUER_URL
               valueFrom:
                 secretKeyRef:
                   name: {{ include "acp-cd.clientCredentialsName" . }}
-                  key: importJobIssiuerURL
+                  key: issiuerURL
           volumeMounts:
             - mountPath: /import
               name: import

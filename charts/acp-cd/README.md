@@ -2,7 +2,11 @@
 
 [Cloudentity](https://cloudentity.com/) Authorization Control Plane (ACP) is a cutting edge platform for the API access control. ACP consolidates capabilities of a modern OAuth/OIDC server with an advanced authorization, consent management, and developer enablement.
 
-This chart bootstraps [acp-cd](https://docs.authorization.cloudentity.com/guides/developer/protect/istio/configuration_import/) deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+ACP-CD provides a mechanism allowing you to declaratively manage the configuration of your ACP data.
+It allows to set up policies, APIs, clients, services, and all other features of ACP by defining those in a file.
+It can be used to set up a GitOps-like pipeline, or ad-hoc import, easing the process.
+This chart bootstraps [acp-cd](https://docs.authorization.cloudentity.com/guides/developer/protect/istio/configuration_import/) 
+deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
 ## Prerequisites
 
