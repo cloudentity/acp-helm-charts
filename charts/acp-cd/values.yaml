@@ -1,81 +1,77 @@
-# Default values for acp-cd.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-
+## ACP-CD image parameters
+##
 image:
-  repository: nginx
+  ## Image repository
+  ##
+  repository: docker.cloudentity.io/acp
+
+  ## Image pull policy
+  ##
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
+
+  ## Image tag (immutable tags are recommended, default is the chart appVersion)
+  ##
   tag: ""
 
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
+## Global Docker registry secret names as an array
+##
+imagePullSecrets:
+  - name: docker.cloudentity.io
 
-serviceAccount:
-  # Specifies whether a service account should be created
+## Credentials for your ACP-CD
+##
+##
+clientCredentials:
+
   create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
+
   name: ""
 
-podAnnotations: {}
+  clientID: "YnZnN2h2YzA1NnV0YmdpaHF1OWcK"
+  clientSecret: "aE0wdmYwZHNBMHkxSHBHZW1WXzlDa21iYmlOclp2NW92S1JDTm5hd2pJbwo="
+  issiuerURL: "https://acp.acp-system:8443/default/system"
 
-podSecurityContext: {}
-  # fsGroup: 2000
-
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-
-service:
-  type: ClusterIP
-  port: 80
-
-ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
-
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
+policies:
+  - tenant_id: "{tid}"
+    server_id: "{aid}"
+    id: block_test_policy
+    policy_name: block_test
+    language: cloudentity
+    type: api
+    validators:
+      - name: "false"
+  - tenant_id: "{tid}"
+    server_id: "{aid}"
+    id: allow_test_policy
+    policy_name: allow_test
+    language: cloudentity
+    type: api
+    validators:
+      - name: "true"
+gateway_api_groups:
+  - tenant_id: "{tid}"
+    server_id: "{aid}"
+    service_id: httpbin
+    gateway_id: sample-istio-authorizer
+    name: "default/httpbin"
+    id: test
+    apis:
+      - method: GET
+        path: /deny
+      - method: GET
+        path: /anything
+services:
+  - id: httpbin
+    tenant_id: "{tid}"
+    authorization_server_id: "{aid}"
+    gateway_id: sample-istio-authorizer
+    name: default/httpbin
+    apis:
+      - method: GET
+        path: /deny
+        can_have_policy: true
+        policy_id: block_test_policy
+      - method: GET
+        path: /anything
+        can_have_policy: true
+        policy_id: allow_test_policy   
