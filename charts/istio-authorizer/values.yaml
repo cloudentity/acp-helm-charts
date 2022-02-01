@@ -87,7 +87,7 @@ parseBody:
 ##
 clientCredentials:
   ## Specifies whether a kubernetes secret should be created from the provided clientID and clientSecret.
-  ## For production setup please create secret manually and use name
+  ## For production setupplease create the secret (ideally encrypted) manually
   ## parameter to integrate with istio-authorizer
   ##
   create: true
@@ -106,7 +106,8 @@ clientCredentials:
 ## Additional istio-authorizer ConfigMap entries
 ##
 data:
-  ##  Example root CA used by istio-authorizer http client
+  ## If you're exposing ACP with your own custom (not publically trusted) certificates, Istio Authorizer needs to trust them.
+  ## Set the ca.crt to the CA certificate used by ACP.
   ##
   ca.crt: |
     -----BEGIN CERTIFICATE-----
