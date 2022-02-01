@@ -1,4 +1,4 @@
-{{- if .Values.envoyFilter.enabled -}}
+{{- if .Values.parseBody.enabled -}}
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
@@ -23,7 +23,7 @@ spec:
         typed_config:
           "@type": type.googleapis.com/envoy.extensions.filters.http.ext_authz.v3.ExtAuthz
           with_request_body:
-            max_request_bytes: {{ .Values.envoyFilter.maxRequestBytes }}
+            max_request_bytes: {{ .Values.parseBody.maxRequestBytes }}
             allow_partial_message: true
             pack_as_bytes: true
 {{- end }}
