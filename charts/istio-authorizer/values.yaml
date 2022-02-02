@@ -87,7 +87,7 @@ parseBody:
 ##
 clientCredentials:
   ## Specifies whether a kubernetes secret should be created from the provided clientID and clientSecret.
-  ## For production setupplease create the secret (ideally encrypted) manually
+  ## For production setup, please create the secret (ideally encrypted) manually
   ## parameter to integrate with istio-authorizer
   ##
   create: true
