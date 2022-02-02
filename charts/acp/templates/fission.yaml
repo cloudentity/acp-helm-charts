@@ -73,7 +73,7 @@ spec:
   poolsize: {{ .Values.fission.poolsize }}
   terminationGracePeriod: 1
   runtime:
-    image: docker.cloudentity.io/rego-env:2
+    image: docker.cloudentity.io/rego-env:2.0.1
     podspec:
       containers:
         - name: rego-v2
