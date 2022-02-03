@@ -46,9 +46,9 @@ clientCredentials:
   ##
   clientSecret: ""
 
-  ## Issuer URL must point to the issuer URL of the System workspace of your tenan
+  ## Issuer URL must point to the issuer URL of the System workspace of your tenant
   ##
-  issiuerURL: "https://acp.acp-system:8443/default/system"
+  issuerURL: "https://acp.acp-system:8443/default/system"
 
 ## ACP-CD declarative configuration import for tenant
 ## Ref: https://docs.authorization.cloudentity.com/api/system/#operation/importTenantConfiguration

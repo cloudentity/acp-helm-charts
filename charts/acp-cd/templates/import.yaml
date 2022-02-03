@@ -48,7 +48,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ include "acp-cd.clientCredentialsName" . }}
-                  key: issiuerURL
+                  key: issuerURL
           volumeMounts:
             - mountPath: /import
               name: import
