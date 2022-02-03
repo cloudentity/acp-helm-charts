@@ -14,7 +14,8 @@ spec:
       {{- end }}
       volumes:
         - name: import
-          configMap: {{ include "acp-cd.fullname" . }}
+          configMap: 
+            name: {{ include "acp-cd.fullname" . }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"

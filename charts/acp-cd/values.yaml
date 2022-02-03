@@ -39,12 +39,12 @@ clientCredentials:
   ## Client ID must point to the client identifier 
   ## of the client application that you have created in the System workspace for your tenant
   ##  
-  clientID: ""
+  clientID: "YnZnN2h2YzA1NnV0YmdpaHF1OWcK"
   
   ## Client Secret must point to the client secret 
   ## of the client application that you have created in the System workspace for your tenant
   ##
-  clientSecret: ""
+  clientSecret: "aE0wdmYwZHNBMHkxSHBHZW1WXzlDa21iYmlOclp2NW92S1JDTm5hd2pJbwo"
 
   ## Issuer URL must point to the issuer URL of the System workspace of your tenant
   ##
@@ -85,5 +85,5 @@ data:
   servers: []
   servers_bindings: []
   services: []
-  tenant": {}
+  tenant: {}
   vanity_domains: []
