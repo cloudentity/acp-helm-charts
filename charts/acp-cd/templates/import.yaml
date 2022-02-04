@@ -4,6 +4,8 @@ metadata:
   labels:
     {{- include "acp-cd.labels" . | nindent 4 }}
   name: {{ include "acp-cd.fullname" . }}
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
 spec:
   backoffLimit: 4
   template:
