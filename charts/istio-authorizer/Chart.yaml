@@ -3,4 +3,4 @@ name: istio-authorizer
 description: A Helm chart for istio-authorizer
 type: application
 version: 1.17.5-1
-appVersion: "2.0.0-8"
+appVersion: "2.0.0-9"
