@@ -52,16 +52,16 @@ spec:
               value: "{{ $value }}"
           {{- end }}
           {{- if eq .Values.extraEnv.APIGEE_PRODUCT_NAME "ApigeeX" }}
-          {{- range $key, $value := .Values.extraEnvApigeeX }}
+            {{- range $key, $value := .Values.extraEnvApigeeX }}
             - name: {{ $key }}
               value: "{{ $value }}"
-          {{- end }}
+            {{- end }}
           {{- end }}
           {{- if eq .Values.extraEnv.APIGEE_PRODUCT_NAME "ApigeeEdge" }}
-          {{- range $key, $value := .Values.extraEnvApigeeEdge }}
+            {{- range $key, $value := .Values.extraEnvApigeeEdge }}
             - name: {{ $key }}
               value: "{{ $value }}"
-          {{- end }}
+            {{- end }}
           {{- end }}
           ports:
             - name: http
