@@ -25,12 +25,15 @@ imagePullSecrets:
 ## Service account to use by the apigee-authorizer
 ##
 serviceAccount:
-  # Specifies whether a service account should be created
+  ## Specifies whether a service account should be created
+  ##
   create: true
-  # Annotations to add to the service account
+  ## Annotations to add to the service account
+  ##
   annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
+  ## The name of the service account to use.
+  ## If not set and create is true, a name is generated using the fullname template
+  ##
   name: ""
 
 ## Issuer URL of your tenant's ACP system workspace
@@ -49,20 +52,22 @@ issuerURL: "https://acp.acp-system:8443/default/system"
 ## If the issuerURL uses a vanity domain, you will need to specify the tenantID,
 ## and if the domain is per-server, then you must also specify the terverID.
 ## There is no harm in specifying them, even if you do not use a vanity domain.
+##
 tenantID: "default"
 serverID: "system"
 
 ## Credentials for your ACP apigee-authorizer
 ##
-##
 clientCredentials:
-  # Specifies whether a kubernetes secret should be created from the provided clientID and clientSecret.
-  # For production setup please create secret manually and use name
-  # parameter to integrate with apigee-authorizer
+  ## Specifies whether a kubernetes secret should be created from the provided clientID and clientSecret.
+  ## For production setup please create secret manually and use name
+  ## parameter to integrate with apigee-authorizer
+  ##
   create: true
 
-  # The name of the client secret to use
-  # If not set and create is true, a name is generated using the fullname template
+  ## The name of the client secret to use
+  ## If not set and create is true, a name is generated using the fullname template
+  ##
   name: ""
 
   # Default dummy values
@@ -71,8 +76,11 @@ clientCredentials:
   clientSecret: "TuIEmSWHtU-0ftOO7445nccomqu71V4Wcv4SW3fzviM"
 
 ## Additional apigee-authorizer environment variables
+##
 extraEnv:
-  # Needed for ApigeeX only
+  ## Specify the path to the Google service account access key.
+  ## Needed for ApigeeX only.
+  ##
   # GOOGLE_APPLICATION_CREDENTIALS: /data-apigee/serviceaccount-key.json
 
 service:
@@ -102,6 +110,7 @@ ingress:
 
   ## Ingress TLS configuration
   ## Secrets must be manually created in the namespace
+  ##
   tls: []
   #  - secretName: apigee-authorizer-tls
   #    hosts:
@@ -111,7 +120,8 @@ ingress:
 ## Additional apigee-authorizer ConfigMap entries
 ##
 data:
-  # Example self-signed cert used to serve HTTPS.
+  ## Example self-signed cert used to serve HTTPS.
+  ##
   cert.pem: |
     -----BEGIN CERTIFICATE-----
     MIIEOjCCAyKgAwIBAgIUEfz65m4SgrhALNdiivOb7Gc/w4gwDQYJKoZIhvcNAQEL
@@ -138,7 +148,8 @@ data:
     A6jrG49GVNwUJwuXNF/YJPD+yYCpUMV5OGMq9pl11iZA8ohE2zSOMGLjJXediYns
     0a+v2EhtAFuMkn6c1NsjNqMddKQPfstqfBwU9ZJQ
     -----END CERTIFICATE-----
-  # Example private key associated with cert.pem.
+  ## Example private key associated with cert.pem.
+  ##
   cert-key.pem: |
     -----BEGIN RSA PRIVATE KEY-----
     MIIEpAIBAAKCAQEAutEBDBNPHr3FiHT90c5+D+Zmi3jKkuBw6Hxgj+9YslM1vpsn
@@ -167,7 +178,8 @@ data:
     64/OUsD3B2FF+WhkjsJAlLBYkVbJUfjY4OZywpnScLjJYTysYlrAArz+5RYEwYUi
     ulKp5/FbjejQNCJr6FD7xouVXUa1yNP8DMNEnhYI7rDGLqIMwEaVRw==
     -----END RSA PRIVATE KEY-----
-  # Example Google Service account access key. Needed only for ApigeeX
+  ## Example Google Service account access key. Needed only for ApigeeX.
+  ##
   serviceaccount-key.json: |
     {
       "type": "service_account",
@@ -188,9 +200,13 @@ data:
     token_exchange:
       enabled: true
     apigee:
-      product_name: ApigeeX #one of ApigeeX or ApigeeEdge
+      ## Specify the Apigee product name: ApigeeX or ApigeeEdge
+      ##
+      product_name: ApigeeX
       shared_flow_data: /data
-      # apigee edge configuration, leave empty in case of ApigeeX
+      ## Input configuration values for ApigeeEdge.
+      ## Leave field empty if you're setting up ApigeeX.
+      ##
       apigee_edge:
         username: ""
         password: ""
