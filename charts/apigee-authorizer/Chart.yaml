@@ -1,0 +1,6 @@
+apiVersion: v2
+name: apigee-authorizer
+description: A Helm chart for apigee-authorizer
+type: application
+version: 0.1.0
+appVersion: "2.0.0-5"

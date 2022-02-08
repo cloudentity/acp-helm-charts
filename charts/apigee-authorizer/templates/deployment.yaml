@@ -57,7 +57,7 @@ spec:
               value: "{{ $value }}"
           {{- end }}
           {{- end }}
-          {{- if eq .Values.EnvVars.APIGEE_PRODUCT_NAME "ApigeeEdge" }}
+          {{- if eq .Values.extraEnv.APIGEE_PRODUCT_NAME "ApigeeEdge" }}
           {{- range $key, $value := .Values.extraEnvApigeeEdge }}
             - name: {{ $key }}
               value: "{{ $value }}"
