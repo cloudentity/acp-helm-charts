@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "apigee-authorizer.fullname" . }}
+  labels:
+    {{- include "apigee-authorizer.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "apigee-authorizer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "apigee-authorizer.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "apigee-authorizer.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: ACP_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "apigee-authorizer.clientCredentialsName" . }}
+                  key: clientID
+            - name: ACP_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "apigee-authorizer.clientCredentialsName" . }}
+                  key: clientSecret
+            - name: ACP_ISSUER_URL
+              value: "{{ .Values.issuerURL }}"
+            - name: ACP_TENANT_ID
+              value: "{{ .Values.tenantID }}"
+            - name: ACP_SERVER_ID
+              value: "{{ .Values.serverID }}"
+          {{- range $key, $value := .Values.extraEnv }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+          {{- end }}
+          {{- if eq .Values.extraEnv.APIGEE_PRODUCT_NAME "ApigeeX" }}
+          {{- range $key, $value := .Values.extraEnvApigeeX }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+          {{- end }}
+          {{- end }}
+          {{- if eq .Values.EnvVars.APIGEE_PRODUCT_NAME "ApigeeEdge" }}
+          {{- range $key, $value := .Values.extraEnvApigeeEdge }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+          {{- end }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: 8442
+              protocol: TCP
+          readinessProbe:
+            tcpSocket:
+              port: 8442
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 8442
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /data-apigee
+              name: data
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: data
+          configMap:
+            name: {{ include "apigee-authorizer.fullname" . }}
