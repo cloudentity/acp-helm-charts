@@ -30,6 +30,9 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - --config
+            - /data-apigee/config.yaml
           env:
             - name: ACP_CLIENT_ID
               valueFrom:
@@ -50,18 +53,6 @@ spec:
           {{- range $key, $value := .Values.extraEnv }}
             - name: {{ $key }}
               value: "{{ $value }}"
-          {{- end }}
-          {{- if eq .Values.extraEnv.APIGEE_PRODUCT_NAME "ApigeeX" }}
-            {{- range $key, $value := .Values.extraEnvApigeeX }}
-            - name: {{ $key }}
-              value: "{{ $value }}"
-            {{- end }}
-          {{- end }}
-          {{- if eq .Values.extraEnv.APIGEE_PRODUCT_NAME "ApigeeEdge" }}
-            {{- range $key, $value := .Values.extraEnvApigeeEdge }}
-            - name: {{ $key }}
-              value: "{{ $value }}"
-            {{- end }}
           {{- end }}
           ports:
             - name: http

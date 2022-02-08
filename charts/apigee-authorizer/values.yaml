@@ -71,58 +71,9 @@ clientCredentials:
   clientSecret: "TuIEmSWHtU-0ftOO7445nccomqu71V4Wcv4SW3fzviM"
 
 ## Additional apigee-authorizer environment variables
-## To specify Apigee-X or Apigee Edge:
-##
-##   APIGEE_PRODUCT_NAME: ApigeeX
-##
-## To specify the path to directory with apigee shared flow definition:
-##
-##   APIGEE_SHARED_FLAW_DATA: /data
-##
-## To serve HTTPS from the apigee-authorizer, specify a cert and key:
-##
-##   HTTP_SERVER_CERTIFICATE_CERT_PATH: /data-apigee/cert.pem
-##   HTTP_SERVER_CERTIFICATE_KEY_PATH:  /data-apigee/cert-key.pem
-##
-## To connect via TLS to ACP, when ACP uses a self-signed cert:
-##
-##   HTTP_CLIENT_INSECURE_SKIP_VERIFY: true
-##
-## To set the logging level:
-##
-##   LOGGING_LEVEL: trace | debug | info | warning | error | fatal | panic
-##
-## ApigeeX specific Environment Variables
-## To specify the Google Service Account access key:
-##
-##   GOOGLE_APPLICATION_CREDENTIALS: /data/apigee/servicaccount-key.json
-##
-## Apigee Edge specific Environment Variables
-## To specify the username, password, and organization ID:
-##
-##  APIGEE_APIGEE_EDGE_USERNAME: ""
-##  APIGEE_APIGEE_EDGE_PASSWORD: ""
-##  APIGEE_APIGEE_EDGE_ORGANIZATION_ID: ""
-##
 extraEnv:
-  HTTP_CLIENT_INSECURE_SKIP_VERIFY: true
-  # HTTP_SERVER_CERTIFICATE_CERT_PATH: /data-apigee/cert.pem
-  # HTTP_SERVER_CERTIFICATE_KEY_PATH: /data-apigee/cert-key.pem
-  APIGEE_PRODUCT_NAME: "ApigeeX"
-  APIGEE_SHARED_FLOW_DATA: /data
-  LOGGING_LEVEL: info
-
-## Environment variables needed for ApigeeX
-##
-extraEnvApigeeX:
-  GOOGLE_APPLICATION_CREDENTIALS: /data-apigee/serviceaccount-key.json
-
-## Environment variables needed for ApigeeEdge
-##
-extraEnvApigeeEdge:
-  APIGEE_APIGEE_EDGE_USERNAME: ""
-  APIGEE_APIGEE_EDGE_PASSWORD: ""
-  APIGEE_APIGEE_EDGE_ORGANIZATION_ID: ""
+  # Needed for ApigeeX only
+  # GOOGLE_APPLICATION_CREDENTIALS: /data-apigee/serviceaccount-key.json
 
 service:
   ## apigee-authorizer service type
@@ -230,3 +181,15 @@ data:
       "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
       "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/apigeesa%40your-project-id.iam.gserviceaccount.com"
     }
+  config: |
+    http_client:
+      cert_path: /data-apigee/cert.pem
+      cert_key: /data-apigee/cert-key.pem
+    apigee:
+      product_name: ApigeeX #one of ApigeeX or ApigeeEdge
+      shared_flow_data: /data
+      # apigee edge configuration, leave empty in case of ApigeeX
+      apigee_edge:
+        username: ""
+        password: ""
+        organization_id: ""
