@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "standalone-authorizer.fullname" . }}
+  labels:
+    {{- include "standalone-authorizer.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      name: {{ .Values.service.name }}
+      targetPort: http
+      protocol: TCP
+  selector:
+    {{- include "standalone-authorizer.selectorLabels" . | nindent 4 }}

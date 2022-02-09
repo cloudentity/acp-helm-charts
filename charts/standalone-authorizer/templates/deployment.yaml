@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "standalone-authorizer.fullname" . }}
+  labels:
+    {{- include "standalone-authorizer.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "standalone-authorizer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "standalone-authorizer.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "standalone-authorizer.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: ACP_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "standalone-authorizer.clientCredentialsName" . }}
+                  key: clientID
+            - name: ACP_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "standalone-authorizer.clientCredentialsName" . }}
+                  key: clientSecret
+            - name: ACP_ISSUER_URL
+              value: "{{ .Values.issuerURL }}"
+            - name: ACP_TENANT_ID
+              value: "{{ .Values.tenantID }}"
+            - name: ACP_SERVER_ID
+              value: "{{ .Values.serverID }}"
+            - name: HTTP_SERVER_PORT
+              value: "{{ .Values.service.port }}"
+            - name: HTTP_SERVER_DANGEROUS_DISABLE_TLS
+              value: "{{ .Values.tlsDisabled }}"
+          {{- range $key, $value := .Values.extraEnv }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          startupProbe:
+            httpGet:
+              path: /alive
+              {{- if .Values.tlsDisabled }}
+              scheme: HTTP
+              {{- else }}
+              scheme: HTTPS
+              {{- end }}
+              port: {{ .Values.service.port }}
+            failureThreshold: 10
+            periodSeconds: 10
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /alive
+              {{- if .Values.tlsDisabled }}
+              scheme: HTTP
+              {{- else }}
+              scheme: HTTPS
+              {{- end }}
+              port: {{ .Values.service.port }}
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /alive
+              {{- if .Values.tlsDisabled }}
+              scheme: HTTP
+              {{- else }}
+              scheme: HTTPS
+              {{- end }}
+              port: {{ .Values.service.port }}
+            periodSeconds: 20
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /data-standalone
+              name: data
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: data
+          configMap:
+            name: {{ include "standalone-authorizer.fullname" . }}
