@@ -27,9 +27,12 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{- toYaml .Values.containerSecurityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - --config
+            - /data/config.yaml
           env:
             - name: ACP_CLIENT_ID
               valueFrom:
@@ -94,7 +97,7 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            - mountPath: /data-standalone
+            - mountPath: /data
               name: data
       {{- with .Values.nodeSelector }}
       nodeSelector:

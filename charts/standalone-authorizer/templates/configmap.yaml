@@ -6,10 +6,9 @@ metadata:
     {{- include "standalone-authorizer.labels" . | nindent 4 }}
 data:
 {{- range $key, $value := .Values.data }}
-  {{- if $key | regexMatch ".*\\.ya?ml$" }}
-  {{ $key }}: |
-    {{- toYaml $value | default "{}" | indent 4 }}
-  {{- else }}
+  {{- if eq $key "config" }}
+  {{ $key }}.yaml: {{ toYaml $value | indent 4 }}
+  {{ else }}
   {{ $key }}: {{ toYaml $value | indent 4 }}
-  {{- end }}
+  {{- end -}}
 {{- end -}}
