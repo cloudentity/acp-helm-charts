@@ -77,7 +77,7 @@ clientCredentials:
 
 ## Additional apigee-authorizer environment variables
 ##
-extraEnv:
+extraEnv: {}
   ## Specify the path to the Google service account access key.
   ## Needed for ApigeeX only.
   ##
