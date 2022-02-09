@@ -78,14 +78,35 @@ tlsDisabled: false
 ##
 extraEnv: {}
 
+## node selector for pod assignment
+##
+# nodeSelector: {}
+
+## Affinity for pod assignment
+affinity: {}
+  #  nodeAffinity:
+  #    requiredDuringSchedulingIgnoredDuringExecution:
+  #      nodeSelectorTerms:
+  #        - matchExpressions:
+  #            - key: authorizer
+  #              operator: In
+  #              values:
+  #                - "true"
+
+## Tolerations for pod assignment
+tolerations: []
+  #  - key: authorizer
+  #    value: "true"
+  #    effect: NoSchedule
+
 ## Pod resources definition
 resources: {}
-  # requests:
-  #   cpu: 10m
-  #   memory: 48Mi
-  # limits:
-  #   cpu: 100m
-  #   memory: 96Mi
+  #  requests:
+  #    cpu: 10m
+  #    memory: 48Mi
+  #  limits:
+  #    cpu: 100m
+  #    memory: 96Mi
 
 service:
   ## standalone-authorizer service type
