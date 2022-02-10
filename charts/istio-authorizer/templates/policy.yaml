@@ -2,7 +2,7 @@
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: acp-authorizer
+  name: acp-istio-authorizer-policy
   namespace: {{ . }}
 spec:
   action: CUSTOM
