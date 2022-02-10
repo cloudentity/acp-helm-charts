@@ -83,8 +83,8 @@ parseBody:
   ##
   maxRequestBytes: 8192
 
-  ## Custom list of namespaces that the parse body filter will be applied to.
-  ## If empty the discovery namespaces will be used.
+  ## Custom list of namespaces that the parse body filter is applied to.
+  ## If empty, namespaces from the discovery.namespaces parameter are used.
   ##
   namespaces: []
 
@@ -108,9 +108,10 @@ clientCredentials:
   clientID: "YnZnN2h2YzA1NnV0YmdpaHF1OWcK"
   clientSecret: "aE0wdmYwZHNBMHkxSHBHZW1WXzlDa21iYmlOclp2NW92S1JDTm5hd2pJbwo="
 
-# Authorizer discovery configuration
+## Authorizer discovery configuration
 discovery:
-  # List of namespaces in which authorizer will do service discovery
+  ## List of namespaces in which the authorizer discovers services.
+  ##
   namespaces:
     - default
 
