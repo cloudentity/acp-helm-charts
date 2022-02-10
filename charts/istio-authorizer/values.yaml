@@ -78,10 +78,14 @@ resources: {}
 ## If you want to use request body in your authorization policies, enable this flag.
 ## It's going to add a filter to Envoy which will propagate the request body to the authorizer. 
 parseBody:
-  enabled: false
+  enabled: true
   ## Maximum number of requested bytes 
   ##
   maxRequestBytes: 8192
+
+  # Custom list of namespaces that the parse body filter will be applied to
+  # If empty fallback to discovery namespaces
+  namespaces:
 
 ## Credentials for your ACP istio-authorizer
 ##
@@ -102,6 +106,10 @@ clientCredentials:
   ##
   clientID: "YnZnN2h2YzA1NnV0YmdpaHF1OWcK"
   clientSecret: "aE0wdmYwZHNBMHkxSHBHZW1WXzlDa21iYmlOclp2NW92S1JDTm5hd2pJbwo="
+
+discovery:
+  namespaces:
+    - default
 
 ## Additional istio-authorizer ConfigMap entries
 ##
