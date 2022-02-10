@@ -50,7 +50,7 @@ issuerURL: "https://acp.acp-system:8443/default/system"
 
 ## Vanity Domain
 ## If the issuerURL uses a vanity domain, you will need to specify the tenantID,
-## and if the domain is per-server, then you must also specify the terverID.
+## and if the domain is per-server, then you must also specify the serverID.
 ## There is no harm in specifying them, even if you do not use a vanity domain.
 ##
 tenantID: "default"
