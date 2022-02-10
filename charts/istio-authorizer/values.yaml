@@ -83,7 +83,8 @@ parseBody:
   ##
   maxRequestBytes: 8192
 
-  # Custom list of namespaces that the parse body filter will be applied to
+  # Custom list of namespaces that the parse body filter will be applied to.
+  # If empty the discovery namespaces will be used.
   namespaces:
 
 ## Credentials for your ACP istio-authorizer

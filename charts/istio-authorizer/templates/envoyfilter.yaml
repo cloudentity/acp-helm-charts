@@ -1,5 +1,9 @@
 {{- if .Values.parseBody.enabled -}}
-{{- range .Values.parseBody.namespaces }}
+{{- $namespaces := .Values.parseBody.namespaces -}}
+{{- if not $namespaces -}}
+{{- $namespaces = .Values.discovery.namespaces -}}
+{{- end -}}
+{{- range $namespaces }}
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
