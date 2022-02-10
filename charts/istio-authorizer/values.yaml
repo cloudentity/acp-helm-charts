@@ -107,9 +107,10 @@ clientCredentials:
   clientID: "YnZnN2h2YzA1NnV0YmdpaHF1OWcK"
   clientSecret: "aE0wdmYwZHNBMHkxSHBHZW1WXzlDa21iYmlOclp2NW92S1JDTm5hd2pJbwo="
 
+# Authorizer discovery configuration
 discovery:
-  namespaces:
-    - default
+  # comma separated list of namespaces in which authorizer will do service discovery
+  namespaces: "default"
 
 ## Additional istio-authorizer ConfigMap entries
 ##
