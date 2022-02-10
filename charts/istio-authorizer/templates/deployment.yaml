@@ -47,7 +47,7 @@ spec:
                   name: {{ include "istio-authorizer.clientCredentialsName" . }}
                   key: clientSecret
             - name: DISCOVERY_NAMESPACES
-              value: {{ .Values.discovery.namespaces }}
+              value: {{ join "," .Values.discovery.namespaces }}
           ports:
             - name: grpc
               containerPort: 9001
