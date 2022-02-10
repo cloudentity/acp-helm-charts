@@ -103,6 +103,29 @@ clientCredentials:
   clientID: "YnZnN2h2YzA1NnV0YmdpaHF1OWcK"
   clientSecret: "aE0wdmYwZHNBMHkxSHBHZW1WXzlDa21iYmlOclp2NW92S1JDTm5hd2pJbwo="
 
+## node selector for pod assignment
+##
+## nodeSelector: {}
+
+# Affinity for pod assignment
+##
+affinity: {}
+## nodeAffinity:
+##   requiredDuringSchedulingIgnoredDuringExecution:
+##     nodeSelectorTerms:
+##       - matchExpressions:
+##           - key: authorizer
+##             operator: In
+##             values:
+##               - "true"
+
+## Tolerations for pod assignment
+##
+tolerations: []
+## - key: authorizer
+##   value: "true"
+##   effect: NoSchedule
+
 ## Additional istio-authorizer ConfigMap entries
 ##
 data:
