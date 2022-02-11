@@ -1,3 +1,4 @@
+{{- if .Values.authorizationPolicy.enabled -}}
 {{- range .Values.discovery.namespaces -}}
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
@@ -11,4 +12,5 @@ spec:
   rules:
   - {}
 ---
+{{- end }}
 {{- end }}

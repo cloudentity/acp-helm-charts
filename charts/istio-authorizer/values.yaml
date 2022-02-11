@@ -95,6 +95,16 @@ parseBody:
   ##
   namespaces: []
 
+## Authorization policy
+## todo
+## https://istio.io/latest/docs/reference/config/security/authorization-policy/
+##
+##
+authorizationPolicy:
+  ## Once enabled, AuthorizationPolicy is applied for discovery.namespaces
+  ##
+  enabled: true
+
 ## Credentials for your ACP istio-authorizer
 ##
 clientCredentials:
