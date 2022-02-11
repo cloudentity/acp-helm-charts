@@ -96,9 +96,8 @@ parseBody:
   namespaces: []
 
 ## Authorization policy
-## todo
+## Adds custom access control action that delegates authorization to Istio Authorizer for APIs deployed behind the Istio Service Mesh.
 ## https://istio.io/latest/docs/reference/config/security/authorization-policy/
-##
 ##
 authorizationPolicy:
   ## Once enabled, AuthorizationPolicy is applied for discovery.namespaces
