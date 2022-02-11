@@ -36,6 +36,10 @@ spec:
           env:
             - name: ACP_ISSUER_URL
               value: {{ .Values.issuerURL }}
+            - name: ACP_TENANT_ID
+              value: {{ .Values.tenantID }}
+            - name: ACP_SERVER_ID
+              value: {{ .Values.serverID }}
             - name: ACP_CLIENT_ID
               valueFrom:
                 secretKeyRef:
@@ -46,6 +50,8 @@ spec:
                 secretKeyRef:
                   name: {{ include "istio-authorizer.clientCredentialsName" . }}
                   key: clientSecret
+            - name: DISCOVERY_NAMESPACES
+              value: {{ join "," .Values.discovery.namespaces }}
           ports:
             - name: grpc
               containerPort: 9001

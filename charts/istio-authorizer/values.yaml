@@ -65,6 +65,13 @@ serviceAccount:
 ##
 issuerURL: "https://acp.acp-system:8443/default/system"
 
+## Vanity Domain
+## If the issuerURL uses a vanity domain, you will need to specify the tenantID,
+## and if the domain is per-server, then you must also specify the serverID.
+##
+tenantID: ""
+serverID: ""
+
 ## Pod resources definition
 resources: {}
   # requests:
@@ -82,6 +89,11 @@ parseBody:
   ## Maximum number of requested bytes 
   ##
   maxRequestBytes: 8192
+
+  ## Custom list of namespaces that the parse body filter is applied to.
+  ## If empty, namespaces from the discovery.namespaces parameter are used.
+  ##
+  namespaces: []
 
 ## Credentials for your ACP istio-authorizer
 ##
@@ -125,6 +137,13 @@ tolerations: []
 ## - key: authorizer
 ##   value: "true"
 ##   effect: NoSchedule
+
+## Authorizer discovery configuration
+discovery:
+  ## List of namespaces in which the authorizer discovers services.
+  ##
+  namespaces:
+    - default
 
 ## Additional istio-authorizer ConfigMap entries
 ##
