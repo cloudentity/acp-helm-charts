@@ -12,6 +12,21 @@ data:
       {{- range .Values.discovery.namespaces }}
       - {{ . }}
       {{- end }}
+    do_not_fail_on_non_matching_requests: {{ .Values.doNotFailOnNonMatchingRequests }}
+    cluster_domain: {{ .Values.clusterDomain }}
+    headers:
+      output_header_prefix: {{ .Values.headers.outputHeaderPrefix }}
+      auth_ctx_header: {{ .Values.headers.authCtxHeader }}
+    token_exchange:
+      enabled: {{ .Values.tokenExchange.enabled }}
+      cache:
+        ttl: {{ .Values.tokenExchange.cache.ttl }}
+        max_size: {{ .Values.tokenExchange.cache.maxSize }}
+    inject_token:
+      mode: {{ .Values.injectToken.mode }}
+      original_token_header_name: {{ .Values.injectToken.originalTokenHeaderName }}
+      exchanged_token_header_name: {{ .Values.injectToken.exchangedTokenHeaderName }}
+      strip_bearer: {{ .Values.injectToken.stripBearer }}
 {{- range $key, $value := .Values.data }}
   {{- if eq $key "extraconfig" }}
   {{ $key }}.yaml: {{ toYaml $value | indent 4 }}

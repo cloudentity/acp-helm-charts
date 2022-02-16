@@ -149,13 +149,71 @@ tolerations: []
 
 ## Authorizer discovery configuration
 discovery:
-  #  When true, API discovery is enabled
+  ##  When true, API discovery is enabled
   ##
   enabled: true
   ## List of namespaces in which the authorizer discovers services.
   ##
   namespaces:
     - default
+
+## Don't fail when the request has no matching rule
+##
+doNotFailOnNonMatchingRequests: false
+
+## Cluster domain name
+##
+clusterDomain: "cluster.local"
+
+
+## Response headers config
+##
+headers:
+  ## Output Header Prefix
+  ##
+  outputHeaderPrefix: "x-output-"
+
+  ## Auth ctx header
+  ##
+  authCtxHeader: "x-auth-ctx"
+
+
+## Token exchange settings
+##
+tokenExchange:
+ ## enable token exchange (temporary until acp 2.0 is released)
+ ##
+ enabled: false
+
+ ## cache settings
+ ##
+ cache:
+   ## defines for how long the exchanged token should be cached for
+   ##
+   ttl: "1m0s"
+
+   ## defines how many tokens should be cached
+   ##
+   maxSize: 1000
+
+## Token exchange inject settings
+injectToken:
+    ## Inject mode, defines what token should be send to the target service
+    ## One of: InjectOriginalToken, InjectExchangedToken, InjectBothTokens
+    ##
+    mode: "InjectExchangedToken"
+
+    ## Original token header name
+    ##
+    originalTokenHeaderName: ""
+
+    ## Exchanged token header name
+    ##
+    exchangedTokenHeaderName: "Authorization"
+
+    ## strip bearer token
+    ##
+    stripBearer: false
 
 ## Additional istio-authorizer ConfigMap entries
 ##
