@@ -14,4 +14,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Check versions
-        run: scripts/acp-version.check.sh
+        run: ./tests/scripts/acp-version-check.sh
