@@ -149,6 +149,9 @@ tolerations: []
 
 ## Authorizer discovery configuration
 discovery:
+  #  When true, API discovery is enabled
+  ##
+  enabled: true
   ## List of namespaces in which the authorizer discovers services.
   ##
   namespaces:
@@ -185,6 +188,6 @@ data:
   # The data should match istio-authorizer configuration options
   # https://docs.authorization.cloudentity.com/guides/developer/protect/istio/istio_authz_config/
   #
-  config: |
+  extraconfig: |
     http_client:
       root_ca: /data/ca.crt

@@ -5,8 +5,15 @@ metadata:
   labels:
     {{- include "istio-authorizer.labels" . | nindent 4 }}
 data:
+  config.yaml: |
+    discovery:
+      enabled: {{ .Values.discovery.enabled }}
+      namespaces:
+      {{- range .Values.discovery.namespaces }}
+      - {{ . }}
+      {{- end }}
 {{- range $key, $value := .Values.data }}
-  {{- if eq $key "config" }}
+  {{- if eq $key "extraconfig" }}
   {{ $key }}.yaml: {{ toYaml $value | indent 4 }}
   {{ else }}
   {{ $key }}: {{ toYaml $value | indent 4 }}

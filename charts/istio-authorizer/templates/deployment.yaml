@@ -32,7 +32,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
             - --config
-            - /data/config.yaml
+            - /data/config.yaml,/data/extraconfig.yaml
           env:
             - name: ACP_ISSUER_URL
               value: {{ .Values.issuerURL }}
@@ -50,8 +50,6 @@ spec:
                 secretKeyRef:
                   name: {{ include "istio-authorizer.clientCredentialsName" . }}
                   key: clientSecret
-            - name: DISCOVERY_NAMESPACES
-              value: {{ join "," .Values.discovery.namespaces }}
           ports:
             - name: grpc
               containerPort: 9001
