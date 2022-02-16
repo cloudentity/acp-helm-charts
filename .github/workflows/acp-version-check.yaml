@@ -1,0 +1,17 @@
+name: ACP charts version check
+on:
+  push:
+    branches-ignore:
+      - "master"
+    tags-ignore:
+      - "*"
+
+jobs:
+  compare-versions:
+    name: Compare ACP charts version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Check versions
+        run: scripts/acp-version.check.sh
