@@ -14,7 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Helm lint
-        run: make helm-lint CHART=openbanking
+        run: make helm-lint CHART=kube-acp-stack
   acp-dependency-version:
     name: Check acp dependency version
     runs-on: ubuntu-latest
