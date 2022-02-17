@@ -15,6 +15,6 @@ dependencies:
   repository: https://charts.bitnami.com/bitnami
   condition: redis-cluster.enabled
 - name: acp
-  version: "0.17.2-1"
+  version: "0.17.2-3"
   repository: https://charts.cloudentity.io
   condition: acp.enabled

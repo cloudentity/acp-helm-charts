@@ -1,0 +1,17 @@
+name: openbanking chart test
+on:
+  push:
+    branches-ignore:
+      - "master"
+    tags-ignore:
+      - "*"
+
+jobs:
+  test:
+    name: Test chart
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Helm lint
+        run: make helm-lint CHART=openbanking
