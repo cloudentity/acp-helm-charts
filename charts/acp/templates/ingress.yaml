@@ -60,7 +60,7 @@ spec:
               service:
                 name: {{ $fullName }}
                 port:
-                  name: {{ $svcPort }}
+                  number: {{ $svcPort }}
               {{- else }}
               serviceName: {{ $fullName }}
               servicePort: {{ $svcPort }}
@@ -128,7 +128,7 @@ spec:
               service:
                 name: {{ $fullName }}
                 port:
-                  name: {{ $svcPort }}
+                  number: {{ $svcPort }}
               {{- else }}
               serviceName: {{ $fullName }}
               servicePort: {{ $svcPort }}
