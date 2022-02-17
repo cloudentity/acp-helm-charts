@@ -1,10 +1,10 @@
 {{- $fullName := include "acp.fullname" . -}}
 {{- $svcPort := include "acp.portNumber" . -}}
 {{- if .Values.ingress.enabled -}}
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
+{{- if $.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
+apiVersion: networking.k8s.io/v1
 {{- else -}}
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
@@ -12,7 +12,9 @@ metadata:
   labels:
     {{- include "acp.labels" . | nindent 4 }}
   annotations:
-    kubernetes.io/ingress.class: nginx
+    {{- if not ( $.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" ) }}
+    kubernetes.io/ingress.class: {{ .Values.ingress.ingressClassName }}
+    {{- end }}
     {{- if .Values.tlsDisabled }}
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     {{- else }}
@@ -30,6 +32,9 @@ metadata:
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
+  {{- if $.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
+  ingressClassName: {{ .Values.ingress.ingressClassName }}
+  {{- end }}
   {{- if .Values.ingress.tls }}
   tls:
     {{- range .Values.ingress.tls }}
@@ -47,18 +52,28 @@ spec:
         paths:
           {{- range .paths }}
           - path: {{ .path }}
+            {{- if $.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
+            pathType: {{ .pathType }}
+            {{- end }}
             backend:
+              {{- if $.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
+              service:
+                name: {{ $fullName }}
+                port:
+                  name: {{ $svcPort }}
+              {{- else }}
               serviceName: {{ $fullName }}
               servicePort: {{ $svcPort }}
+              {{- end }}
           {{- end }}
     {{- end }}
 {{- end }}
 ---
 {{- if .Values.ingressMtls.enabled -}}
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
+{{- if $.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
+apiVersion: networking.k8s.io/v1
 {{- else -}}
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
@@ -66,7 +81,9 @@ metadata:
   labels:
     {{- include "acp.labels" . | nindent 4 }}
   annotations:
-    kubernetes.io/ingress.class: nginx
+    {{- if not ( $.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" ) }}
+    kubernetes.io/ingress.class: {{ .Values.ingressMtls.ingressClassName }}
+    {{- end }}
     nginx.ingress.kubernetes.io/auth-tls-verify-client: "optional_no_ca"
     nginx.ingress.kubernetes.io/auth-tls-verify-depth: "2"
     nginx.ingress.kubernetes.io/auth-tls-secret: {{ .Release.Namespace }}/{{ .Values.ingressMtls.secret.name }}
@@ -87,6 +104,9 @@ metadata:
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
+  {{- if $.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
+  ingressClassName: {{ .Values.ingressMtls.ingressClassName }}
+  {{- end }}
   tls:
     - hosts:
         {{- range .Values.ingressMtls.hosts }}
@@ -100,9 +120,19 @@ spec:
         paths:
           {{- range .paths }}
           - path: {{ .path }}
+            {{- if $.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
+            pathType: {{ .pathType }}
+            {{- end }}
             backend:
+              {{- if $.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
+              service:
+                name: {{ $fullName }}
+                port:
+                  name: {{ $svcPort }}
+              {{- else }}
               serviceName: {{ $fullName }}
               servicePort: {{ $svcPort }}
+              {{- end }}
           {{- end }}
     {{- end }}
 {{- end }}
