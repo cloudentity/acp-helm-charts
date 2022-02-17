@@ -10,7 +10,7 @@ metadata:
     {{- include "istio-authorizer.labels" . | nindent 4 }}
 spec:
 {{- if not .Values.deployAsDaemonSet }}
-  replicas: 1
+  replicas: {{ .Values.replicas }}
 {{- end }}
   selector:
     matchLabels:
