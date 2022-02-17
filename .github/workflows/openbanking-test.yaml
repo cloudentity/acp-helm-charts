@@ -1,10 +1,11 @@
 name: openbanking chart test
 on:
   push:
-    branches-ignore:
-      - "master"
     tags-ignore:
       - "*"
+
+env:
+  CHART: openbanking
 
 jobs:
   test:
@@ -14,4 +15,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Helm lint
-        run: make helm-lint CHART=openbanking
+        run: make helm-lint

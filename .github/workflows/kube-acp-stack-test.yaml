@@ -1,10 +1,11 @@
 name: kube-acp-stack chart test
 on:
   push:
-    branches-ignore:
-      - "master"
     tags-ignore:
       - "*"
+
+env:
+  CHART: kube-acp-stack
 
 jobs:
   lint:
@@ -14,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Helm lint
-        run: make helm-lint CHART=kube-acp-stack
+        run: make helm-lint
   acp-dependency-version:
     name: Check acp dependency version
     runs-on: ubuntu-latest

@@ -1,5 +1,5 @@
 # name of the chart on which targets will be perfomed
-CHART = 
+CHART ?= acp
 
 # chart-specific targets
 helm-lint:
