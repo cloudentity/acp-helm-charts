@@ -56,6 +56,9 @@ spec:
             - name: grpc
               containerPort: 9001
               protocol: TCP
+            - name: metrics
+              containerPort: 9000
+              protocol: TCP
           readinessProbe:
             tcpSocket:
               port: 9001

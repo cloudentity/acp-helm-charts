@@ -11,5 +11,9 @@ spec:
       name: grpc
     - port: 9002
       name: http
+    - port: 9000
+      targetPort: metrics
+      protocol: TCP
+      name: metrics
   selector:
     {{- include "istio-authorizer.selectorLabels" . | nindent 4 }}
