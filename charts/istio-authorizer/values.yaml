@@ -176,6 +176,7 @@ discovery:
   ##
   disableProxy: false
 
+  ## TODO add comment
   ## if your service is self-hosting an OpenAPI endpoint, you need to provide the path to this endpoint to enable Istio authorizer to call this endpoint and automatically discover your APIs
   ##
   openApiEndpoint: ""
@@ -188,59 +189,49 @@ discovery:
 ##
 doNotFailOnNonMatchingRequests: false
 
+enforcement:
+  blockUnknown: true
+
 ## Cluster domain name
 ##
-clusterDomain: "cluster.local"
+trustDomain: "cluster.local"
 
-
-## Response headers config
 ##
-headers:
-  ## Output Header Prefix
-  ##
-  outputHeaderPrefix: "x-output-"
-
-  ## Auth ctx header
-  ##
-  authCtxHeader: "x-auth-ctx"
-
+targetService:
+  inject:
+    headers:
+      customDataPrefix: "x-output-""
+      authCtx: "x-auth-ctx"
 
 ## Token exchange settings
 ##
 tokenExchange:
- ## enable token exchange (temporary until acp 2.0 is released)
- ##
- enabled: false
+  ## enable token exchange (temporary until acp 2.0 is released)
+  ##
+  enabled: false
 
- ## cache settings
- ##
- cache:
-   ## defines for how long the exchanged token should be cached for
-   ##
-   ttl: "1m0s"
-
-   ## defines how many tokens should be cached
-   ##
-   maxSize: 1000
-
-## Token exchange inject settings
-injectToken:
+  ## Token exchange inject settings
+  inject:
     ## Inject mode, defines what token should be send to the target service
     ## One of: InjectOriginalToken, InjectExchangedToken, InjectBothTokens
     ##
     mode: "InjectExchangedToken"
 
-    ## Original token header name
-    ##
-    originalTokenHeaderName: ""
+    headers:
+      ## Original token header name
+      ##
+      originalToken: ""
 
-    ## Exchanged token header name
-    ##
-    exchangedTokenHeaderName: "Authorization"
+      ## Exchanged token header name
+      ##
+      exchangedToken: "Authorization"
 
-    ## strip bearer token
-    ##
-    stripBearer: false
+      ## strip bearer token
+      ##
+      stripBearer: false
+
+# TODO
+extraConfig:
 
 ## Additional istio-authorizer ConfigMap entries
 ##
@@ -270,6 +261,7 @@ data:
     VyZGyIRnGkXUtC239/Lz0v0PXVwAPUF8ITb0JYcG/ojIc5VfTOkQOeOHHBaS+dXt
     HBJjBbnwpN4tNFhczJkbga16hL+vV0I4z61mJG8OkDr25Q==
     -----END CERTIFICATE-----
+
   # The data should match istio-authorizer configuration options
   # https://docs.authorization.cloudentity.com/guides/developer/protect/istio/istio_authz_config/
   #
