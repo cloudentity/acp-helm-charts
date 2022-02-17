@@ -6,12 +6,19 @@ metadata:
     {{- include "istio-authorizer.labels" . | nindent 4 }}
 data:
   config.yaml: |
+    logging:
+      level: {{ .Values.logging.level }}
     discovery:
       enabled: {{ .Values.discovery.enabled }}
       namespaces:
       {{- range .Values.discovery.namespaces }}
       - {{ . }}
       {{- end }}
+      timeout: {{ .Values.discovery.timeout }}
+      interval: {{ .Values.discovery.interval }}
+      disable_proxy: {{ .Values.discovery.disableProxy }}
+      open_api_endpoint: {{ .Values.discovery.openApiEndpoint }}
+      grpc_refrection_calls: {{ .Values.discovery.grpcRefrectionCalls }}
     do_not_fail_on_non_matching_requests: {{ .Values.doNotFailOnNonMatchingRequests }}
     cluster_domain: {{ .Values.clusterDomain }}
     headers:
