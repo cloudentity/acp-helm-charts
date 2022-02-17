@@ -13,6 +13,15 @@ image:
   ##
   tag: ""
 
+## deployAsDaemonSet decides whether to deploy istio-authorizer as a DaemonSet or a Deployment.
+##
+deployAsDaemonSet: true
+
+
+## A map with annotations
+##
+podAnnotations: []
+
 ## istio-authorizer image registry secret names as an array
 ##
 imagePullSecrets:
@@ -83,10 +92,10 @@ resources: {}
 
 ## Enable body parsing
 ## If you want to use request body in your authorization policies, enable this flag.
-## It's going to add a filter to Envoy which will propagate the request body to the authorizer. 
+## It's going to add a filter to Envoy which will propagate the request body to the authorizer.
 parseBody:
   enabled: false
-  ## Maximum number of requested bytes 
+  ## Maximum number of requested bytes
   ##
   maxRequestBytes: 8192
 
