@@ -154,6 +154,10 @@ discovery:
   namespaces:
     - default
 
+## Array with environment variables to add to the container
+##
+# extraEnvVars: []
+
 ## Additional istio-authorizer ConfigMap entries
 ##
 data:
