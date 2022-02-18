@@ -13,6 +13,38 @@ image:
   ##
   tag: ""
 
+## deployAsDaemonSet decides whether to deploy istio-authorizer as a DaemonSet or a Deployment.
+##
+deployAsDaemonSet: true
+
+## Number of desired pod replicas if deployAsDaemonSet set to false.
+##
+replicas: 1
+
+## Autoscaling parameters if deployAsDaemonSet set to false.
+##
+autoscaling:
+  ## Enable autoscaling
+  ##
+  enabled: false
+
+  ## Define mix replica count
+  ##
+  # minReplicas: 0
+  ## Define max replica count
+  ##
+  # maxReplicas: 1
+  ## The average CPU usage of a all pods in a deployment
+  ##
+  # targetCPUUtilizationPercentage: ""
+  ## The average memory usage of a all pods in a deployment
+  ##
+  # targetMemoryUtilizationPercentage: ""
+
+## A map with annotations
+##
+podAnnotations: []
+
 ## istio-authorizer image registry secret names as an array
 ##
 imagePullSecrets:
@@ -83,10 +115,10 @@ resources: {}
 
 ## Enable body parsing
 ## If you want to use request body in your authorization policies, enable this flag.
-## It's going to add a filter to Envoy which will propagate the request body to the authorizer. 
+## It's going to add a filter to Envoy which will propagate the request body to the authorizer.
 parseBody:
-  enabled: false
-  ## Maximum number of requested bytes 
+  enabled: true
+  ## Maximum number of requested bytes
   ##
   maxRequestBytes: 8192
 
@@ -164,19 +196,6 @@ discovery:
   namespaces:
     - default
 
-  ## discovery process timeout
-  ##
-  timeout: "10s"
-
-  ## how often discovery is performed
-  ##
-  interval: "30s"
-
-  ## disable proxy in discovery
-  ##
-  disableProxy: false
-
-  ## TODO add comment
   ## if your service is self-hosting an OpenAPI endpoint, you need to provide the path to this endpoint to enable Istio authorizer to call this endpoint and automatically discover your APIs
   ##
   openApiEndpoint: ""
@@ -185,28 +204,37 @@ discovery:
   ##
   grpcRefrectionCalls: false
 
-## Don't fail when the request has no matching rule
+## Enforcement configuration
 ##
-doNotFailOnNonMatchingRequests: false
-
 enforcement:
-  blockUnknown: true
+  ## allow requests with no matching rule
+  ##
+  allowUnknown: false
 
 ## Cluster domain name
 ##
 trustDomain: "cluster.local"
 
-##
+## Target Service configuration
 targetService:
+  ## Inject configuration
+  ##
   inject:
+    ## Headers configuration
+    ##
     headers:
-      customDataPrefix: "x-output-""
+      ## custom data header name prefix used to propage global variables defined in a policy
+      ##
+      customDataPrefix: "x-output-"
+
+      ## header name containing base64 encoded authentication context json object
+      ##
       authCtx: "x-auth-ctx"
 
 ## Token exchange settings
 ##
 tokenExchange:
-  ## enable token exchange (temporary until acp 2.0 is released)
+  ## Enable token exchange (temporary until acp 2.0 is released)
   ##
   enabled: false
 
@@ -232,6 +260,10 @@ tokenExchange:
 
 # TODO
 extraConfig:
+
+## Array with environment variables to add to the container
+##
+# extraEnvVars: []
 
 ## Additional istio-authorizer ConfigMap entries
 ##

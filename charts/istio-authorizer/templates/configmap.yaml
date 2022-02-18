@@ -6,34 +6,32 @@ metadata:
     {{- include "istio-authorizer.labels" . | nindent 4 }}
 data:
   config.yaml: |
+    {{- with .Values }}
     logging:
-      level: {{ .Values.logging.level }}
+      level: {{ .logging.level }}
     discovery:
-      enabled: {{ .Values.discovery.enabled }}
+      enabled: {{ .discovery.enabled }}
       namespaces:
-      {{- range .Values.discovery.namespaces }}
+      {{- range .discovery.namespaces }}
       - {{ . }}
       {{- end }}
-      timeout: {{ .Values.discovery.timeout }}
-      interval: {{ .Values.discovery.interval }}
-      disable_proxy: {{ .Values.discovery.disableProxy }}
-      open_api_endpoint: {{ .Values.discovery.openApiEndpoint }}
-      grpc_refrection_calls: {{ .Values.discovery.grpcRefrectionCalls }}
-    do_not_fail_on_non_matching_requests: {{ .Values.doNotFailOnNonMatchingRequests }}
-    cluster_domain: {{ .Values.clusterDomain }}
-    headers:
-      output_header_prefix: {{ .Values.headers.outputHeaderPrefix }}
-      auth_ctx_header: {{ .Values.headers.authCtxHeader }}
+      open_api_endpoint: {{ .discovery.openApiEndpoint }}
+      grpc_refrection_calls: {{ .discovery.grpcRefrectionCalls }}
+    target_service:
+      inject:
+        headers:
+          custom_data_prefix: {{ .targetService.inject.headers.customDataPrefix }}
+          auth_ctx: {{ .targetService.inject.headers.authCtx }}
+    trust_domain: {{ .trustDomain }}
     token_exchange:
-      enabled: {{ .Values.tokenExchange.enabled }}
-      cache:
-        ttl: {{ .Values.tokenExchange.cache.ttl }}
-        max_size: {{ .Values.tokenExchange.cache.maxSize }}
-    inject_token:
-      mode: {{ .Values.injectToken.mode }}
-      original_token_header_name: {{ .Values.injectToken.originalTokenHeaderName }}
-      exchanged_token_header_name: {{ .Values.injectToken.exchangedTokenHeaderName }}
-      strip_bearer: {{ .Values.injectToken.stripBearer }}
+      enabled: {{ .tokenExchange.enabled }}
+      inject:
+        mode: {{ .tokenExchange.inject.mode }}
+        headers:
+          original_token: {{ .tokenExchange.inject.headers.originalToken }}
+          exchanged_token: {{ .tokenExchange.inject.headers.exchangedToken }}
+          strip_bearer: {{ .tokenExchange.inject.headers.stripBearer }}
+    {{- end -}}
 {{- range $key, $value := .Values.data }}
   {{- if eq $key "extraconfig" }}
   {{ $key }}.yaml: {{ toYaml $value | indent 4 }}

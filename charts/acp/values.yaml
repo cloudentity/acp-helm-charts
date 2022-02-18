@@ -83,9 +83,13 @@ ingress:
   ##
   enabled: true
 
+  ## Name of the ingress class
+  ##
+  ingressClassName: nginx
+
   ## Ingress additional custom annotations
   ##
-  customAnnotations:
+  customAnnotations: {}
 
   ## Ingress hostnames with paths
   ##
@@ -93,6 +97,7 @@ ingress:
     - host: acp.local
       paths:
         - path: /
+          pathType: ImplementationSpecific
 
   ## Ingress TLS configuration
   ## Secrets must be manually created in the namespace
@@ -122,9 +127,13 @@ ingressMtls:
   ##
   enabled: false
 
+  ## Name of the ingress class
+  ##
+  ingressClassName: nginx
+
   ## mTLS Ingress additional custom annotations
   ##
-  customAnnotations:
+  customAnnotations: {}
 
   ## mTLS Ingress hostnames with paths
   ##
@@ -132,6 +141,7 @@ ingressMtls:
     - host: mtls.acp.local
       paths:
         - path: /
+          pathType: ImplementationSpecific
 
   ## TLS certificates to be created for mTLS Ingress
   ##

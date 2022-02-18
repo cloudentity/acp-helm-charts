@@ -1,0 +1,18 @@
+name: openbanking chart test
+on:
+  push:
+    tags-ignore:
+      - "*"
+
+env:
+  CHART: openbanking
+
+jobs:
+  test:
+    name: Test chart
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Helm lint
+        run: make helm-lint
