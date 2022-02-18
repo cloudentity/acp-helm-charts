@@ -52,6 +52,10 @@ spec:
                   key: clientSecret
             - name: DISCOVERY_NAMESPACES
               value: {{ join "," .Values.discovery.namespaces }}
+            {{- range $key, $value := .Values.extraEnvVars }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+            {{- end }}
           ports:
             - name: grpc
               containerPort: 9001
