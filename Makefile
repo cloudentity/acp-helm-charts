@@ -12,7 +12,7 @@ check-kube-apis:
 	docker run --rm -v $(PWD)/charts/${CHART}:/data cloudentity/helm-tools \
 		'sed "s/false/true/g" /data/values.yaml |\
 		helm template -a "networking.k8s.io/v1/Ingress" -f - /data |\
-		pluto detect -'
+		pluto detect --ignore-deprecations -'
 
 # other targets
 check-acp-charts-version:
