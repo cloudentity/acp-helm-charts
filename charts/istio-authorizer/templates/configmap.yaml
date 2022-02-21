@@ -12,7 +12,7 @@ data:
   config.yaml: |
     {{- if ((.Values.httpClient).rootCa) }}
     http_client:
-      root_ca: /tls/client-ca.crt
+      root_ca: /data/client-ca.crt
     {{- end }}
     {{- with .Values }}
     logging:
