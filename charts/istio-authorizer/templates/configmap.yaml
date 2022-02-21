@@ -5,7 +5,15 @@ metadata:
   labels:
     {{- include "istio-authorizer.labels" . | nindent 4 }}
 data:
+{{- if ((.Values.httpClient).rootCa) }}
+  client-ca.crt: |
+    {{ .Values.httpClient.rootCa | nindent 4 | trim }}
+{{- end }}
   config.yaml: |
+    {{- if ((.Values.httpClient).rootCa) }}
+    http_client:
+      root_ca: /tls/client-ca.crt
+    {{- end }}
     {{- with .Values }}
     logging:
       level: {{ .logging.level }}
@@ -31,11 +39,8 @@ data:
           original_token: {{ .tokenExchange.inject.headers.originalToken }}
           exchanged_token: {{ .tokenExchange.inject.headers.exchangedToken }}
           strip_bearer: {{ .tokenExchange.inject.headers.stripBearer }}
-    {{- end -}}
-{{- range $key, $value := .Values.data }}
-  {{- if eq $key "extraconfig" }}
-  {{ $key }}.yaml: {{ toYaml $value | indent 4 }}
-  {{ else }}
-  {{ $key }}: {{ toYaml $value | indent 4 }}
-  {{- end -}}
-{{- end -}}
+    {{- end }}
+  extraconfig.yaml: |
+    {{- with .Values.extraConfig }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
