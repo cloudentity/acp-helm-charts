@@ -3,6 +3,7 @@ on:
   push:
     tags-ignore:
       - "*"
+  pull_request:
 
 env:
   CHART: istio-authorizer
