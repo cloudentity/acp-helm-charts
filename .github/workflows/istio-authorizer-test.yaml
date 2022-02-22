@@ -16,3 +16,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Helm lint
         run: make helm-lint
+      - name: kubeeval lint
+        run: make lint-kubeeval
+        
