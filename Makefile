@@ -2,7 +2,7 @@
 CHART ?= acp
 
 docker:
-	docker build -t cloudentity/helm-tools - < Dockerfile
+	docker build --tag cloudentity/helm-tools - < Dockerfile
 
 # chart-specific targets
 helm-lint:
