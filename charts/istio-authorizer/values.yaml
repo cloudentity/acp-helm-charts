@@ -160,32 +160,34 @@ clientCredentials:
 ##
 ## nodeSelector: {}
 
-# Affinity for pod assignment
+## Affinity for pod assignment
 ##
 affinity: {}
-## nodeAffinity:
-##   requiredDuringSchedulingIgnoredDuringExecution:
-##     nodeSelectorTerms:
-##       - matchExpressions:
-##           - key: authorizer
-##             operator: In
-##             values:
-##               - "true"
+  # nodeAffinity:
+  #   requiredDuringSchedulingIgnoredDuringExecution:
+  #   nodeSelectorTerms:
+  #     - matchExpressions:
+  #         - key: authorizer
+  #           operator: In
+  #           values:
+  #             - "true"
 
 ## Tolerations for pod assignment
 ##
 tolerations: []
-## - key: authorizer
-##   value: "true"
-##   effect: NoSchedule
+#- key: authorizer
+#  value: "true"
+#  effect: NoSchedule
 
 ## Logging configuration
+##
 logging:
   ## log level
   ##
   level: info
 
 ## Authorizer discovery configuration
+##
 discovery:
   ##  When true, API discovery is enabled
   ##
@@ -258,7 +260,6 @@ tokenExchange:
       ##
       stripBearer: false
 
-
 ## ACP http client configuration
 ##
 # httpClient:
@@ -270,11 +271,12 @@ tokenExchange:
 #     -----END CERTIFICATE-----
 
 ## Additional istio-authorizer ConfigMap entries
-# The data should match istio-authorizer configuration options
-# https://docs.authorization.cloudentity.com/guides/developer/protect/istio/istio_authz_config/
+## The data should match istio-authorizer configuration options
+## https://docs.authorization.cloudentity.com/guides/developer/protect/istio/istio_authz_config/
 ##
 extraConfig: {}
 
 ## Array with environment variables to add to the container
 ##
 # extraEnvVars: []
+
