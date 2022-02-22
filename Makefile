@@ -11,7 +11,7 @@ helm-lint:
 check-kube-apis:
 	docker run --rm --volume $(PWD)/charts/${CHART}:/data cloudentity/helm-tools \
 		'sed "s/false/true/g" /data/values.yaml |\
-		helm template -a "networking.k8s.io/v1/Ingress" -f - /data |\
+		helm template --api-versions "networking.k8s.io/v1/Ingress" --values - /data |\
 		pluto detect --ignore-deprecations -o wide -'
 
 # other targets
