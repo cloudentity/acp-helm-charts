@@ -9,7 +9,7 @@ helm-lint:
 	helm lint ./charts/${CHART}
 
 check-kube-apis:
-	docker run --rm -v $(PWD)/charts/${CHART}:/data cloudentity/helm-tools \
+	docker run --rm --volume $(PWD)/charts/${CHART}:/data cloudentity/helm-tools \
 		'sed "s/false/true/g" /data/values.yaml |\
 		helm template -a "networking.k8s.io/v1/Ingress" -f - /data |\
 		pluto detect --ignore-deprecations -o wide -'
