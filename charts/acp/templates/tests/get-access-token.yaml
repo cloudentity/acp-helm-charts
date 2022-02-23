@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Release.Name }}-access-token-test"
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: {{ .Release.Name }}-access-token-test
+      image: alpine/curl
+      args: 
+        - --insecure
+        - --request
+        - POST
+        - --data
+        - grant_type=client_credentials
+        - --user
+        - system:{{.Values.secretConfig.data.system.secret}}
+        - {{.Values.serverURL}}/system/system/oauth2/token
+  restartPolicy: Never
