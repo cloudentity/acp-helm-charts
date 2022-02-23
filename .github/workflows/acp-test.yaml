@@ -25,7 +25,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Prepare
+        run: make prepare
+      # skipping `make install` here as base-stack already contains `acp` chart
       - name: Verify
         run: make verify
       - name: Helm tests
         run: make helm-test
+      - name: Debug
+        if: failure()
+        run: make debug
