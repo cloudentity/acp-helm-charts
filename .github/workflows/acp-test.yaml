@@ -26,6 +26,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Prepare
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PWD: ${{ secrets.DOCKER_PWD }}
         run: make prepare
       # skipping `make install` here as base-stack already contains `acp` chart
       - name: Verify
