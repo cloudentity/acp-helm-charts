@@ -204,7 +204,7 @@ discovery:
 
   ## allow grpc reflection calls
   ##
-  grpcRefrectionCalls: false
+  grpcReflectionCalls: false
 
 ## Enforcement configuration
 ##

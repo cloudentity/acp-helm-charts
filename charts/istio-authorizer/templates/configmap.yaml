@@ -24,7 +24,7 @@ data:
       - {{ . }}
       {{- end }}
       open_api_endpoint: {{ .discovery.openApiEndpoint }}
-      grpc_refrection_calls: {{ .discovery.grpcRefrectionCalls }}
+      grpc_reflection_calls: {{ .discovery.grpcReflectionCalls }}
     target_service:
       inject:
         headers:
