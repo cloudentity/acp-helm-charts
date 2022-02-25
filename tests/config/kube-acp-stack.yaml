@@ -1,0 +1,24 @@
+acp:
+  enabled: true
+  serverURL: "https://acp.acp-system:8443"
+  secretConfig:
+    data:
+      system:
+        secret: 0123456789abcdef0123456789abcdef
+      redis:
+        password: p@ssw0rd!
+  config:
+    data:
+      redis:
+        redis_search: true
+cockroachdb:
+  enabled: true
+  single-node: true
+  statefulset:
+    replicas: 1
+redis-cluster:
+  enabled: true
+  cluster:
+    nodes: 3
+    replicas: 0
+  password: p@ssw0rd!

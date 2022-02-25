@@ -19,3 +19,22 @@ jobs:
         run: make helm-lint
       - name: Check kubernetes APIs
         run: make check-kube-apis
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Prepare
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PWD: ${{ secrets.DOCKER_PWD }}
+        run: make prepare
+      # skipping `make install` here as base-stack already contains `acp` chart
+      - name: Verify
+        run: make verify
+      - name: Helm tests
+        run: make helm-test
+      - name: Debug
+        if: failure()
+        run: make debug
