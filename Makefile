@@ -4,14 +4,14 @@ KUBE_ACP_STACK_CHART ?= kube-acp-stack
 ACP_CHARTS_PATH = true
 
 all: prepare deploy
-prepare: create-cluster prepare-helm prepare-cluster
-deploy: install-acp-stack
+prepare: create-cluster prepare-cluster prepare-helm
+deploy: install-ingress-controller install-acp-stack
 
 # cluster and tooling setup targets
 create-cluster:
 	kind create cluster \
 		--name acp \
-		--config ./config/kind-cluster-config.yaml
+		--config ./tests/configs/kind-cluster-config.yaml
 
 prepare-helm:
 	helm repo add acp https://charts.cloudentity.io
@@ -61,10 +61,18 @@ wait:
 		--timeout 5m
 
 install-istio:
-	curl --location https://istio.io/downloadIstio | ISTIO_VERSION=1.9.3 TARGET_ARCH=x86_64  sh -
-	./istio-1.9.3/bin/istioctl install --filename ./config/ce-istio-profile.yaml --skip-confirmation
+	curl --location https://istio.io/downloadIstio | ISTIO_VERSION=1.9.3 TARGET_ARCH=x86_64 sh -
+	./istio-1.9.3/bin/istioctl install --filename ./tests/configs/ce-istio-profile.yaml --skip-confirmation
 	kubectl label namespace default istio-injection=enabled
 	rm --recursive --force ./istio-1.9.3
+
+install-istio-authorizer:
+	helm upgrade istio-authorizer charts/istio-authorizer \
+		--values ./tests/values/istio-authorizer.yaml \
+		--namespace acp-system \
+		--timeout 10m \
+		--install
+	kubectl -n acp-system wait deploy/istio-authorizer --for condition=available --timeout=10m
 
 purge:
 	-@for chart in $(shell ls charts); do helm uninstall $${chart} -n acp-system; done
