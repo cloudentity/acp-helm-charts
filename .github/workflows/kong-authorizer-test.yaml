@@ -3,6 +3,7 @@ on:
   push:
     tags-ignore:
       - "*"
+  pull_request:
 
 env:
   CHART: kong-authorizer
@@ -16,3 +17,5 @@ jobs:
         uses: actions/checkout@v2
       - name: Helm lint
         run: make helm-lint
+      - name: Check kubernetes APIs
+        run: make check-kube-apis

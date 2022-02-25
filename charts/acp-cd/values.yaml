@@ -1,0 +1,89 @@
+## ACP-CD image parameters
+##
+image:
+  ## Image repository
+  ##
+  repository: docker.cloudentity.io/acp
+
+  ## Image pull policy
+  ##
+  pullPolicy: IfNotPresent
+
+  ## Image tag (immutable tags are recommended, default is the chart appVersion)
+  ##
+  tag: ""
+
+## Global Docker registry secret names as an array
+##
+imagePullSecrets:
+  - name: docker.cloudentity.io
+
+## Import mode (update, fail, ignore)
+##
+mode: update
+
+## Credentials for your ACP-CD
+##
+clientCredentials:
+  ## Specifies whether a kubernetes secret should be created from the provided clientID and clientSecret.
+  ## For production setup please create secret manually and use name
+  ## parameter to integrate with istio-authorizer
+  ##
+  create: true
+  
+  ## The name of the client secret to use
+  ## If not set and create is true, a name is generated using the fullname template
+  ##
+  name: ""
+
+  ## Client ID must point to the client identifier 
+  ## of the client application that you have created in the System workspace for your tenant
+  ##  
+  clientID: "YnZnN2h2YzA1NnV0YmdpaHF1OWcK"
+  
+  ## Client Secret must point to the client secret 
+  ## of the client application that you have created in the System workspace for your tenant
+  ##
+  clientSecret: "aE0wdmYwZHNBMHkxSHBHZW1WXzlDa21iYmlOclp2NW92S1JDTm5hd2pJbwo"
+
+  ## Issuer URL must point to the issuer URL of the System workspace of your tenant
+  ##
+  issuerURL: "https://acp.acp-system:8443/default/system"
+
+## ACP-CD declarative configuration import for tenant
+## Ref: https://docs.authorization.cloudentity.com/api/system/#operation/importTenantConfiguration
+##
+data:
+  apis: []
+  audit_events: [] 
+  cdr_arrangements: []
+  ciba_authentication_services: []
+  claims: []
+  clients: []
+  consent_actions: []
+  consent_grants: []
+  consents: []
+  cross_tenant_api_policy_bindings: []
+  gateway_api_groups: []
+  gateways: []
+  idps: []
+  mfa_methods: []
+  openbanking_br_consents: []
+  openbanking_file_payment_consent_file_resources: []
+  openbanking_uk_consents: []
+  policies: []
+  policy_execution_points: []
+  privacy_ledger_events: []
+  quota_usage: []
+  recurring_jobs: []
+  scope_grants: []
+  scopes_without_service: []
+  script_execution_points: []
+  scripts: []
+  secrets: []
+  server_consents: []
+  servers: []
+  servers_bindings: []
+  services: []
+  tenant: {}
+  vanity_domains: []

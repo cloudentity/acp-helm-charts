@@ -3,6 +3,7 @@ on:
   push:
     tags-ignore:
       - "*"
+  pull_request:
 
 env:
   CHART: istio-authorizer
@@ -18,4 +19,5 @@ jobs:
         run: make helm-lint
       - name: kubeeval lint
         run: make lint-kubeeval
-        
+      - name: Check kubernetes APIs
+        run: make check-kube-apis
