@@ -1,0 +1,6 @@
+extensionProviders:
+- name: "acp-authorizer"
+  envoyExtAuthzGrpc:
+  # todo add seed to replace namespace
+    service: "istio-authorizer.istio-authorizer.svc.cluster.local"
+    port: "9001"

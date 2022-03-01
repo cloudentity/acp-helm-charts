@@ -1,7 +1,7 @@
 ### VARIABLES ###
 
 # name of the chart on which targets will be perfomed
-CHART ?= acp
+CHART ?= istio-authorizer
 
 # name of the Kubernetes Namespace where resources will be placed
 NAMESPACE ?= acp-system
@@ -10,7 +10,7 @@ NAMESPACE ?= acp-system
 ### TARGETS ###
 
 # main targets
-prepare: create-cluster base-stack
+prepare: create-cluster install-base-stack
 
 install: helm-install
 
@@ -32,7 +32,7 @@ create-cluster:
 		--docker-username=${DOCKER_USER} \
 		--docker-password=${DOCKER_PWD}
 
-base-stack:
+install-base-stack:
 	mkdir --parents .kube-acp-stack-test
 	cp ./charts/kube-acp-stack/Chart.yaml ./charts/kube-acp-stack/values.yaml .kube-acp-stack-test/
 	yq eval '(.dependencies[]|select(.name == "acp").repository) |= "file://../charts/acp"' .kube-acp-stack-test/Chart.yaml --inplace
@@ -42,6 +42,27 @@ base-stack:
 		--namespace ${NAMESPACE} \
 		--timeout 5m \
 		--install
+
+install-ingress-controller:
+	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+	helm repo update
+	kubectl create namespace nginx
+	helm upgrade \
+		--install ingress-nginx ingress-nginx/ingress-nginx \
+		--values ./tests/config/ingress-nginx.yaml \
+		-n nginx
+	kubectl -n nginx wait deploy/ingress-nginx-controller \
+		--for condition=available \
+		--timeout=10m
+
+install-istio:
+	curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.9.3 TARGET_ARCH=x86_64  sh -
+	./istio-1.9.3/bin/istioctl install -f ./tests/config/ce-istio-profile.yaml -y
+	kubectl label namespace default istio-injection=enabled
+	rm -rf ./istio-1.9.3
+
+install-example:
+	kubectl apply --filename ./tests/services/httpbin
 
 clean-helm:
 	rm --recursive --force .kube-acp-stack-test
@@ -61,10 +82,16 @@ lint-kubeeval: docker
 		kubeval --skip-kinds AuthorizationPolicy"
 
 helm-install:
-	helm upgrade ${CHART} ${CHART} \
+	helm upgrade ${CHART} ./charts/${CHART} \
 		--namespace ${NAMESPACE} \
+		--values ./tests/config/istio-authorizer.yaml \
 		--timeout 5m \
+		--create-namespace \
 		--install
+
+helm-uninstall:
+	helm uninstall ${CHART} \
+		--namespace ${NAMESPACE}
 
 helm-test:
 	helm test ${CHART} --namespace ${NAMESPACE}
@@ -92,3 +119,6 @@ check-kube-apis:
 
 check-acp-charts-version:
 	tests/scripts/acp-version-check.sh
+
+update-istio-configmap:
+	tests/scripts/update-istio-configmap.sh
