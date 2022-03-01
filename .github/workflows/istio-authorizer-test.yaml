@@ -38,10 +38,12 @@ jobs:
         run: make install-istio
       - name: install
         run: NAMESPACE=istio-authorizer make install
+      - name: update-istio-configmap
+        run: make update-istio-configmap
       - name: Verify
         run: CHART=acp make verify
       - name: Helm tests
-        run: make helm-test
+        run: NAMESPACE=istio-authorizer make helm-test
       - name: Debug
         if: failure()
         run: make debug
