@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ .Release.Name }}-validation-test"
+  name: "{{ .Release.Name }}-allow-request-validation-test"
   annotations:
     "helm.sh/hook": test
 spec:
   containers:
-    - name: {{ .Release.Name }}-istio-validate-test
-      image: alpine/curl
+    - name: {{ .Release.Name }}-allow-request-istio-validate-test
+      image: curlimages/curl
       args: 
         - --insecure
         - http://httpbin.default:80/headers

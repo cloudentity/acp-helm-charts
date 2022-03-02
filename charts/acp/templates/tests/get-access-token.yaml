@@ -14,7 +14,7 @@ metadata:
 spec:
   containers:
     - name: {{ .Release.Name }}-access-token-test
-      image: alpine/curl
+      image: curlimages/curl
       args: 
         - --insecure
         - --request
