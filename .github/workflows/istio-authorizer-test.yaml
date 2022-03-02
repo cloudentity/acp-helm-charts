@@ -33,7 +33,7 @@ jobs:
           DOCKER_PWD: ${{ secrets.DOCKER_PWD }}
         run: make prepare
       - name: Verify
-        run: CHART=acp make verify &&
+        run: CHART=acp make verify
       - name: install-ingress-controller
         run: make install-ingress-controller
       - name: install-istio
