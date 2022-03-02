@@ -64,7 +64,7 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
             - name: SERVER_DISABLE_ASYNC_PROCESSING
-              value: false
+              value: "false"
           ports:
             - name: http
               containerPort: {{ include "acp.portNumber" . }}

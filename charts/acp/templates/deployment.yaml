@@ -63,7 +63,7 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
             - name: SERVER_DISABLE_ASYNC_PROCESSING
-              value: {{ .Values.workers.enabled }}
+              value: {{ quote .Values.workers.enabled }}
           ports:
             - name: http
               containerPort: {{ include "acp.portNumber" . }}
