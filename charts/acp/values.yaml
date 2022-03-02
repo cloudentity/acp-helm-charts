@@ -429,6 +429,17 @@ workers:
   ##
   replicaCount: 1
 
+  ## Define workers service
+  ##
+  service:
+    ## Enables workers service for ACP
+    ##
+    enabled: false
+
+    ## ACP workers service type
+    ##
+    type: ClusterIP
+
   ## Deployment annotations
   ##
   # annotations: {}
