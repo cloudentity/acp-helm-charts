@@ -32,6 +32,8 @@ jobs:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
           DOCKER_PWD: ${{ secrets.DOCKER_PWD }}
         run: make prepare
+      - name: Verify
+        run: CHART=acp make verify &&
       - name: install-ingress-controller
         run: make install-ingress-controller
       - name: install-istio
@@ -42,8 +44,8 @@ jobs:
         run: make update-istio-configmap
       - name: install-example-httpbin
         run: make install-example-httpbin
-      - name: Verify
-        run: CHART=acp make verify
+      - name: wait for httpbin
+        run: CHART=httpbin NAMESPACE=default make wait
       - name: Helm tests
         run: NAMESPACE=istio-authorizer make helm-test
       - name: Debug
