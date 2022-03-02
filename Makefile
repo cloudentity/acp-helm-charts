@@ -61,7 +61,7 @@ install-istio:
 	kubectl label namespace default istio-injection=enabled
 	rm -rf ./istio-1.9.3
 
-install-example:
+install-example-httpbin:
 	kubectl apply --filename ./tests/services/httpbin
 
 clean-helm:

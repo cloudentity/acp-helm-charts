@@ -40,6 +40,8 @@ jobs:
         run: NAMESPACE=istio-authorizer make install
       - name: update-istio-configmap
         run: make update-istio-configmap
+      - name: install-example-httpbin
+        run: make install-example-httpbin
       - name: Verify
         run: CHART=acp make verify
       - name: Helm tests
