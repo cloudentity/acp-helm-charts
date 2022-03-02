@@ -393,6 +393,59 @@ certificate:
   ##
   #  redis: {}
 
+## Workers chart configuration
+## Worker nodes are used to create seperate ACP deployment for asynchronous jobs handling
+##
+workers:
+  ## Enables worker nodes for ACP
+  ##
+  enabled: false
+
+  ## Autoscaling parameters
+  ##
+  autoscaling:
+    ## Enable autoscaling
+    ##
+    enabled: false
+  
+    ## Define mix replica count
+    ##
+    # minReplicas: 0
+    ## Define max replica count
+    ##
+    # maxReplicas: 1
+    ## The average CPU usage of a all pods in a deployment
+    ##
+    # targetCPUUtilizationPercentage: ""
+    ## The average memory usage of a all pods in a deployment
+    ##
+    # targetMemoryUtilizationPercentage: ""
+  
+  ## Number of ACP workers replicas to deploy
+  ##
+  replicaCount: 1
+
+  ## Pod annotations
+  ##
+  # podAnnotations: {}
+  
+  ## ACP workers resource requests and limits
+  ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+  ##
+  resources: {}
+  
+  ## ACP workers node selector
+  ##
+  # nodeSelector: {}
+  
+  ## ACP workers pod affinity
+  ##
+  # affinity: {}
+  
+  ## ACP workers pod tolerations
+  ##
+  # tolerations: {}
+
 ## Fission chart configuration
 ##
 fission:
