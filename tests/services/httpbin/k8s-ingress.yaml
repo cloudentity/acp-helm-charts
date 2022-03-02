@@ -6,10 +6,10 @@ metadata:
   name: ingress
 spec:
   rules:
-  - host: httpbin.ingress.k8s
-    http:
-      paths:
-      - path: /*
-        backend:
-          serviceName: httpbin
-          servicePort: 80
+    - host: httpbin.ingress.k8s
+      http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: httpbin
+              servicePort: 80

@@ -11,8 +11,8 @@ spec:
   selector:
     app: httpbin
   ports:
-  - port: 80
-    name: http
+    - port: 80
+      name: http
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -34,8 +34,8 @@ spec:
     spec:
       serviceAccountName: httpbin
       containers:
-      - name: httpbin
-        image: "kennethreitz/httpbin"
-        ports:
-        - containerPort: 80
-          name: http
+        - name: httpbin
+          image: "kennethreitz/httpbin"
+          ports:
+            - containerPort: 80
+              name: http

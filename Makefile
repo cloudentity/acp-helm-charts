@@ -1,7 +1,7 @@
 ### VARIABLES ###
 
 # name of the chart on which targets will be perfomed
-CHART ?= istio-authorizer
+CHART ?= acp
 
 # name of the Kubernetes Namespace where resources will be placed
 NAMESPACE ?= acp-system
