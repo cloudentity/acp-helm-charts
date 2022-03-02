@@ -214,6 +214,10 @@ resources: {}
 ##
 # tolerations: {}
 
+## ACP pod topology spread constraints
+##
+# topologySpreadConstraints: {}
+
 ## A security context defines privilege and access control settings for a Pod or Container
 ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 ##
@@ -449,6 +453,10 @@ workers:
   ## ACP workers pod tolerations
   ##
   # tolerations: {}
+  
+  ## ACP workers pod topology spread constraints
+  ##
+  # topologySpreadConstraints: {}
 
 ## Fission chart configuration
 ##
