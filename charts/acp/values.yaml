@@ -403,14 +403,14 @@ certificate:
 workers:
   ## Enables worker nodes for ACP
   ##
-  enabled: true
+  enabled: false
 
   ## Autoscaling parameters
   ##
   autoscaling:
     ## Enable autoscaling
     ##
-    enabled: true
+    enabled: false
   
     ## Define mix replica count
     ##
