@@ -7,7 +7,6 @@ metadata:
 spec:
   containers:
     - name: {{ .Release.Name }}-istio-validate-test
-      image: alpine
-      args: 
-        - '[ $(curl --insecure --silent --output /dev/null --write-out "%{http_code}" http://httpbin.default:80/anything) -eq 403 ]'
+      image: curlimages/curl
+      command: ["/bin/sh", "-c", "[ $(curl --insecure --silent --output /dev/null --write-out \"%{http_code}\" http://httpbin.default:80/anything) -eq 403 ]"]
   restartPolicy: Never
