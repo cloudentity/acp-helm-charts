@@ -60,7 +60,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{- define "acp.workers.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "acp.name" . }}
+app.kubernetes.io/name: {{ include "acp.name" . }}-workers
 app.kubernetes.io/instance: {{ .Release.Name }}-workers
 {{- end }}
 
