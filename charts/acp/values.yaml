@@ -214,6 +214,10 @@ resources: {}
 ##
 # tolerations: {}
 
+## ACP pod topology spread constraints
+##
+# topologySpreadConstraints: {}
+
 ## A security context defines privilege and access control settings for a Pod or Container
 ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 ##
@@ -399,21 +403,21 @@ certificate:
 workers:
   ## Enables worker nodes for ACP
   ##
-  enabled: false
+  enabled: true
 
   ## Autoscaling parameters
   ##
   autoscaling:
     ## Enable autoscaling
     ##
-    enabled: false
+    enabled: true
   
     ## Define mix replica count
     ##
-    # minReplicas: 0
+    minReplicas: 1
     ## Define max replica count
     ##
-    # maxReplicas: 1
+    maxReplicas: 1
     ## The average CPU usage of a all pods in a deployment
     ##
     # targetCPUUtilizationPercentage: ""
@@ -449,6 +453,10 @@ workers:
   ## ACP workers pod tolerations
   ##
   # tolerations: {}
+  
+  ## ACP workers pod topology spread constraints
+  ##
+  # topologySpreadConstraints: {}
 
 ## Fission chart configuration
 ##
