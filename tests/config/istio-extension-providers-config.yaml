@@ -1,0 +1,5 @@
+extensionProviders:
+  - name: "acp-authorizer"
+    envoyExtAuthzGrpc:
+      service: "istio-authoriszer.istio-authorizer.svc.cluster.local"
+      port: "9001"

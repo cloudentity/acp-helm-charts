@@ -17,5 +17,37 @@ jobs:
         uses: actions/checkout@v2
       - name: Helm lint
         run: make helm-lint
+      - name: Kubeeval lint
+        run: make lint-kubeeval
       - name: Check kubernetes APIs
         run: make check-kube-apis
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Prepare
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PWD: ${{ secrets.DOCKER_PWD }}
+        run: make prepare
+      - name: Verify
+        run: CHART=acp make verify
+      - name: install-ingress-controller
+        run: make install-ingress-controller
+      - name: install-istio
+        run: make install-istio
+      - name: install
+        run: NAMESPACE=istio-authorizer make install
+      - name: update-istio-configmap
+        run: make update-istio-configmap
+      - name: install-example-httpbin
+        run: make install-example-httpbin
+      - name: wait for httpbin
+        run: CHART=httpbin NAMESPACE=default make wait
+      - name: Helm tests
+        run: NAMESPACE=istio-authorizer make helm-test
+      - name: Debug
+        if: failure()
+        run: make debug

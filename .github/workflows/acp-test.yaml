@@ -17,6 +17,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Helm lint
         run: make helm-lint
+      - name: Kubeeval lint
+        run: make lint-kubeeval
       - name: Check kubernetes APIs
         run: make check-kube-apis
   test:
@@ -30,7 +32,7 @@ jobs:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
           DOCKER_PWD: ${{ secrets.DOCKER_PWD }}
         run: make prepare
-      # skipping `make install` here as base-stack already contains `acp` chart
+      # skipping `make install` here as install-base-stack already contains `acp` chart
       - name: Verify
         run: make verify
       - name: Helm tests
