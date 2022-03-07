@@ -50,16 +50,16 @@ install-ingress-controller:
 	helm upgrade \
 		--install ingress-nginx ingress-nginx/ingress-nginx \
 		--values ./tests/config/ingress-nginx.yaml \
-		-n nginx
-	kubectl -n nginx wait deploy/ingress-nginx-controller \
+		--namespace nginx
+	kubectl --namespace nginx wait deploy/ingress-nginx-controller \
 		--for condition=available \
 		--timeout=10m
 
 install-istio:
-	curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.9.3 TARGET_ARCH=x86_64  sh -
-	./istio-1.9.3/bin/istioctl install -f ./tests/config/ce-istio-profile.yaml -y
+	curl --location https://istio.io/downloadIstio | ISTIO_VERSION=1.9.3 TARGET_ARCH=x86_64  sh -
+	./istio-1.9.3/bin/istioctl install --filename ./tests/config/ce-istio-profile.yaml --skip-confirmation
 	kubectl label namespace default istio-injection=enabled
-	rm -rf ./istio-1.9.3
+	rm --recursive --force ./istio-1.9.3
 
 install-example-httpbin:
 	kubectl apply --filename ./tests/services/httpbin
@@ -77,7 +77,9 @@ helm-lint:
 	helm lint ./charts/${CHART}
 
 lint-kubeeval: docker
-	docker run --rm -v $(shell pwd)/charts/${CHART}:/data cloudentity/helm-tools \
+	docker run cloudentity/helm-tools \
+		--volume $(shell pwd)/charts/${CHART}:/data \
+		--rm \
 		"helm template 'lint' /data |\
 		kubeval --skip-kinds AuthorizationPolicy,EnvoyFilter"
 
