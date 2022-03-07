@@ -1,28 +1,29 @@
+{{- if .Values.workers.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "acp.fullname" . }}
+  name: {{ include "acp.fullname" . }}-workers
   labels:
-    {{- include "acp.labels" . | nindent 4 }}
-  {{- with .Values.annotations }}
+    {{- include "acp.workers.labels" . | nindent 4 }}
+  {{- with .Values.workers.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
+  {{- if not .Values.workers.autoscaling.enabled }}
+  replicas: {{ .Values.workers.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "acp.selectorLabels" . | nindent 6 }}
+      {{- include "acp.workers.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
+      {{- with .Values.workers.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "acp.selectorLabels" . | nindent 8 }}
+        {{- include "acp.workers.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -63,7 +64,7 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
             - name: SERVER_DISABLE_ASYNC_PROCESSING
-              value: {{ quote .Values.workers.enabled }}
+              value: "false"
           ports:
             - name: http
               containerPort: {{ include "acp.portNumber" . }}
@@ -119,20 +120,21 @@ spec:
               name: secret
               readOnly: true
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+            {{- toYaml .Values.workers.resources | nindent 12 }}
+      {{- with .Values.workers.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
+      {{- with .Values.workers.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tolerations }}
+      {{- with .Values.workers.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.topologySpreadConstraints }}
+      {{- with .Values.workers.topologySpreadConstraints }}
       topologySpreadConstraints:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+{{- end }}

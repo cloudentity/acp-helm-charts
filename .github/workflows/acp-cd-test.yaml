@@ -1,0 +1,21 @@
+name: acp-cd chart test
+on:
+  push:
+    tags-ignore:
+      - "*"
+  pull_request:
+
+env:
+  CHART: acp-cd
+
+jobs:
+  lint:
+    name: Linters
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Helm lint
+        run: make helm-lint
+      - name: Check kubernetes APIs
+        run: make check-kube-apis

@@ -1,0 +1,21 @@
+{{- if and .Values.workers.enabled .Values.workers.service.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "acp.fullname" . }}-workers
+  labels:
+    {{- include "acp.workers.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.workers.service.type }}
+  ports:
+    - port: {{ include "acp.portNumber" . }}
+      targetPort: http
+      protocol: TCP
+      name: http
+    - port: 9000
+      targetPort: metrics
+      protocol: TCP
+      name: metrics
+  selector:
+    {{- include "acp.workers.selectorLabels" . | nindent 4 }}
+{{- end }}

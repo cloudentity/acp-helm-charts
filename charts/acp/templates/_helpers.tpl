@@ -42,12 +42,26 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
+{{- define "acp.workers.labels" -}}
+helm.sh/chart: {{ include "acp.chart" . }}
+{{ include "acp.workers.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
 {{/*
 Selector labels
 */}}
 {{- define "acp.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "acp.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{- define "acp.workers.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "acp.name" . }}-workers
+app.kubernetes.io/instance: {{ .Release.Name }}-workers
 {{- end }}
 
 {{/*
