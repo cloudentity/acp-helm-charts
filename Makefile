@@ -77,9 +77,10 @@ helm-lint:
 	helm lint ./charts/${CHART}
 
 lint-kubeeval: docker
-	docker run cloudentity/helm-tools \
+	docker run \
 		--volume $(shell pwd)/charts/${CHART}:/data \
 		--rm \
+		cloudentity/helm-tools \
 		"helm template 'lint' /data |\
 		kubeval --skip-kinds AuthorizationPolicy,EnvoyFilter"
 
