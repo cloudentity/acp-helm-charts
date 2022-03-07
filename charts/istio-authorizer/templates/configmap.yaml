@@ -25,6 +25,8 @@ data:
       {{- end }}
       open_api_endpoint: {{ .discovery.openApiEndpoint }}
       grpc_reflection_calls: {{ .discovery.grpcReflectionCalls }}
+    enforcement:
+      allow_unknown: {{ .enforcement.allowUnknown }}
     target_service:
       inject:
         headers:
