@@ -24,5 +24,3 @@ We'd love to have you contribute! Please refer to our [contribution guidelines](
 ## License
 
 [Apache 2.0 License](https://github.com/cloudentity/acp-helm-charts/blob/main/LICENSE).
-
-Test
