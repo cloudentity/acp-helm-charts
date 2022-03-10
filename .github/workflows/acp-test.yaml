@@ -1,12 +1,12 @@
 name: acp chart test
 on:
   push:
-    paths:
-      - 'charts/acp/**'
-      - 'tests/**'
     tags-ignore:
       - "*"
   pull_request:
+    paths:
+    - 'charts/acp/**'
+    - 'tests/**'
 
 env:
   CHART: acp
