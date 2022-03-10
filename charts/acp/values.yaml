@@ -279,7 +279,7 @@ certManager:
 ##
 tlsDisabled: false
 
-## Import Job configuration
+## Migrate Job configuration
 ##
 migrateJob:
   ## Enables the SQL migrate job
@@ -388,21 +388,23 @@ certificate:
   #
   #   -----END RSA PRIVATE KEY-----
 
-  ## SQL client
-  ## The data should match acp configuration options
-  ## https://docs.operations.cloudentity.com/reference/acp-configuration/
-  ##
-  #  sql: {}
-  ## Hazelcast client
-  ## The data should match acp configuration options
-  ## https://docs.operations.cloudentity.com/reference/acp-configuration/
-  ##
-  #  hazelcast: {}
-  ## Redis client
-  ## The data should match acp configuration options
-  ## https://docs.operations.cloudentity.com/reference/acp-configuration/
-  ##
-  #  redis: {}
+## SQL client
+## The data should match acp configuration options
+## https://docs.operations.cloudentity.com/reference/acp-configuration/
+##
+# sql: {}
+
+## Hazelcast client
+## The data should match acp configuration options
+## https://docs.operations.cloudentity.com/reference/acp-configuration/
+##
+# hazelcast: {}
+
+## Redis client
+## The data should match acp configuration options
+## https://docs.operations.cloudentity.com/reference/acp-configuration/
+##
+# redis: {}
 
 ## Workers chart configuration
 ## Worker nodes are used to create seperate ACP deployment for asynchronous jobs handling
