@@ -1,6 +1,9 @@
 name: kube-acp-stack chart test
 on:
   push:
+    paths:
+      - 'charts/kube-acp-stack/**'
+      - 'tests/**'
     tags-ignore:
       - "*"
   pull_request:

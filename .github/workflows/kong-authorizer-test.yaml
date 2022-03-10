@@ -1,6 +1,9 @@
 name: kong-authorizer chart test
 on:
   push:
+    paths:
+      - 'charts/kong-authorizer/**'
+      - 'tests/**'
     tags-ignore:
       - "*"
   pull_request:

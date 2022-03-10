@@ -1,6 +1,9 @@
 name: acp-cd chart test
 on:
   push:
+    paths:
+      - 'charts/acp-cd/**'
+      - 'tests/**'
     tags-ignore:
       - "*"
   pull_request:

@@ -1,6 +1,9 @@
 name: istio-authorizer chart test
 on:
   push:
+    paths:
+      - 'charts/istio-authorizer/**'
+      - 'tests/**'
     tags-ignore:
       - "*"
   pull_request:

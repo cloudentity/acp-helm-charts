@@ -1,6 +1,9 @@
 name: openbanking chart test
 on:
   push:
+    paths:
+      - 'charts/openbanking/**'
+      - 'tests/**'
     tags-ignore:
       - "*"
   pull_request:
