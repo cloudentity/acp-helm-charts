@@ -4,6 +4,10 @@ on:
     tags-ignore:
       - "*"
   pull_request:
+    paths:
+      - 'charts/kube-acp-stack/**'
+      - 'charts/acp/**'
+      - 'tests/**'
 
 env:
   CHART: kube-acp-stack
