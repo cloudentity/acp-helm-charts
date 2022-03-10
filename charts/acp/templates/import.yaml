@@ -6,8 +6,9 @@ metadata:
     {{- include "acp.labels" . | nindent 4 }}
   name: {{ include "acp.fullname" . }}-import
   annotations:
-    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook: post-upgrade
     helm.sh/hook-delete-policy: before-hook-creation
+    helm.sh/hook-weight: "5"
 spec:
   backoffLimit: 8
   template:
@@ -94,7 +95,13 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  labels:
+    {{- include "acp.labels" . | nindent 4 }}
   name: {{ include "acp.fullname" . }}-import
+  annotations:
+    helm.sh/hook: post-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation
+    helm.sh/hook-weight: "0"
 data:
   seed.yaml: |
     {{- with .Values.importJob.data }}

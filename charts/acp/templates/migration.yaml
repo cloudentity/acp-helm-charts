@@ -7,10 +7,10 @@ metadata:
   name: {{ include "acp.fullname" . }}-migrate
   annotations:
     helm.sh/hook: pre-install,pre-upgrade
-    helm.sh/hook-delete-policy: hook-succeeded,before-hook-creation
+    helm.sh/hook-delete-policy: before-hook-creation
     helm.sh/hook-weight: "5"
 spec:
-  backoffLimit: 5
+  backoffLimit: 8
   template:
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -95,7 +95,7 @@ metadata:
     {{- include "acp.labels" . | nindent 4 }}
   annotations:
     helm.sh/hook: pre-install,pre-upgrade
-    helm.sh/hook-delete-policy: hook-succeeded,before-hook-creation
+    helm.sh/hook-delete-policy: before-hook-creation
     helm.sh/hook-weight: "0"
 type: kubernetes.io/tls
 data:
@@ -119,7 +119,7 @@ metadata:
     {{- include "acp.labels" . | nindent 4 }}
   annotations:
     helm.sh/hook: pre-install,pre-upgrade
-    helm.sh/hook-delete-policy: hook-succeeded,before-hook-creation
+    helm.sh/hook-delete-policy: before-hook-creation
     helm.sh/hook-weight: "0"
 data:
   client-ca.crt: {{ .Values.client.rootCa | b64enc }}
@@ -134,7 +134,7 @@ metadata:
     {{- include "acp.labels" . | nindent 4 }}
   annotations:
     helm.sh/hook: pre-install,pre-upgrade
-    helm.sh/hook-delete-policy: hook-succeeded,before-hook-creation
+    helm.sh/hook-delete-policy: before-hook-creation
     helm.sh/hook-weight: "0"
 spec:
   duration: {{ .Values.certManager.duration }}
