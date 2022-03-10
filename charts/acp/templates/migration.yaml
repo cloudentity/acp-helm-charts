@@ -1,0 +1,162 @@
+{{- if .Values.migrateJob.enabled -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    {{- include "acp.labels" . | nindent 4 }}
+  name: {{ include "acp.fullname" . }}-migrate
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation
+    helm.sh/hook-weight: "5"
+spec:
+  backoffLimit: 8
+  template:
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: tls
+          projected:
+            defaultMode: 384
+            sources:
+            - secret:
+                name: {{ include "acp.fullname" . }}-tls-migrate
+            {{- if ((.Values.client).rootCa) }}
+            - secret:
+                name: {{ include "acp.fullname" . }}-client-tls-migrate
+            {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}-sql-configure
+          securityContext:
+            {{- toYaml .Values.containerSecurityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - sql
+            - configure
+            - --sql.url
+            - {{ .Values.sql.url }}
+          {{- with .Values.env }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: /tls
+              name: tls
+              readOnly: true
+          resources:
+            {{- toYaml .Values.migrateJob.resources | nindent 12 }}
+      initContainers:
+        - name: {{ .Chart.Name }}-sql-migrate
+          securityContext:
+            {{- toYaml .Values.containerSecurityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - sql
+            - migrate
+            - --sql.url
+            - {{ .Values.sql.url }}
+          {{- with .Values.env }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: /tls
+              name: tls
+              readOnly: true
+          resources:
+            {{- toYaml .Values.migrateJob.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: OnFailure
+---
+{{- if and .Values.certificate.create (not .Values.certManager.enabled) }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "acp.fullname" . }}-tls-migrate
+  labels:
+    {{- include "acp.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation
+    helm.sh/hook-weight: "0"
+type: kubernetes.io/tls
+data:
+  {{- if and .Values.certificate.cert .Values.certificate.key }}
+  {{- with .Values.certificate }}
+  tls.crt: {{ .cert | b64enc }}
+  tls.key: {{ .key | b64enc }}
+  {{- end }}
+  {{ else }}
+  tls.crt: {{ .Files.Get "files/cert.pem" | b64enc }}
+  tls.key: {{ .Files.Get "files/cert-key.pem" | b64enc }}
+  {{- end }}
+{{- end }}
+---
+{{- if ((.Values.client).rootCa) }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "acp.fullname" . }}-client-tls-migrate
+  labels:
+    {{- include "acp.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation
+    helm.sh/hook-weight: "0"
+data:
+  client-ca.crt: {{ .Values.client.rootCa | b64enc }}
+{{- end }}
+---
+{{- if .Values.certManager.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "acp.fullname" . }}-migrate
+  labels:
+    {{- include "acp.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation
+    helm.sh/hook-weight: "0"
+spec:
+  duration: {{ .Values.certManager.duration }}
+  renewBefore: {{ .Values.certManager.renewBefore }}
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth
+    - client auth
+  privateKey:
+    size: {{ .Values.certManager.privateKey.size }}
+    algorithm: {{ .Values.certManager.privateKey.algorithm }}
+  dnsNames:
+    - {{ include "acp.fullname" . }}
+    - {{ include "acp.fullname" . }}.{{ .Release.Namespace }}
+    - {{ include "acp.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+    {{- with .Values.certManager.extraNames }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  secretName: {{ include "acp.fullname" . }}-tls-migrate
+  issuerRef:
+    name: {{ .Values.certManager.issuerRef.name }}
+    kind: {{ .Values.certManager.issuerRef.kind }}
+{{- end }}
+{{- end }}
