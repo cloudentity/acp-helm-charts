@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'charts/kube-acp-stack/**'
+      - 'charts/acp/**'
       - 'tests/**'
     tags-ignore:
       - "*"
