@@ -68,5 +68,3 @@ To manually configure Docker credentials, first create a Secret by providing cre
 ```console
 kubectl create secret docker-registry docker.cloudentity.io --docker-server=docker.cloudentity.io --docker-username=<your-name> --docker-password=<your-password>
 ```
-
-xyz
