@@ -281,6 +281,13 @@ tlsDisabled: false
 
 ## Import Job configuration
 ##
+migrateJob:
+  ## Enables the SQL migrate job
+  ##
+  enabled: false
+
+## Import Job configuration
+##
 importJob:
   ## Enables the import job
   ##
