@@ -40,7 +40,7 @@ spec:
             - sql
             - configure
             - --sql.url
-            - {{ .Values.sql.url }}
+            - {{ (.Values.sql).url }}
           {{- with .Values.env }}
           env:
             {{- toYaml . | nindent 12 }}
@@ -61,7 +61,7 @@ spec:
             - sql
             - migrate
             - --sql.url
-            - {{ .Values.sql.url }}
+            - {{ (.Values.sql).url }}
           {{- with .Values.env }}
           env:
             {{- toYaml . | nindent 12 }}
