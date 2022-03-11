@@ -117,7 +117,10 @@ debug:
 check-kube-apis:
 	docker run --rm --volume $(PWD)/charts/${CHART}:/data cloudentity/helm-tools \
 		'sed "s/false/true/g" /data/values.yaml |\
-		helm template --api-versions "networking.k8s.io/v1/Ingress" --values - /data |\
+		helm template \
+		--api-versions "autoscaling/v2/HorizontalPodAutoscaler" \
+		--api-versions "networking.k8s.io/v1/Ingress" \
+		--values - /data |\
 		pluto detect --ignore-deprecations --output wide -'
 
 check-acp-charts-version:
