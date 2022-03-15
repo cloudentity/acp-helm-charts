@@ -43,6 +43,12 @@ spec:
                   key: clientSecret
             - name: ACP_ISSUER_URL
               value: "{{ .Values.issuerURL }}"
+            - name: ACP_TLS_CLIENT_INSECURE_SKIP_VERIFY
+              value: "{{ .Values.tlsClientInsecureSkipVerify }}"
+            - name: KONG_ADMIN_URL
+              value: "{{ .Values.kongAdminURL }}"
+            - name: KONG_TLS_CLIENT_INSECURE_SKIP_VERIFY
+              value: "{{ .Values.kongTlsClientInsecureSkipVerify }}"
             - name: ACP_TENANT_ID
               value: "{{ .Values.tenantID }}"
             - name: ACP_SERVER_ID
@@ -56,13 +62,17 @@ spec:
               containerPort: 9003
               protocol: TCP
           readinessProbe:
-            tcpSocket:
-              port: 9003
+            httpGet:
+              scheme: HTTPS
+              path: /alive
+              port: http
             initialDelaySeconds: 5
             periodSeconds: 10
           livenessProbe:
-            tcpSocket:
-              port: 9003
+            httpGet:
+              scheme: HTTPS
+              path: /alive
+              port: http
             initialDelaySeconds: 15
             periodSeconds: 20
           resources:

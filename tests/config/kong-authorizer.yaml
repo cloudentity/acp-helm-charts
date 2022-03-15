@@ -1,0 +1,9 @@
+clientCredentials:
+  clientID: "kong_authorizer_gateway_client"
+  clientSecret: "m5wxaxmfcthrgo0ykw9hv8oda6ua09d1"
+issuerURL: "https://acp.acp-system:8443/system/system"
+tlsClientInsecureSkipVerify: true
+kongAdminURL: "https://kong-kong-admin.kong-system:8001"
+kongTlsClientInsecureSkipVerify: true
+logging:
+  level: "debug"

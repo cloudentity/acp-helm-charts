@@ -11,7 +11,7 @@ image:
 
   ## Image tag (immutable tags are recommended, default is the chart appVersion)
   ##
-  tag: "latest"
+  tag: ""
 
 ## kong-authorizer image registry secret names as an array
 ##
@@ -49,8 +49,8 @@ issuerURL: "https://acp.acp-system:8443/default/system"
 ## If the issuerURL uses a vanity domain, you will need to specify the tenantID,
 ## and if the domain is per-server, then you must also specify the terverID.
 ## There is no harm in specifying them, even if you do not use a vanity domain.
-tenantID: "default"
-serverID: "system"
+tenantID: ""
+serverID: ""
 
 ## Credentials for your ACP kong-authorizer
 ##
@@ -93,8 +93,10 @@ extraEnvVars:
   HTTP_CLIENT_INSECURE_SKIP_VERIFY: true
   HTTP_SERVER_CERTIFICATE_CERT_PATH: /data/cert.pem
   HTTP_SERVER_CERTIFICATE_KEY_PATH: /data/cert-key.pem
-  KONG_ADMIN_URL: https://192.168.0.104:11444
+  KONG_ADMIN_URL: http://kong-kong-admin.kong-system:8001
   KONG_HTTP_CLIENT_INSECURE_SKIP_VERIFY: true
+  ACP_TLS_CLIENT_INSECURE_SKIP_VERIFY: true
+  KONG_TLS_CLIENT_INSECURE_SKIP_VERIFY: true
   LOGGING_LEVEL: info
 
 service:
@@ -119,7 +121,7 @@ ingress:
   ## Ingress hostnames with paths
   ##
   hosts:
-    - host: kong-authorizer.acp-system
+    - host: kong-authorizer.kong-authorizer
       paths:
         - path: /authorize
 
@@ -129,7 +131,6 @@ ingress:
   #  - secretName: kong-authorizer-tls
   #    hosts:
   #      - kong.domain.com
-
 
 ## Additional kong-authorizer ConfigMap entries
 ##
