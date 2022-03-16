@@ -10,6 +10,12 @@ metadata:
   {{- end }}
 rules:
 - apiGroups:
+  - ""
+  resources:
+  - "namespaces"
+  verbs:
+  - "list"
+- apiGroups:
   - "apps"
   resources:
   - "deployments"
