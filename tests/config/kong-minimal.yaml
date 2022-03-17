@@ -12,6 +12,11 @@ env:
   prefix: /kong_prefix/
   database: postgres
 
+plugins:
+  configMaps:
+  - name: kong-plugin-acp
+    pluginName: kong-plugin-acp
+
 admin:
   enabled: true
   http:
@@ -29,3 +34,12 @@ postgresql:
 ingressController:
   enabled: false
   installCRDs: false
+
+deployment:
+  userDefinedVolumes:
+  - name: "custom-kong-plugin-acp"
+    configMap:
+      name: "kong-plugin-acp"
+  userDefinedVolumeMounts:
+  - name: "custom-kong-plugin-acp"
+    mountPath: "/opt"
