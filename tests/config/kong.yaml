@@ -29,7 +29,7 @@ deployment:
   initContainers:
   - name: plugin-setup
     image: imolein/luarocks:5.1
-    command: ['sh', '-c', 'luarocks download 1.0.0-1 kong-plugin-acp && luarocks unpack kong-plugin-acp && mv kong-plugin-acp-*/acp-kong-plugin/src/kong/plugins/acp/* /opt/acp']
+    command: ['sh', '-c', 'luarocks download kong-plugin-acp 1.0.0-1 && luarocks unpack kong-plugin-acp && mv kong-plugin-acp-*/acp-kong-plugin/src/kong/plugins/acp/* /opt/acp']
     volumeMounts:
       - name: "custom-kong-plugin-acp"
         mountPath: "/opt/acp"

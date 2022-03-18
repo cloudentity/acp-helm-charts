@@ -66,7 +66,7 @@ install-istio:
 install-kong:
 	helm upgrade kong kong/kong \
 		--namespace kong-system \
-		--values ./tests/config/kong-minimal.yaml \
+		--values ./tests/config/kong.yaml \
 		--timeout 5m \
 		--create-namespace \
 		--install
