@@ -71,6 +71,10 @@ install-kong:
 		--create-namespace \
 		--install
 
+uninstall-kong:
+	helm uninstall -n kong-system kong && \
+		kubectl delete namespaces kong-system
+
 install-example-httpbin:
 	kubectl apply --filename ./tests/services/httpbin
 
