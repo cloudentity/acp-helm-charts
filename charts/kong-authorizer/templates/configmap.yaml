@@ -5,11 +5,47 @@ metadata:
   labels:
     {{- include "kong-authorizer.labels" . | nindent 4 }}
 data:
-{{- range $key, $value := .Values.data }}
-  {{- if $key | regexMatch ".*\\.ya?ml$" }}
-  {{ $key }}: |
-    {{- toYaml $value | default "{}" | indent 4 }}
-  {{- else }}
-  {{ $key }}: {{ toYaml $value | indent 4 }}
-  {{- end }}
-{{- end -}}
+{{- if ((.Values.httpClient).rootCa) }}
+  client-ca.crt: |
+    {{ .Values.httpClient.rootCa | nindent 4 | trim }}
+{{- end }}
+{{- if ((.Values.httpServer).cert) }}
+  cert.pem: |
+    {{ .Values.httpServer.cert | nindent 4 | trim }}
+{{- end }}
+{{- if ((.Values.httpServer).certKey) }}
+  cert-key.pem: |
+    {{ .Values.httpServer.certKey | nindent 4 | trim }}
+{{- end }}
+
+  config.yaml: |
+    {{- if ((.Values.httpClient).rootCa) }}
+    http_client:
+      root_ca: /data/client-ca.crt
+    {{- end }}
+    http_server:
+      certificate:
+        {{- if ((.Values.httpServer).cert_path) }}
+        cert: /data/cert.pem
+        {{- end }}
+        {{- if ((.Values.httpServer).key_path) }}
+        key: /data/cert-key.pem
+        {{- end }}
+    {{- with .Values }}
+    logging:
+      level: {{ .logging.level }}
+    enforcement:
+      allow_unknown: {{ .enforcement.allowUnknown }}
+    token_exchange:
+      enabled: {{ .tokenExchange.enabled }}
+      inject:
+        mode: {{ .tokenExchange.inject.mode }}
+        headers:
+          original_token: {{ .tokenExchange.inject.headers.originalToken }}
+          exchanged_token: {{ .tokenExchange.inject.headers.exchangedToken }}
+          strip_bearer: {{ .tokenExchange.inject.headers.stripBearer }}
+    {{- end }}
+  extraconfig.yaml: |
+    {{- with .Values.extraConfig }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}

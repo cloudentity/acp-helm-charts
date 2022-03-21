@@ -10,10 +10,11 @@ spec:
       {{- include "kong-authorizer.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
       labels:
         {{- include "kong-authorizer.selectorLabels" . | nindent 8 }}
     spec:
@@ -27,9 +28,12 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{- toYaml .Values.containerSecurityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - --config
+            - /data/config.yaml,/data/extraconfig.yaml
           env:
             - name: ACP_CLIENT_ID
               valueFrom:
@@ -43,12 +47,14 @@ spec:
                   key: clientSecret
             - name: ACP_ISSUER_URL
               value: "{{ .Values.issuerURL }}"
-            - name: ACP_TLS_CLIENT_INSECURE_SKIP_VERIFY
-              value: "{{ .Values.tlsClientInsecureSkipVerify }}"
+            # not sure if this one works
+            # - name: ACP_TLS_CLIENT_INSECURE_SKIP_VERIFY
+            #   value: "{{ .Values.tlsClientInsecureSkipVerify }}"
+            # - name: KONG_TLS_CLIENT_INSECURE_SKIP_VERIFY
+            #   value: "{{ .Values.kongTlsClientInsecureSkipVerify }}"
+            # end
             - name: KONG_ADMIN_URL
               value: "{{ .Values.kongAdminURL }}"
-            - name: KONG_TLS_CLIENT_INSECURE_SKIP_VERIFY
-              value: "{{ .Values.kongTlsClientInsecureSkipVerify }}"
             - name: ACP_TENANT_ID
               value: "{{ .Values.tenantID }}"
             - name: ACP_SERVER_ID
