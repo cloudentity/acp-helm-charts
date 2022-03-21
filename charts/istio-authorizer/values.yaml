@@ -214,11 +214,9 @@ enforcement:
   allowUnknown: false
 
 ## Cluster domain name
-## TODO ASK IF DEPRECATED
 ##
 trustDomain: "cluster.local"
 
-## TODO ASK IF DEPRECATED
 ## Target Service configuration
 targetService:
   ## Inject configuration
