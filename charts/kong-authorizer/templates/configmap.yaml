@@ -17,7 +17,6 @@ data:
   cert-key.pem: |
     {{ .Values.httpServer.certKey | nindent 4 | trim }}
 {{- end }}
-
   config.yaml: |
     {{- if ((.Values.httpClient).rootCa) }}
     http_client:
