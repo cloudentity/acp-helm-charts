@@ -64,6 +64,8 @@ install-istio:
 	rm --recursive --force ./istio-1.9.3
 
 install-kong:
+	helm repo add kong https://charts.konghq.com
+	helm repo update
 	helm upgrade kong kong/kong \
 		--namespace kong-system \
 		--values ./tests/config/kong.yaml \
