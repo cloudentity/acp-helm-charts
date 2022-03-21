@@ -57,7 +57,7 @@ spec:
             - name: ACP_TENANT_ID
               value: {{ .Values.tenantID }}
             - name: ACP_SERVER_ID
-              value: {{ .Values.serverID }
+              value: {{ .Values.serverID }}
             {{- range $key, $value := .Values.extraEnvVars }}
             - name: {{ $key }}
               value: "{{ $value }}"
