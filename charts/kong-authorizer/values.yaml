@@ -139,6 +139,12 @@ enforcement:
   ##
   allowUnknown: false
 
+## Kong configuration
+##
+kong:
+  ## Admin portal URL
+  admin_url: http://kong-kong-admin.kong-system:8001
+
 service:
   ## kong-authorizer service type
   ##
@@ -215,14 +221,5 @@ tokenExchange:
 ##
 # extraConfig: {}
 
-## Array with environment variables to add to the container
-##
-extraEnvVars:
-  # todo handle as config
-  HTTP_CLIENT_INSECURE_SKIP_VERIFY: true
-  KONG_HTTP_CLIENT_INSECURE_SKIP_VERIFY: true
-  ACP_TLS_CLIENT_INSECURE_SKIP_VERIFY: true
-  KONG_TLS_CLIENT_INSECURE_SKIP_VERIFY: true
-  # kong
-  KONG_ADMIN_URL: http://kong-kong-admin.kong-system:8001
+
 

@@ -5,6 +5,8 @@ issuerURL: "https://acp.acp-system:8443/system/system"
 tlsClientInsecureSkipVerify: true
 kongAdminURL: "http://kong-kong-admin.kong-system:8001"
 kongTlsClientInsecureSkipVerify: true
+extraEnvVars:
+  HTTP_CLIENT_INSECURE_SKIP_VERIFY: true
 httpServer:
   cert: |
     -----BEGIN CERTIFICATE-----

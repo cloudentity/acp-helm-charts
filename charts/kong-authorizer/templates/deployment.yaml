@@ -47,12 +47,6 @@ spec:
                   key: clientSecret
             - name: ACP_ISSUER_URL
               value: "{{ .Values.issuerURL }}"
-            # not sure if this one works
-            # - name: ACP_TLS_CLIENT_INSECURE_SKIP_VERIFY
-            #   value: "{{ .Values.tlsClientInsecureSkipVerify }}"
-            # - name: KONG_TLS_CLIENT_INSECURE_SKIP_VERIFY
-            #   value: "{{ .Values.kongTlsClientInsecureSkipVerify }}"
-            # end
             - name: KONG_ADMIN_URL
               value: "{{ .Values.kongAdminURL }}"
             - name: ACP_TENANT_ID

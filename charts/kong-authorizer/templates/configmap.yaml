@@ -44,6 +44,8 @@ data:
           original_token: {{ .tokenExchange.inject.headers.originalToken }}
           exchanged_token: {{ .tokenExchange.inject.headers.exchangedToken }}
           strip_bearer: {{ .tokenExchange.inject.headers.stripBearer }}
+    kong:
+      admin_url: {{ .kong.admin_url }}
     {{- end }}
   extraconfig.yaml: |
     {{- with .Values.extraConfig }}
