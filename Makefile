@@ -14,6 +14,8 @@ prepare: create-cluster install-base-stack
 
 install: helm-install
 
+uninstall: helm-uninstall
+
 verify: wait
 
 test: helm-test
@@ -61,6 +63,20 @@ install-istio:
 	kubectl label namespace default istio-injection=enabled
 	rm --recursive --force ./istio-1.9.3
 
+install-kong:
+	helm repo add kong https://charts.konghq.com
+	helm repo update
+	helm upgrade kong kong/kong \
+		--namespace kong-system \
+		--values ./tests/config/kong.yaml \
+		--timeout 5m \
+		--create-namespace \
+		--install
+
+uninstall-kong:
+	helm uninstall -n kong-system kong && \
+		kubectl delete namespaces kong-system
+
 install-example-httpbin:
 	kubectl apply --filename ./tests/services/httpbin
 
@@ -87,7 +103,7 @@ lint-kubeeval: docker
 helm-install:
 	helm upgrade ${CHART} ./charts/${CHART} \
 		--namespace ${NAMESPACE} \
-		--values ./tests/config/istio-authorizer.yaml \
+		--values ./tests/config/${CHART}.yaml \
 		--timeout 5m \
 		--create-namespace \
 		--install

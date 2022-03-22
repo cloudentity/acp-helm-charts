@@ -42,12 +42,6 @@ spec:
             - --config
             - /data/config.yaml,/data/extraconfig.yaml
           env:
-            - name: ACP_ISSUER_URL
-              value: {{ .Values.issuerURL }}
-            - name: ACP_TENANT_ID
-              value: {{ .Values.tenantID }}
-            - name: ACP_SERVER_ID
-              value: {{ .Values.serverID }}
             - name: ACP_CLIENT_ID
               valueFrom:
                 secretKeyRef:
@@ -58,6 +52,12 @@ spec:
                 secretKeyRef:
                   name: {{ include "istio-authorizer.clientCredentialsName" . }}
                   key: clientSecret
+            - name: ACP_ISSUER_URL
+              value: {{ .Values.issuerURL }}
+            - name: ACP_TENANT_ID
+              value: {{ .Values.tenantID }}
+            - name: ACP_SERVER_ID
+              value: {{ .Values.serverID }}
             {{- range $key, $value := .Values.extraEnvVars }}
             - name: {{ $key }}
               value: "{{ $value }}"

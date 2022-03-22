@@ -1,0 +1,41 @@
+image:
+  repository: kong
+  tag: "2.7"
+
+env:
+  prefix: /kong_prefix/
+  database: postgres
+  plugins: "bundled, acp"
+
+admin:
+  enabled: true
+  http:
+    enabled: true
+    servicePort: 8001
+    containerPort: 8001
+
+postgresql:
+  enabled: true
+  postgresqlUsername: kong
+  postgresqlDatabase: kong
+  service:
+    port: 5432
+
+ingressController:
+  enabled: false
+  installCRDs: false
+
+deployment:
+  initContainers:
+  - name: plugin-setup
+    image: imolein/luarocks:5.1
+    command: ['sh', '-c', 'luarocks download kong-plugin-acp 1.0.0-1 && luarocks unpack kong-plugin-acp && mv kong-plugin-acp-*/acp-kong-plugin/src/kong/plugins/acp/* /opt/acp']
+    volumeMounts:
+      - name: "custom-kong-plugin-acp"
+        mountPath: "/opt/acp"
+  userDefinedVolumes:
+  - name: "custom-kong-plugin-acp"
+    emptyDir: {}
+  userDefinedVolumeMounts:
+  - name: "custom-kong-plugin-acp"
+    mountPath: "/usr/local/share/lua/5.1/kong/plugins/acp"

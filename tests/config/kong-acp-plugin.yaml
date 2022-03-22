@@ -1,0 +1,7 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: kong-plugin-acp
+config:
+  header_value: "Kong plugin ACP"
+plugin: kong-plugin-acp
