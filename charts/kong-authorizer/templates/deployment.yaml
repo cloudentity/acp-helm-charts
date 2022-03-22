@@ -1,10 +1,17 @@
 apiVersion: apps/v1
+{{- if not .Values.deployAsDaemonSet }}
 kind: Deployment
+{{- else }}
+kind: DaemonSet
+{{- end }}
 metadata:
   name: {{ include "kong-authorizer.fullname" . }}
   labels:
     {{- include "kong-authorizer.labels" . | nindent 4 }}
 spec:
+{{- if not .Values.deployAsDaemonSet }}
+  replicas: {{ .Values.replicas }}
+{{- end }}
   selector:
     matchLabels:
       {{- include "kong-authorizer.selectorLabels" . | nindent 6 }}
