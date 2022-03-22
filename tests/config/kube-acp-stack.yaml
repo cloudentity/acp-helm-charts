@@ -59,7 +59,7 @@ acp:
           last_active: "2021-07-15T12:39:56.099Z"
         - tenant_id: system
           authorization_server_id: system
-          id: kong_authorizer_gateway_client
+          id: kong_authorizer_test_gateway
           name: Kong authorizer test gateway
           type: kong
           client_id: kong_authorizer_gateway_client
@@ -87,6 +87,11 @@ acp:
             - method: GET
               path: /headers
               can_have_policy: true
+        - id: "kong_httpbin_service"
+          tenant_id: system
+          authorization_server_id: system
+          gateway_id: kong_authorizer_test_gateway
+          name: Httpbin test service
       gateway_api_groups:
         - tenant_id: system
           server_id: system
@@ -99,6 +104,16 @@ acp:
               path: /anything
               policy_id: block
               can_have_policy: true
+            - method: GET
+              path: /headers
+              can_have_policy: true
+        - tenant_id: system
+          server_id: system
+          service_id: "kong_httpbin_service"
+          gateway_id: kong_authorizer_test_gateway
+          name: "httpbin"
+          id: "kong_httpbin_api_group"
+          apis:
             - method: GET
               path: /headers
               can_have_policy: true
