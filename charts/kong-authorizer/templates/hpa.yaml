@@ -1,4 +1,3 @@
-
 {{- if not .Values.deployAsDaemonSet }}
 {{- if .Values.autoscaling.enabled }}
 apiVersion: autoscaling/v2beta1
