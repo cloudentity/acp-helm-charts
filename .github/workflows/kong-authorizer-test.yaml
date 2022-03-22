@@ -41,8 +41,6 @@ jobs:
         run: make install-kong
       - name: install
         run: NAMESPACE=kong-authorizer make install
-      - name: wait
-        run: NAMESPACE=kong-authorizer make wait
       - name: Debug
         if: failure()
         run: make debug

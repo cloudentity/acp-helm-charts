@@ -3,14 +3,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "istio-authorizer.fullname" . }}
+  name: {{ include "kong-authorizer.fullname" . }}
   labels:
-    {{- include "istio-authorizer.labels" . | nindent 4 }}
+    {{- include "kong-authorizer.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "istio-authorizer.fullname" . }}
+    name: {{ include "kong-authorizer.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
