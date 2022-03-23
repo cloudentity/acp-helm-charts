@@ -4,7 +4,7 @@ image:
 
 env:
   prefix: /kong_prefix/
-  database: postgres
+  database: "off"
   plugins: "bundled, acp"
 
 admin:
@@ -14,28 +14,58 @@ admin:
     servicePort: 8001
     containerPort: 8001
 
-postgresql:
-  enabled: true
-  postgresqlUsername: kong
-  postgresqlDatabase: kong
-  service:
-    port: 5432
-
 ingressController:
   enabled: false
   installCRDs: false
 
 deployment:
   initContainers:
-  - name: plugin-setup
-    image: imolein/luarocks:5.1
-    command: ['sh', '-c', 'luarocks download kong-plugin-acp 1.0.0-1 && luarocks unpack kong-plugin-acp && mv kong-plugin-acp-*/acp-kong-plugin/src/kong/plugins/acp/* /opt/acp']
-    volumeMounts:
-      - name: "custom-kong-plugin-acp"
-        mountPath: "/opt/acp"
+    - name: plugin-setup
+      image: imolein/luarocks:5.1
+      command:
+        [
+          "sh",
+          "-c",
+          "luarocks download kong-plugin-acp 1.0.0-1 && luarocks unpack kong-plugin-acp && mv kong-plugin-acp-*/acp-kong-plugin/src/kong/plugins/acp/* /opt/acp",
+        ]
+      volumeMounts:
+        - name: "custom-kong-plugin-acp"
+          mountPath: "/opt/acp"
   userDefinedVolumes:
-  - name: "custom-kong-plugin-acp"
-    emptyDir: {}
+    - name: "custom-kong-plugin-acp"
+      emptyDir: {}
   userDefinedVolumeMounts:
-  - name: "custom-kong-plugin-acp"
-    mountPath: "/usr/local/share/lua/5.1/kong/plugins/acp"
+    - name: "custom-kong-plugin-acp"
+      mountPath: "/usr/local/share/lua/5.1/kong/plugins/acp"
+
+dblessConfig:
+  config: |
+    _format_version: "1.1"
+    services:
+      - name: httpbin-service
+        url: https://httpbin.org
+        routes:
+        - name: anything
+          paths:
+          - "/anything"
+          methods:
+          - "GET"
+          - "PATCH"
+          - "POST"
+          - "DELETE"
+          strip_path: false
+        - name: headers
+          paths:
+          - "/headers"
+          methods:
+          - "GET"
+          - "PATCH"
+          - "POST"
+          - "DELETE"
+          strip_path: false
+        plugins:
+        - name: acp
+          config:
+            api_group_id: httpbin-service
+            auth_url: https://kong-authorizer.kong-authorizer:9003/authorize
+            ssl_verify: false

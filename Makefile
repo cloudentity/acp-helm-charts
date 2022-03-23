@@ -121,6 +121,12 @@ wait:
 		--namespace ${NAMESPACE} \
 		--timeout 5m
 
+wait-for-daemonset:
+	kubectl wait daemonset/${CHART} \
+		--for=jsonpath='{.status.numberReady}'=1 \
+		--namespace ${NAMESPACE} \
+		--timeout 5m
+
 debug:
 	-kubectl get all --all-namespaces
 	-kubectl logs daemonset/kindnet --namespace kube-system

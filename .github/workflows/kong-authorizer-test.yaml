@@ -41,6 +41,11 @@ jobs:
         run: make install-kong
       - name: install
         run: NAMESPACE=kong-authorizer make install
+      - name: wait
+        run: NAMESPACE=kong-authorizer make wait-for-daemonset
+      # TODO enable after service discovery disable option will be available
+      # - name: Helm tests
+      #   run: NAMESPACE=kong-authorizer make helm-test
       - name: Debug
         if: failure()
         run: make debug
