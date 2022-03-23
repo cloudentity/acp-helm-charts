@@ -33,6 +33,8 @@ data:
     {{- with .Values }}
     logging:
       level: {{ .logging.level }}
+    discovery:
+      enabled: {{ .discovery.enabled }}
     enforcement:
       allow_unknown: {{ .enforcement.allowUnknown }}
     token_exchange:

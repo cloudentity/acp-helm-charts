@@ -92,6 +92,14 @@ acp:
           authorization_server_id: system
           gateway_id: kong_authorizer_test_gateway
           name: Httpbin test service
+          apis:
+            - method: GET
+              path: /anything
+              policy_id: block
+              can_have_policy: true
+            - method: GET
+              path: /headers
+              can_have_policy: true
       gateway_api_groups:
         - tenant_id: system
           server_id: system
@@ -111,9 +119,13 @@ acp:
           server_id: system
           service_id: "kong_httpbin_service"
           gateway_id: kong_authorizer_test_gateway
-          name: "httpbin"
-          id: "kong_httpbin_api_group"
+          name: "httpbin-service"
+          id: "httpbin-service"
           apis:
+            - method: GET
+              path: /anything
+              policy_id: block
+              can_have_policy: true
             - method: GET
               path: /headers
               can_have_policy: true

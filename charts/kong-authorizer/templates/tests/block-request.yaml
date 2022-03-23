@@ -8,5 +8,5 @@ spec:
   containers:
     - name: {{ .Release.Name }}-block-access-istio-validate-test
       image: curlimages/curl
-      command: ["/bin/sh", "-c", "[ $(curl --insecure --silent --output /dev/null --write-out \"%{http_code}\" http://kong-kong-proxy.kong-system:80/deny) -eq 403 ]"]
+      command: ["/bin/sh", "-c", "[ $(curl --insecure --silent --output /dev/null --write-out \"%{http_code}\" http://kong-kong-proxy.kong-system:80/anything) -eq 403 ]"]
   restartPolicy: Never

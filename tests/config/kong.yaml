@@ -40,9 +40,9 @@ dblessConfig:
       - name: httpbin-service
         url: https://httpbin.org
         routes:
-        - name: deny
+        - name: anything
           paths:
-          - "/deny"
+          - "/anything"
           methods:
           - "GET"
           - "PATCH"

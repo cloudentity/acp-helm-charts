@@ -123,7 +123,7 @@ wait:
 
 wait-for-daemonset:
 	kubectl wait daemonset/${CHART} \
-		--for=jsonpath='{.status.numberAvailable}'=1 \
+		--for=jsonpath='{.status.numberReady}'=1 \
 		--namespace ${NAMESPACE} \
 		--timeout 5m
 

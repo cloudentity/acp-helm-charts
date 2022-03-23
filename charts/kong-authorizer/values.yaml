@@ -164,6 +164,13 @@ logging:
   ##
   level: info
 
+## Authorizer discovery configuration
+##
+discovery:
+  ##  When true, API discovery is enabled
+  ##
+  enabled: true
+
 ## Enforcement configuration
 ##
 enforcement:
