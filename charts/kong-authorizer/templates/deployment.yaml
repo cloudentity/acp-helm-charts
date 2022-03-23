@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-{{- if not .Values.deployAsDaemonSet }}
+{{- if .Values.autoscaling.enabled }}
 kind: Deployment
 {{- else }}
 kind: DaemonSet
@@ -9,9 +9,9 @@ metadata:
   labels:
     {{- include "kong-authorizer.labels" . | nindent 4 }}
 spec:
-{{- if not .Values.deployAsDaemonSet }}
-  replicas: {{ .Values.replicas }}
-{{- end }}
+  {{- if .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "kong-authorizer.selectorLabels" . | nindent 6 }}
@@ -97,6 +97,10 @@ spec:
       {{- end }}
       {{- with .Values.tolerations }}
       tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.topologySpreadConstraints }}
+      topologySpreadConstraints:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
