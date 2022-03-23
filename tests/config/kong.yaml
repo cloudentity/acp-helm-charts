@@ -20,18 +20,23 @@ ingressController:
 
 deployment:
   initContainers:
-  - name: plugin-setup
-    image: imolein/luarocks:5.1
-    command: ['sh', '-c', 'luarocks download kong-plugin-acp 1.0.0-1 && luarocks unpack kong-plugin-acp && mv kong-plugin-acp-*/acp-kong-plugin/src/kong/plugins/acp/* /opt/acp']
-    volumeMounts:
-      - name: "custom-kong-plugin-acp"
-        mountPath: "/opt/acp"
+    - name: plugin-setup
+      image: imolein/luarocks:5.1
+      command:
+        [
+          "sh",
+          "-c",
+          "luarocks download kong-plugin-acp 1.0.0-1 && luarocks unpack kong-plugin-acp && mv kong-plugin-acp-*/acp-kong-plugin/src/kong/plugins/acp/* /opt/acp",
+        ]
+      volumeMounts:
+        - name: "custom-kong-plugin-acp"
+          mountPath: "/opt/acp"
   userDefinedVolumes:
-  - name: "custom-kong-plugin-acp"
-    emptyDir: {}
+    - name: "custom-kong-plugin-acp"
+      emptyDir: {}
   userDefinedVolumeMounts:
-  - name: "custom-kong-plugin-acp"
-    mountPath: "/usr/local/share/lua/5.1/kong/plugins/acp"
+    - name: "custom-kong-plugin-acp"
+      mountPath: "/usr/local/share/lua/5.1/kong/plugins/acp"
 
 dblessConfig:
   config: |

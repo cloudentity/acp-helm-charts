@@ -30,12 +30,12 @@ acp:
           client_name: Authorizer Test Gateway Client
           token_endpoint_auth_method: client_secret_post
           grant_types:
-          - client_credentials
+            - client_credentials
           scopes:
-          - read_gateway_configuration
-          - write_gateway_configuration
-          - push_gateway_requests
-          - introspect_tokens
+            - read_gateway_configuration
+            - write_gateway_configuration
+            - push_gateway_requests
+            - introspect_tokens
         - tenant_id: system
           authorization_server_id: system
           client_id: kong_authorizer_gateway_client
@@ -43,12 +43,12 @@ acp:
           client_name: Authorizer Test Gateway Client
           token_endpoint_auth_method: client_secret_post
           grant_types:
-          - client_credentials
+            - client_credentials
           scopes:
-          - read_gateway_configuration
-          - write_gateway_configuration
-          - push_gateway_requests
-          - introspect_tokens
+            - read_gateway_configuration
+            - write_gateway_configuration
+            - push_gateway_requests
+            - introspect_tokens
       gateways:
         - tenant_id: system
           authorization_server_id: system
@@ -72,9 +72,9 @@ acp:
           language: cloudentity
           type: api
           validators:
-          - name: "false"
+            - name: "false"
       services:
-        - id: "{{ encServiceID \"spiffe://cluster.local/ns/default/sa/httpbin\" }}"
+        - id: '{{ encServiceID "spiffe://cluster.local/ns/default/sa/httpbin" }}'
           tenant_id: system
           authorization_server_id: system
           gateway_id: istio_authorizer_test_gateway
@@ -103,10 +103,10 @@ acp:
       gateway_api_groups:
         - tenant_id: system
           server_id: system
-          service_id: "{{ encServiceID \"spiffe://cluster.local/ns/default/sa/httpbin\" }}"
+          service_id: '{{ encServiceID "spiffe://cluster.local/ns/default/sa/httpbin" }}'
           gateway_id: istio_authorizer_test_gateway
           name: "default/httpbin"
-          id: "{{ encSpiffeID \"spiffe://cluster.local/ns/default/sa/httpbin\" }}"
+          id: '{{ encSpiffeID "spiffe://cluster.local/ns/default/sa/httpbin" }}'
           apis:
             - method: GET
               path: /anything
