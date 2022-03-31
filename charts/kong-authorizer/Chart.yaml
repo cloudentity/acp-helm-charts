@@ -2,5 +2,5 @@ apiVersion: v2
 name: kong-authorizer
 description: A Helm chart for kong-authorizer
 type: application
-version: 2.0.2
-appVersion: "2.0.2"
+version: 2.1.0
+appVersion: "2.1.0"
