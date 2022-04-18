@@ -3,6 +3,10 @@ on:
   push:
     tags-ignore:
       - "*"
+    branches:
+      - 'release/**'
+    paths:
+      - 'charts/istio-authorizer/Chart.yaml'
   pull_request:
     paths:
       - 'charts/istio-authorizer/**'
