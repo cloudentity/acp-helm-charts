@@ -64,6 +64,8 @@ spec:
           {{- end }}
             - name: SERVER_DISABLE_ASYNC_PROCESSING
               value: {{ quote .Values.workers.enabled }}
+            - name: SQL_MIGRATIONS_DISABLE
+              value: {{ quote .Values.migrateJob.enabled }}
           ports:
             - name: http
               containerPort: {{ include "acp.portNumber" . }}
