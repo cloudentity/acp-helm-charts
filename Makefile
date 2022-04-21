@@ -6,6 +6,12 @@ CHART ?= acp
 # name of the Kubernetes Namespace where resources will be placed
 NAMESPACE ?= acp-system
 
+# list of helm charts that should match ACP release version
+HELM_CHARTS = acp-cd,acp,istio-authorizer,kube-acp-stack
+
+# ACP helm chart version
+ACP_VERSION ?= 2.1.0
+export ACP_VERSION
 
 ### TARGETS ###
 
@@ -136,3 +142,6 @@ check-acp-charts-version:
 
 update-istio-configmap:
 	tests/scripts/update-istio-configmap.sh
+
+bump-acp-version:
+	tests/scripts/bump-acp-version.sh ${HELM_CHARTS} ${ACP_VERSION}

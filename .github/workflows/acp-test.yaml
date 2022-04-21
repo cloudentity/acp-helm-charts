@@ -3,6 +3,10 @@ on:
   push:
     tags-ignore:
       - "*"
+    branches:
+      - 'release/**'
+    paths:
+      - 'charts/acp-cd/Chart.yaml'
   pull_request:
     paths:
     - 'charts/acp/**'
