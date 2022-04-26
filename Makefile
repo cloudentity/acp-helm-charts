@@ -65,7 +65,7 @@ install-ingress-controller:
 
 install-istio:
 	curl --location https://istio.io/downloadIstio | ISTIO_VERSION=1.9.3 TARGET_ARCH=x86_64  sh -
-	./istio-1.9.3/bin/istioctl install --filename ./tests/config/ce-istio-profile.yaml --skip-confirmation
+	./istio-1.9.3/bin/istioctl install --filename ./tests/config/ce-istio-profile.yaml --skip-confirmation --readiness-timeout 10m
 	kubectl label namespace default istio-injection=enabled
 	rm --recursive --force ./istio-1.9.3
 
