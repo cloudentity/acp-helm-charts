@@ -9,6 +9,9 @@ NAMESPACE ?= acp-system
 # list of helm charts that should match ACP release version
 HELM_CHARTS = acp-cd,acp,istio-authorizer,kube-acp-stack
 
+# istio version
+ISTIO_VERSION ?= 1.13.3
+
 # ACP helm chart version
 ACP_VERSION ?= 2.2.0
 export ACP_VERSION
@@ -64,10 +67,10 @@ install-ingress-controller:
 		--timeout=10m
 
 install-istio:
-	curl --location https://istio.io/downloadIstio | ISTIO_VERSION=1.9.3 TARGET_ARCH=x86_64  sh -
-	./istio-1.9.3/bin/istioctl install --filename ./tests/config/ce-istio-profile.yaml --skip-confirmation --readiness-timeout 10m
+	curl --location https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} TARGET_ARCH=x86_64  sh -
+	./istio-${ISTIO_VERSION}/bin/istioctl install --filename ./tests/config/ce-istio-profile.yaml --skip-confirmation
 	kubectl label namespace default istio-injection=enabled
-	rm --recursive --force ./istio-1.9.3
+	rm --recursive --force ./istio-${ISTIO_VERSION}
 
 install-example-httpbin:
 	kubectl apply --filename ./tests/services/httpbin
