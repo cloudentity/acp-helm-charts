@@ -96,7 +96,7 @@ helm-install:
 	helm upgrade ${CHART} ./charts/${CHART} \
 		--namespace ${NAMESPACE} \
 		--values ./tests/config/${CHART}.yaml \
-		--timeout 5m \
+		--timeout 10m \
 		--create-namespace \
 		--install
 
@@ -111,13 +111,13 @@ wait:
 	kubectl wait deploy/${CHART} \
 		--for condition=available \
 		--namespace ${NAMESPACE} \
-		--timeout 5m
+		--timeout 10m
 
 wait-for-daemonset:
 	kubectl wait daemonset/${CHART} \
 		--for=jsonpath='{.status.numberReady}'=1 \
 		--namespace ${NAMESPACE} \
-		--timeout 5m
+		--timeout 10m
 
 debug:
 	-kubectl get all --all-namespaces
