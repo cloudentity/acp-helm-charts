@@ -93,7 +93,7 @@ lint-kubeeval: docker
 		--rm \
 		cloudentity/helm-tools \
 		"helm template 'lint' /data |\
-		kubeval --skip-kinds AuthorizationPolicy,EnvoyFilter"
+		kubeval --skip-kinds AuthorizationPolicy,EnvoyFilter --additional-schema-locations https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master"
 
 helm-install:
 	helm upgrade ${CHART} ./charts/${CHART} \
