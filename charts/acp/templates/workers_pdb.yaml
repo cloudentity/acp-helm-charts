@@ -1,0 +1,18 @@
+{{- if and .Values.workers.podDisruptionBudget (gt (int .Values.workers.replicaCount) 1) }}
+{{- if .Capabilities.APIVersions.Has "policy/v1/PodDisruptionBudget" }}
+apiVersion: policy/v1
+{{- else }}
+apiVersion: policy/v1beta1
+{{- end }}
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "acp.fullname" . }}-workers
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "acp.workers.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "acp.workers.selectorLabels" . | nindent 6 }}
+  {{- toYaml .Values.workers.podDisruptionBudget | nindent 2 }}
+{{- end }}

@@ -198,7 +198,7 @@ autoscaling:
 
 ## Number of ACP replicas to deploy
 ##
-replicaCount: 1
+replicaCount: 2
 
 ## Pod annotations
 ##
@@ -224,6 +224,10 @@ resources: {}
 ## ACP pod topology spread constraints
 ##
 # topologySpreadConstraints: {}
+
+## ACP Pod disruption budget
+##
+# podDisruptionBudget: {}
 
 ## A security context defines privilege and access control settings for a Pod or Container
 ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
@@ -450,7 +454,7 @@ workers:
 
   ## Number of ACP workers replicas to deploy
   ##
-  replicaCount: 1
+  replicaCount: 2
 
   ## Define workers service
   ##
@@ -491,6 +495,10 @@ workers:
   ## ACP workers pod topology spread constraints
   ##
   # topologySpreadConstraints: {}
+
+  ## ACP workers Pod disruption budget
+  ##
+  # podDisruptionBudget: {}
 
 ## Fission chart configuration
 ##

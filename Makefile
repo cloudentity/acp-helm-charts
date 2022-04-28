@@ -134,6 +134,7 @@ check-kube-apis:
 		helm template \
 		--api-versions "autoscaling/v2/HorizontalPodAutoscaler" \
 		--api-versions "networking.k8s.io/v1/Ingress" \
+		--api-versions "policy/v1/PodDisruptionBudget" \
 		--values - /data |\
 		pluto detect --ignore-deprecations --output wide -'
 
