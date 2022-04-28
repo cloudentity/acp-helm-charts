@@ -7,7 +7,6 @@ apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
   name: {{ include "acp.fullname" . }}
-  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "acp.labels" . | nindent 4 }}
 spec:
