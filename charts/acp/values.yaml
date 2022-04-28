@@ -225,6 +225,10 @@ resources: {}
 ##
 # topologySpreadConstraints: {}
 
+## ACP Pod disruption budget
+##
+# podDisruptionBudget: {}
+
 ## A security context defines privilege and access control settings for a Pod or Container
 ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 ##
@@ -491,6 +495,10 @@ workers:
   ## ACP workers pod topology spread constraints
   ##
   # topologySpreadConstraints: {}
+
+  ## ACP workers Pod disruption budget
+  ##
+  # podDisruptionBudget: {}
 
 ## Fission chart configuration
 ##
