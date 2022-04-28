@@ -198,7 +198,7 @@ autoscaling:
 
 ## Number of ACP replicas to deploy
 ##
-replicaCount: 2
+replicaCount: 1
 
 ## Pod annotations
 ##
@@ -454,7 +454,7 @@ workers:
 
   ## Number of ACP workers replicas to deploy
   ##
-  replicaCount: 2
+  replicaCount: 1
 
   ## Define workers service
   ##
