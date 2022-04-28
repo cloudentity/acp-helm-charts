@@ -3,8 +3,8 @@
 {{- $serviceName := include "openbanking.consentAdmin.fullname" . }}
 {{- $servicePort := .Values.consentAdmin.service.servicePort -}}
 {{- $extraPaths := .Values.consentAdmin.ingress.extraPaths -}}
-{{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1beta1" }}
-apiVersion: networking.k8s.io/v1beta1
+{{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1" }}
+apiVersion: networking.k8s.io/v1
 {{ else }}
 apiVersion: extensions/v1beta1
 {{ end -}}
@@ -32,9 +32,12 @@ spec:
 {{ toYaml $extraPaths | indent 10 }}
 {{- end }}
           - path: /{{ rest $url | join "/" }}
+            pathType: Prefix
             backend:
-              serviceName: {{ $serviceName }}
-              servicePort: {{ $servicePort }}
+              service:
+                name: {{ $serviceName }}
+                port:
+                  number: {{ $servicePort }}
   {{- end -}}
 {{- if .Values.consentAdmin.ingress.tls }}
   tls:
