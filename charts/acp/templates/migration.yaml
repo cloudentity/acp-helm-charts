@@ -18,6 +18,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
+        - name: data
+          configMap:
+            name: {{ include "acp.configName" . }}
         - name: tls
           projected:
             defaultMode: 384
@@ -28,6 +31,9 @@ spec:
             - secret:
                 name: {{ include "acp.fullname" . }}-client-tls-migrate
             {{- end }}
+        - name: secret
+          secret:
+            secretName: {{ include "acp.secretConfig" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -62,13 +68,21 @@ spec:
             - migrate
             - --sql.url
             - {{ (.Values.sql).url }}
+            - --config
+            - /data/config.yaml,/data/extraconfig.yaml,/secret/config.yaml
           {{- with .Values.env }}
           env:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
+            - mountPath: /data
+              name: data
+              readOnly: true
             - mountPath: /tls
               name: tls
+              readOnly: true
+            - mountPath: /secret
+              name: secret
               readOnly: true
           resources:
             {{- toYaml .Values.migrateJob.resources | nindent 12 }}
