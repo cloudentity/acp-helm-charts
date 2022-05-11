@@ -262,10 +262,6 @@ certManager:
   ##
   enabled: false
 
-  ## The Common Name (AKA CN) represents the server name protected by the SSL certificate
-  ##
-  # commonName:
-
   ## The requested ‘duration’ (i.e. lifetime) of the Certificate
   ##
   duration: 2160h
