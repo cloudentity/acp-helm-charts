@@ -83,7 +83,7 @@ spec:
               {{- end }}
               port: {{ include "acp.portNumber" . }}
             initialDelaySeconds: 3
-            failureThreshold: 10
+            failureThreshold: 1
             periodSeconds: 10
             timeoutSeconds: 10
           startupProbe:
@@ -108,7 +108,6 @@ spec:
               {{- end }}
               port: {{ include "acp.portNumber" . }}
             initialDelaySeconds: 5
-            failureThreshold: 3
             periodSeconds: 10
             timeoutSeconds: 10
           volumeMounts:
