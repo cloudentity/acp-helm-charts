@@ -297,13 +297,6 @@ migrateJob:
   ##
   enabled: false
 
-  ## Config files path
-  ##
-  config:
-    - /data/config.yaml
-    - /data/extraconfig.yaml
-    - /secret/config.yaml
-
 ## Import Job configuration
 ##
 importJob:

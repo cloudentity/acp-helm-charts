@@ -69,7 +69,7 @@ spec:
             - --sql.url
             - {{ (.Values.sql).url }}
             - --config
-            - {{ join "," .Values.migrateJob.config }}
+            - /data/config.yaml,/data/extraconfig.yaml,/secret/secret.yaml
           {{- with .Values.env }}
           env:
             {{- toYaml . | nindent 12 }}
