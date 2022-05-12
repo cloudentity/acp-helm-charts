@@ -58,6 +58,8 @@ spec:
           args:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          - --config
+          - /data/config.yaml,/data/extraconfig.yaml,/secret/config.yaml
           env:
           {{- with .Values.env }}
             {{- toYaml . | nindent 12 }}

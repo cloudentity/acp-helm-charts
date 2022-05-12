@@ -18,6 +18,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
+        - name: data
+          configMap:
+            name: {{ include "acp.configName" . }}-migrate
         - name: tls
           projected:
             defaultMode: 384
@@ -28,6 +31,9 @@ spec:
             - secret:
                 name: {{ include "acp.fullname" . }}-client-tls-migrate
             {{- end }}
+        - name: secret
+          secret:
+            secretName: {{ include "acp.secretConfig" . }}-migrate
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -62,13 +68,24 @@ spec:
             - migrate
             - --sql.url
             - {{ (.Values.sql).url }}
+            - --config
+            - /data/config.yaml,/data/extraconfig.yaml,/secret/config.yaml
+            {{- with .Values.migrateJob.extraArgs }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
           {{- with .Values.env }}
           env:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
+            - mountPath: /data
+              name: data
+              readOnly: true
             - mountPath: /tls
               name: tls
+              readOnly: true
+            - mountPath: /secret
+              name: secret
               readOnly: true
           resources:
             {{- toYaml .Values.migrateJob.resources | nindent 12 }}
@@ -159,4 +176,38 @@ spec:
     name: {{ .Values.certManager.issuerRef.name }}
     kind: {{ .Values.certManager.issuerRef.kind }}
 {{- end }}
+---
+{{- if .Values.secretConfig.create -}}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "acp.secretConfig" . }}-migrate
+  labels:
+    {{- include "acp.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation
+    helm.sh/hook-weight: "0"
+stringData:
+  config.yaml: |
+    {{- with .Values.secretConfig.data }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+{{- end }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "acp.secretConfig" . }}-migrate
+  labels:
+    {{- include "acp.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation
+    helm.sh/hook-weight: "0"
+data:
+  config.yaml: |
+    {{- with .Values.migrateJob.data }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
 {{- end }}

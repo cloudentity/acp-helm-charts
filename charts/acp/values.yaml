@@ -58,8 +58,6 @@ serviceAccount:
 args:
   - server
   - start
-  - --config
-  - /data/config.yaml,/data/extraconfig.yaml,/secret/config.yaml
   - --demo
   - --metrics
   - --create-default-tenant
@@ -295,7 +293,16 @@ tlsDisabled: false
 migrateJob:
   ## Enables the SQL migrate job
   ##
-  enabled: false
+  enabled: true
+
+  ## Extra args for import command
+  ##
+  extraArgs: []
+
+  ## The data should match acp configuration options
+  ## https://docs.operations.cloudentity.com/reference/acp-configuration/
+  ##
+  data: {}
 
 ## Import Job configuration
 ##
@@ -303,13 +310,6 @@ importJob:
   ## Enables the import job
   ##
   enabled: false
-
-  ## Config files path
-  ##
-  config:
-    - /data/config.yaml
-    - /data/extraconfig.yaml
-    - /secret/config.yaml
 
   ## Import mode (update, fail, ignore)
   ##
