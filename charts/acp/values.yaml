@@ -293,7 +293,7 @@ tlsDisabled: false
 migrateJob:
   ## Enables the SQL migrate job
   ##
-  enabled: true
+  enabled: false
 
   ## Extra args for import command
   ##
