@@ -302,7 +302,12 @@ migrateJob:
   ## The data should match acp configuration options
   ## https://docs.operations.cloudentity.com/reference/acp-configuration/
   ##
-  data: {}
+  config: {}
+
+  ## The data should match acp configuration options
+  ## https://docs.operations.cloudentity.com/reference/acp-configuration/
+  ##
+  extraConfig: {}
 
 ## Import Job configuration
 ##
