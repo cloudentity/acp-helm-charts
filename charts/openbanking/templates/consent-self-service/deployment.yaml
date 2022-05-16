@@ -19,7 +19,7 @@ spec:
       labels:
         {{- include "openbanking.consentSelfservice.labels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ template "openbanking.serviceAccountName.bank" . }}
+      serviceAccountName: {{ template "openbanking.serviceAccountName.consentSelfservice" . }}
       {{- if .Values.consentSelfservice.extraInitContainers }}
       initContainers:
 {{ toYaml .Values.consentSelfservice.extraInitContainers | indent 8 }}

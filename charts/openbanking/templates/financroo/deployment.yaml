@@ -19,7 +19,7 @@ spec:
       labels:
         {{- include "openbanking.financroo.labels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ template "openbanking.serviceAccountName.bank" . }}
+      serviceAccountName: {{ template "openbanking.serviceAccountName.financroo" . }}
       {{- if .Values.financroo.extraInitContainers }}
       initContainers:
 {{ toYaml .Values.financroo.extraInitContainers | indent 8 }}
