@@ -20,6 +20,11 @@ bump-acp-version() {
   done
 }
 
+git-config() {
+  git config --global user.name "Cloudentity CI"
+  git config --global user.email devops@cloudentity.com
+}
+
 commit-release-branch() {
   git diff --quiet && git diff --staged --quiet || git commit --all --message "Bump acp version to ${ACP_VERSION}"
 }
@@ -30,5 +35,6 @@ push-release-branch() {
 
 create-release-branch
 bump-acp-version
+git-config
 commit-release-branch
 push-release-branch
