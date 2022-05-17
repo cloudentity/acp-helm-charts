@@ -210,8 +210,4 @@ data:
     {{- with .Values.migrateJob.config }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
-  extraconfig.yaml: |
-    {{- with .Values.migrateJob.extraConfig }}
-      {{- toYaml . | nindent 4 }}
-    {{- end }}
 {{- end }}
