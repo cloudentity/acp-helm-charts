@@ -156,6 +156,9 @@ metadata:
 spec:
   duration: {{ .Values.certManager.duration }}
   renewBefore: {{ .Values.certManager.renewBefore }}
+  {{- if ((.Values.certManager).commonName) }}
+  commonName: {{ .Values.certManager.commonName }}
+  {{- end }}
   usages:
     - digital signature
     - key encipherment
