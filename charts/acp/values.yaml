@@ -270,6 +270,10 @@ certManager:
   ##
   renewBefore: 720h
 
+  ## The Common Name (AKA CN) represents the server name protected by the SSL certificate
+  ##
+  # commonName:
+
   ## Options to control private keys used for the Certificate.
   ##
   privateKey:
