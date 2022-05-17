@@ -375,6 +375,10 @@ secretConfig:
   ##
   create: true
 
+  ## Secret name if create false
+  ##
+  # name:
+
   ## Secret annotations
   ##
   # annotations: {}
