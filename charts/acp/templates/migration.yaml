@@ -68,10 +68,10 @@ spec:
             - migrate
             - --sql.url
             - {{ (.Values.sql).url }}
-            - --config
+            {{- if not .Values.migrateJob.customConfig }}
             - /data/config.yaml,/data/extraconfig.yaml,/secret/config.yaml
-            {{- with .Values.migrateJob.extraArgs }}
-              {{- toYaml . | nindent 12 }}
+            {{ else }}
+            - {{ .Values.migrateJob.customConfig }}
             {{- end }}
           {{- with .Values.env }}
           env:

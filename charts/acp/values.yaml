@@ -63,6 +63,10 @@ args:
   - --create-default-tenant
   - --create-default-workspaces
 
+## Enables custom config
+##
+# customConfig:
+
 ## Array with environment variables to add to the ACP container
 ##
 # env: []
@@ -299,6 +303,10 @@ migrateJob:
   ##
   extraArgs: []
 
+  ## Enables custom config
+  ##
+  # customConfig:
+
   ## The data should match acp configuration options
   ## https://docs.operations.cloudentity.com/reference/acp-configuration/
   ##
@@ -315,6 +323,10 @@ importJob:
   ## Enables the import job
   ##
   enabled: false
+
+  ## Enables custom config
+  ##
+  # customConfig:
 
   ## Import mode (update, fail, ignore)
   ##

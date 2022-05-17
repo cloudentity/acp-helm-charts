@@ -49,7 +49,11 @@ spec:
           args:
             - import
             - --config
+            {{- if not .Values.importJob.customConfig }}
             - /data/config.yaml,/data/extraconfig.yaml,/secret/config.yaml
+            {{ else }}
+            - {{ .Values.importJob.customConfig }}
+            {{- end }}
             - --mode
             - {{ .Values.importJob.mode }}
             - --format
