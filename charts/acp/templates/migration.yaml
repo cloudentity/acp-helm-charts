@@ -69,7 +69,7 @@ spec:
             - --sql.url
             - {{ (.Values.sql).url }}
             {{- if not .Values.migrateJob.customConfig }}
-            - /data/config.yaml,/data/extraconfig.yaml,/secret/config.yaml
+            - /data/config.yaml,/secret/config.yaml
             {{ else }}
             - {{ .Values.migrateJob.customConfig }}
             {{- end }}

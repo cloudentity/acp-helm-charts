@@ -50,7 +50,7 @@ spec:
             - import
             - --config
             {{- if not .Values.importJob.customConfig }}
-            - /data/config.yaml,/secret/config.yaml
+            - /data/config.yaml,/data/extraconfig.yaml,/secret/config.yaml
             {{ else }}
             - {{ .Values.importJob.customConfig }}
             {{- end }}
