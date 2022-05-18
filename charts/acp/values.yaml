@@ -447,7 +447,7 @@ workers:
     ## Enable autoscaling
     ##
     enabled: false
-  
+
     ## Define mix replica count
     ##
     # minReplicas: 0
@@ -490,24 +490,24 @@ workers:
   ## Pod annotations
   ##
   # podAnnotations: {}
-  
+
   ## ACP workers resource requests and limits
   ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
   ##
   resources: {}
-  
+
   ## ACP workers node selector
   ##
   # nodeSelector: {}
-  
+
   ## ACP workers pod affinity
   ##
   # affinity: {}
-  
+
   ## ACP workers pod tolerations
   ##
   # tolerations: {}
-  
+
   ## ACP workers pod topology spread constraints
   ##
   # topologySpreadConstraints: {}
