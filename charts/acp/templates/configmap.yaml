@@ -52,11 +52,11 @@ data:
       - "{{ .Release.Name }}-redis-cluster-headless:6379"
       {{- end }}
     {{- if .Values.fission.enabled }}
-    faas:                      
-      provider: fission       
-    fission:       
+    faas:
+      provider: fission
+    fission:
       function_settings:
-        idle_timeout: {{ .Values.fission.idleTimeout }}    
+        idle_timeout: {{ .Values.fission.idleTimeout }}
     {{- end }}
     {{- with .Values.features }}
     features:
