@@ -303,10 +303,6 @@ migrateJob:
   ##
   enabled: false
 
-  ## Extra args for import command
-  ##
-  extraArgs: []
-
   ## Enables custom config
   ##
   # customConfig:
