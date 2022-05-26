@@ -9,3 +9,12 @@ data:
     {{- with .Values.data }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
+  config.yaml: |
+    {{- if ((.Values.client).rootCa) }}
+    client:
+      root_ca: /tls/client-ca.crt
+    {{- end }}
+  extraconfig.yaml: |
+    {{- with .Values.config.data }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}

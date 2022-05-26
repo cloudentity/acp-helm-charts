@@ -16,8 +16,16 @@ spec:
       {{- end }}
       volumes:
         - name: import
-          configMap: 
+          configMap:
             name: {{ include "acp-cd.fullname" . }}
+        {{- if ((.Values.client).rootCa) }}
+        - name: tls
+          projected:
+            defaultMode: 384
+            sources:
+            - secret:
+                name: {{ include "acp-cd.fullname" . }}-client-tls
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -36,6 +44,12 @@ spec:
             - yaml
             - --input
             - /import/seed.yaml
+            - --config
+            {{- if not .Values.customConfig }}
+            - /data/config.yaml,/data/extraconfig.yaml
+            {{ else }}
+            - {{ .Values.customConfig }}
+            {{- end }}
           env:
             - name: CLIENT_ID
               valueFrom:
@@ -56,4 +70,9 @@ spec:
             - mountPath: /import
               name: import
               readOnly: true
+            {{- if ((.Values.client).rootCa) }}
+            - mountPath: /tls
+              name: tls
+              readOnly: true
+            {{ end }}
       restartPolicy: Never
