@@ -65,12 +65,18 @@ clientCredentials:
 ## Enable Default ACP config
 ##
 config:
+  create: true
+
   ## The data should match acp configuration options
   ## https://docs.operations.cloudentity.com/reference/acp-configuration/
   ##
   data:
   #  logging:
   #     level: debug
+
+  ## Config name if create false
+  ##
+  # name:
 
 ## ACP-CD declarative configuration import for tenant
 ## Ref: https://docs.authorization.cloudentity.com/api/system/#operation/importTenantConfiguration
