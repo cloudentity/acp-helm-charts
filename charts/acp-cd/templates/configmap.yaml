@@ -6,10 +6,6 @@ metadata:
   labels:
     {{- include "acp-cd.labels" . | nindent 4 }}
 data:
-  seed.yaml: |
-    {{- with .Values.data }}
-      {{- toYaml . | nindent 4 }}
-    {{- end }}
   config.yaml: |
     {{- if ((.Values.client).rootCa) }}
     client:
