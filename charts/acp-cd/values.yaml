@@ -52,7 +52,7 @@ clientCredentials:
 
 ## Enables custom config
 ##
-# customConfig:
+# configPath:
 
 ## ACP http client configuration
 ##

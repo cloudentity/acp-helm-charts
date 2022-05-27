@@ -48,10 +48,10 @@ spec:
             - --input
             - /import/seed.yaml
             - --config
-            {{- if not .Values.customConfig }}
+            {{- if not .Values.configPath }}
             - /data/config.yaml,/data/extraconfig.yaml
             {{ else }}
-            - {{ .Values.customConfig }}
+            - {{ .Values.configPath }}
             {{- end }}
           env:
             - name: CLIENT_ID
