@@ -20,3 +20,15 @@ data:
       {{- toYaml . | nindent 4 }}
     {{- end }}
 {{- end }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "acp-cd.fullname" . }}-import
+  labels:
+    {{- include "acp-cd.labels" . | nindent 4 }}
+data:
+  seed.yaml: |
+    {{- with .Values.data }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}

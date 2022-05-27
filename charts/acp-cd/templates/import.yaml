@@ -20,7 +20,7 @@ spec:
             name: {{ include "acp-cd.configName" . }}
         - name: import
           configMap:
-            name: {{ include "acp-cd.fullname" . }}
+            name: {{ include "acp-cd.fullname" . }}-import
         {{- if ((.Values.client).rootCa) }}
         - name: tls
           projected:
