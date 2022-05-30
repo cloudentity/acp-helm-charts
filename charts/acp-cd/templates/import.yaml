@@ -29,6 +29,8 @@ spec:
             - secret:
                 name: {{ include "acp-cd.fullname" . }}-client-tls
         {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
