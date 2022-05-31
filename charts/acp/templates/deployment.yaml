@@ -59,10 +59,10 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
             - --config
-            {{- if not .Values.customConfig }}
+            {{- if not .Values.configPath }}
             - /data/config.yaml,/data/extraconfig.yaml,/secret/config.yaml
             {{ else }}
-            - {{ .Values.customConfig }}
+            - {{ .Values.configPath }}
             {{- end }}
           env:
           {{- with .Values.env }}
