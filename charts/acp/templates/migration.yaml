@@ -73,10 +73,10 @@ spec:
             - --sql.url
             - {{ (.Values.sql).url }}
             - --config
-            {{- if not .Values.migrateJob.customConfig }}
+            {{- if not .Values.migrateJob.configPath }}
             - /data/config.yaml,/secret/config.yaml
             {{ else }}
-            - {{ .Values.migrateJob.customConfig }}
+            - {{ .Values.migrateJob.configPath }}
             {{- end }}
           {{- with .Values.env }}
           env:
