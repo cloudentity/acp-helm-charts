@@ -65,7 +65,7 @@ args:
 
 ## Enables custom config
 ##
-# customConfig:
+# configPath:
 
 ## Array with environment variables to add to the ACP container
 ##
@@ -305,7 +305,7 @@ migrateJob:
 
   ## Enables custom config
   ##
-  # customConfig:
+  # configPath:
 
   ## The data should match acp configuration options
   ## https://docs.operations.cloudentity.com/reference/acp-configuration/
@@ -321,7 +321,7 @@ importJob:
 
   ## Enables custom config
   ##
-  # customConfig:
+  # configPath:
 
   ## Import mode (update, fail, ignore)
   ##
