@@ -1,20 +1,12 @@
-apiVersion: v2
-name: kube-acp-stack
-description: kube-acp-stack collects acp charts combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster
-type: application
-version: 2.3.0
-sources:
-  - https://github.com/cloudentity/acp-helm-charts
-dependencies:
-  - name: cockroachdb
-    version: "7.0.0"
-    repository: https://charts.cockroachdb.com
-    condition: cockroachdb.enabled
-  - name: redis-cluster
-    version: "7.0.13"
-    repository: https://charts.bitnami.com/bitnami
-    condition: redis-cluster.enabled
-  - name: acp
-    version: "2.3.0"
-    repository: https://charts.cloudentity.io
-    condition: acp.enabled
+name: cockroachdb
+version: "7.0.0"
+repository: https://charts.cockroachdb.com
+condition: cockroachdb.enabled
+name: redis-cluster
+version: "7.0.13"
+repository: https://charts.bitnami.com/bitnami
+condition: redis-cluster.enabled
+name: acp
+version: "2.3.1"
+repository: https://charts.cloudentity.io
+condition: acp.enabled
