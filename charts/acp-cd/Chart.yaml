@@ -3,4 +3,4 @@ name: acp-cd
 description: Cloudentity ACP continuous Delivery
 type: application
 version: 2.3.0
-appVersion: "2.3.0"
+appVersion: "2.4.0"
