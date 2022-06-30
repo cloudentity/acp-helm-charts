@@ -12,7 +12,7 @@ dependencies:
     condition: cockroachdb.enabled
   - name: redis-cluster
     version: "7.6.3"
-    repository: https://charts.bitnami.com/bitnami
+    repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
     condition: redis-cluster.enabled
   - name: acp
     version: "2.4.0"
