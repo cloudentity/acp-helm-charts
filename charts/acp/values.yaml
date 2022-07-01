@@ -167,6 +167,17 @@ ingressMtls:
       -----BEGIN CERTIFICATE-----
       -----END CERTIFICATE-----
 
+## ServiceMonitor configuration
+##
+serviceMonitor:
+  ## Enables the ServiceMonitor integration
+  ##
+  enabled: false
+
+  ## Define ServiceMonitor endpoint config
+  ##
+  endpointConfig: {}
+
 ## Deployment annotations
 ##
 # annotations: {}
@@ -476,6 +487,17 @@ workers:
     ## ACP workers service type
     ##
     type: ClusterIP
+
+  ## ServiceMonitor configuration
+  ##
+  serviceMonitor:
+    ## Enables workers ServiceMonitor integration
+    ##
+    enabled: false
+
+    ## Define workers ServiceMonitor endpoint config
+    ##
+    endpointConfig: {}
 
   ## Deployment annotations
   ##
