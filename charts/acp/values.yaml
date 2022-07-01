@@ -421,12 +421,6 @@ certificate:
 ##
 # sql: {}
 
-## Hazelcast client
-## The data should match acp configuration options
-## https://docs.operations.cloudentity.com/reference/acp-configuration/
-##
-# hazelcast: {}
-
 ## Redis client
 ## The data should match acp configuration options
 ## https://docs.operations.cloudentity.com/reference/acp-configuration/
