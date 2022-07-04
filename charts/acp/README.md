@@ -49,6 +49,15 @@ $ helm upgrade [RELEASE_NAME] [CHART] --install
 
 _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
 
+### From 2.4.0 to 2.4.1
+
+`IngressMtls.secret` was renamed to `IngressMtls.tlsSecrets` to match other ingress format. Type was changed from map to array.
+`IngressMtls.tls` configuration was added.
+
+### Upgrade from 0.17.x to 2.0.0
+
+No breaking changes. Helm charts were updated to match ACP version.
+
 ### From 0.15.0 to 0.15.1
 
 Version 0.15.1 of ACP helm chart uses `docker.cloudentity.io` as the secret name referencing Cloudentity registry.
