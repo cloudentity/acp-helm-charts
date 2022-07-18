@@ -18,6 +18,17 @@ image:
 imagePullSecrets:
   - name: docker.cloudentity.io
 
+## A security context defines privilege and access control settings for a Pod or Container
+## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+##
+## Pod security context
+##
+podSecurityContext:
+  fsGroup: 1000
+  runAsGroup: 1000
+  runAsNonRoot: true
+  runAsUser: 1000
+
 ## Import mode (update, fail, ignore)
 ##
 mode: update
@@ -30,18 +41,18 @@ clientCredentials:
   ## parameter to integrate with istio-authorizer
   ##
   create: true
-  
+
   ## The name of the client secret to use
   ## If not set and create is true, a name is generated using the fullname template
   ##
   name: ""
 
-  ## Client ID must point to the client identifier 
+  ## Client ID must point to the client identifier
   ## of the client application that you have created in the System workspace for your tenant
-  ##  
+  ##
   clientID: "YnZnN2h2YzA1NnV0YmdpaHF1OWcK"
-  
-  ## Client Secret must point to the client secret 
+
+  ## Client Secret must point to the client secret
   ## of the client application that you have created in the System workspace for your tenant
   ##
   clientSecret: "aE0wdmYwZHNBMHkxSHBHZW1WXzlDa21iYmlOclp2NW92S1JDTm5hd2pJbwo"
@@ -50,12 +61,40 @@ clientCredentials:
   ##
   issuerURL: "https://acp.acp-system:8443/default/system"
 
+## Enables custom config
+##
+# configPath:
+
+## ACP http client configuration
+##
+# client:
+  # rootCa: |
+  #   -----BEGIN CERTIFICATE-----
+  #
+  #   -----END CERTIFICATE-----
+
+## Enable Default ACP config
+##
+config:
+  create: true
+
+  ## The data should match acp configuration options
+  ## https://docs.operations.cloudentity.com/reference/acp-configuration/
+  ##
+  data:
+  #  logging:
+  #     level: debug
+
+  ## Config name if create false
+  ##
+  # name:
+
 ## ACP-CD declarative configuration import for tenant
 ## Ref: https://docs.authorization.cloudentity.com/api/system/#operation/importTenantConfiguration
 ##
 data:
   apis: []
-  audit_events: [] 
+  audit_events: []
   cdr_arrangements: []
   ciba_authentication_services: []
   claims: []
