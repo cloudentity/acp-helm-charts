@@ -564,6 +564,8 @@ fission:
   ##
   podSecurityContext:
     fsGroup: 65535
+    runAsUser: 65535
+    runAsGroup: 65535
     runAsNonRoot: true
   
   ## Container security context
