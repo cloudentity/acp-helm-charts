@@ -56,6 +56,10 @@ data:
     features:
       {{- toYaml . | nindent 6 }}
     {{- end }}
+    {{- with .Values.email }}
+    email:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
   extraconfig.yaml: |
     {{- with .Values.config.data }}
       {{- toYaml . | nindent 4 }}

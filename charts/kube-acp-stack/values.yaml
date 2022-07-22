@@ -12,6 +12,8 @@ cockroachdb:
   enabled: true
   tls:
     enabled: false
+mailhog:
+  enabled: false
 redis-cluster:
   enabled: true
   cluster:
