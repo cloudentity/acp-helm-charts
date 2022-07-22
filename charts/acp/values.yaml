@@ -253,14 +253,16 @@ resources: {}
 ## Pod security context
 ##
 podSecurityContext:
-  fsGroup: 1000
-  runAsGroup: 1000
+  fsGroup: 65535
   runAsNonRoot: true
-  runAsUser: 1000
 
 ## Container security context
 ##
 containerSecurityContext:
+  runAsUser: 65535
+  runAsGroup: 65535
+  runAsNonRoot: true
+  privileged: false
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
   capabilities:
@@ -561,14 +563,16 @@ fission:
   ## Pod security context
   ##
   podSecurityContext:
-    fsGroup: 1000
-    runAsGroup: 1000
+    fsGroup: 65535
     runAsNonRoot: true
-    runAsUser: 1000
-
+  
   ## Container security context
   ##
   containerSecurityContext:
+    runAsUser: 65535
+    runAsGroup: 65535
+    runAsNonRoot: true
+    privileged: false
     readOnlyRootFilesystem: true
     allowPrivilegeEscalation: false
     capabilities:
