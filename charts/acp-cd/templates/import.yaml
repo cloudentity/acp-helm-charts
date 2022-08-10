@@ -15,9 +15,22 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
+        - name: data
+          configMap:
+            name: {{ include "acp-cd.configName" . }}
         - name: import
-          configMap: 
-            name: {{ include "acp-cd.fullname" . }}
+          configMap:
+            name: {{ include "acp-cd.fullname" . }}-import
+        {{- if ((.Values.client).rootCa) }}
+        - name: tls
+          projected:
+            defaultMode: 384
+            sources:
+            - secret:
+                name: {{ include "acp-cd.fullname" . }}-client-tls
+        {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -36,6 +49,12 @@ spec:
             - yaml
             - --input
             - /import/seed.yaml
+            - --config
+            {{- if not .Values.configPath }}
+            - /data/config.yaml,/data/extraconfig.yaml
+            {{ else }}
+            - {{ .Values.configPath }}
+            {{- end }}
           env:
             - name: CLIENT_ID
               valueFrom:
@@ -53,7 +72,15 @@ spec:
                   name: {{ include "acp-cd.clientCredentialsName" . }}
                   key: issuerURL
           volumeMounts:
+            - mountPath: /data
+              name: data
+              readOnly: true
             - mountPath: /import
               name: import
               readOnly: true
+            {{- if ((.Values.client).rootCa) }}
+            - mountPath: /tls
+              name: tls
+              readOnly: true
+            {{ end }}
       restartPolicy: Never

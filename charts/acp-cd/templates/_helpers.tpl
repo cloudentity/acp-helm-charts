@@ -60,3 +60,15 @@ Create the name of the client secret to use
 {{- default "default" .Values.clientCredentials.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the config to use
+*/}}
+{{- define "acp-cd.configName" -}}
+{{- if .Values.config.create }}
+{{- default (include "acp-cd.fullname" .) .Values.config.name }}
+{{- else }}
+{{- default "default" .Values.config.name }}
+{{- end }}
+{{- end }}
+
