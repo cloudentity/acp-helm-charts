@@ -107,3 +107,14 @@ Create the port number to use
 {{- default 8443 }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create mtls secret list
+*/}}
+{{- define "acp.mtls.secrets" -}}
+{{- $list := list }}
+{{- range .Values.ingressMtls.tlsSecrets }}
+{{- $list = append $list ( printf "%s/%s" $.Release.Namespace .name ) }}
+{{- end }}
+{{- join "," $list }}
+{{- end }}

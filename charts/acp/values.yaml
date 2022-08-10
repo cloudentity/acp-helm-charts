@@ -112,6 +112,7 @@ ingress:
 
   ## Ingress TLS secrets
   ## List of certificates to be created for Ingress
+  ##
   tlsSecrets: []
   # - name: ingress-tls
   #   cert: |
@@ -145,27 +146,42 @@ ingressMtls:
         - path: /
           pathType: ImplementationSpecific
 
-  ## TLS certificates to be created for mTLS Ingress
+  ## Ingress mTLS configuration
+  ## Secrets must be manually created in the namespace
+  ## or automatically using `tlsSecrets` variable
   ##
-  secret:
-    ## Name of the Kubernetes secret
-    ##
-    name: ingress-mtls
-    ## Domain certificate
-    ##
-    cert: |
-      -----BEGIN CERTIFICATE-----
-      -----END CERTIFICATE-----
-    ## Domain certificate key
-    ##
-    key: |
-      -----BEGIN PRIVATE KEY-----
-      -----END PRIVATE KEY-----
-    ## CA certificate of the domain certificate and client certificates
-    ##
-    caCert: |
-      -----BEGIN CERTIFICATE-----
-      -----END CERTIFICATE-----
+  tls: []
+  # - secretName: ingress-mtls
+  #   hosts:
+  #     - mtls.acp.acp-system
+
+  ## Ingress mTLS secrets
+  ## List of certificates to be created for Ingress
+  ##
+  tlsSecrets:
+  # - name: ingress-mtls
+  #   cert: |
+  #     -----BEGIN CERTIFICATE-----
+  #
+  #     -----END CERTIFICATE-----
+  #   key: |
+  #     -----BEGIN RSA PRIVATE KEY-----
+  #
+  #     -----END RSA PRIVATE KEY-----
+  #   caCert: |
+  #     -----BEGIN CERTIFICATE-----
+  #     -----END CERTIFICATE-----
+
+## ServiceMonitor configuration
+##
+serviceMonitor:
+  ## Enables the ServiceMonitor integration
+  ##
+  enabled: false
+
+  ## Define ServiceMonitor endpoint config
+  ##
+  endpointConfig: {}
 
 ## Deployment annotations
 ##
@@ -237,14 +253,16 @@ resources: {}
 ## Pod security context
 ##
 podSecurityContext:
-  fsGroup: 1000
-  runAsGroup: 1000
+  fsGroup: 65535
   runAsNonRoot: true
-  runAsUser: 1000
 
 ## Container security context
 ##
 containerSecurityContext:
+  runAsUser: 65535
+  runAsGroup: 65535
+  runAsNonRoot: true
+  privileged: false
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
   capabilities:
@@ -425,12 +443,6 @@ certificate:
 ##
 # sql: {}
 
-## Hazelcast client
-## The data should match acp configuration options
-## https://docs.operations.cloudentity.com/reference/acp-configuration/
-##
-# hazelcast: {}
-
 ## Redis client
 ## The data should match acp configuration options
 ## https://docs.operations.cloudentity.com/reference/acp-configuration/
@@ -486,6 +498,17 @@ workers:
     ## ACP workers service type
     ##
     type: ClusterIP
+
+  ## ServiceMonitor configuration
+  ##
+  serviceMonitor:
+    ## Enables workers ServiceMonitor integration
+    ##
+    enabled: false
+
+    ## Define workers ServiceMonitor endpoint config
+    ##
+    endpointConfig: {}
 
   ## Deployment annotations
   ##
@@ -544,14 +567,18 @@ fission:
   ## Pod security context
   ##
   podSecurityContext:
-    fsGroup: 1000
-    runAsGroup: 1000
+    fsGroup: 65535
+    runAsUser: 65535
+    runAsGroup: 65535
     runAsNonRoot: true
-    runAsUser: 1000
-
+  
   ## Container security context
   ##
   containerSecurityContext:
+    runAsUser: 65535
+    runAsGroup: 65535
+    runAsNonRoot: true
+    privileged: false
     readOnlyRootFilesystem: true
     allowPrivilegeEscalation: false
     capabilities:

@@ -1,0 +1,20 @@
+{{- if and .Values.workers.enabled .Values.workers.serviceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "acp.fullname" . }}-workers
+  labels:
+    {{- include "acp.workers.labels" . | nindent 4 }}
+spec:
+  endpoints:
+    - port: metrics
+    {{- with .Values.workers.serviceMonitor.endpointConfig }}
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      {{- include "acp.workers.selectorLabels" . | nindent 6 }}
+{{- end }}

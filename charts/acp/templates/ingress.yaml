@@ -86,7 +86,7 @@ metadata:
     {{- end }}
     nginx.ingress.kubernetes.io/auth-tls-verify-client: "optional_no_ca"
     nginx.ingress.kubernetes.io/auth-tls-verify-depth: "2"
-    nginx.ingress.kubernetes.io/auth-tls-secret: {{ .Release.Namespace }}/{{ .Values.ingressMtls.secret.name }}
+    nginx.ingress.kubernetes.io/auth-tls-secret: {{ include "acp.mtls.secrets" . }}
     {{- if .Values.tlsDisabled }}
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     {{- else }}
@@ -108,11 +108,13 @@ spec:
   ingressClassName: {{ .Values.ingressMtls.ingressClassName }}
   {{- end }}
   tls:
+    {{- range .Values.ingressMtls.tls }}
     - hosts:
-        {{- range .Values.ingressMtls.hosts }}
-        - {{ .host | quote }}
+        {{- range .hosts }}
+        - {{ . | quote }}
         {{- end }}
-      secretName: {{ .Values.ingressMtls.secret.name }}
+      secretName: {{ .secretName }}
+    {{- end }}
   rules:
     {{- range .Values.ingressMtls.hosts }}
     - host: {{ .host | quote }}
