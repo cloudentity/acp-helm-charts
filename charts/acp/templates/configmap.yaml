@@ -10,13 +10,16 @@ data:
     {{- if ((.Values.client).rootCa) }}
     client:
       root_ca: /tls/client-ca.crt
+    {{- else if .Values.certManager.enabled }}
+    client:
+      root_ca: /tls/ca.crt
     {{- end }}
     server:
       url: {{ .Values.serverURL }}
       {{- if .Values.ingressMtls.enabled }}
       mtls_url: "{{ .Values.serverURLMtls }}"
       {{- end }}
-      {{- with .Values.certificate.cert }}
+      {{- if or .Values.certificate.create .Values.certManager.enabled }}
       certificate:
         cert_path: "/tls/tls.crt"
         key_path: "/tls/tls.key"
