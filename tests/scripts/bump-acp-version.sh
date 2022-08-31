@@ -17,6 +17,7 @@ bump-acp-version() {
       yq eval -i '.version = strenv(ACP_VERSION)' ./charts/${CHART}/Chart.yaml
       yq eval -i '.dependencies[] |= select(.name == "acp").version = strenv(ACP_VERSION)' ./charts/${CHART}/Chart.yaml
     else
+      yq eval -i '.version = strenv(ACP_VERSION)' ./charts/${CHART}/Chart.yaml
       yq eval -i '.appVersion = strenv(ACP_VERSION)' ./charts/${CHART}/Chart.yaml
     fi
   done
