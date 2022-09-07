@@ -91,7 +91,10 @@ ingress:
 
   ## Ingress additional custom annotations
   ##
-  customAnnotations: {}
+  customAnnotations:
+    nginx.ingress.kubernetes.io/enable-modsecurity: "true"
+    nginx.ingress.kubernetes.io/enable-owasp-core-rules: "true"
+    nginx.ingress.kubernetes.io/service-upstream: "true"
 
   ## Ingress hostnames with paths
   ##
@@ -136,7 +139,10 @@ ingressMtls:
 
   ## mTLS Ingress additional custom annotations
   ##
-  customAnnotations: {}
+  customAnnotations:
+    nginx.ingress.kubernetes.io/enable-modsecurity: "true"
+    nginx.ingress.kubernetes.io/enable-owasp-core-rules: "true"
+    nginx.ingress.kubernetes.io/service-upstream: "true"
 
   ## mTLS Ingress hostnames with paths
   ##

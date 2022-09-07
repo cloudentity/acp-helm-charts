@@ -30,9 +30,6 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-ciphers: "EECDH+AESGCM:EDH+AESGCM"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       proxy_set_header X-SSL-CERT "";
-    nginx.ingress.kubernetes.io/enable-modsecurity: "true"
-    nginx.ingress.kubernetes.io/enable-owasp-core-rules: "true"
-    nginx.ingress.kubernetes.io/service-upstream: "true"
     {{- with .Values.ingress.customAnnotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -107,10 +104,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-ciphers: "EECDH+AESGCM:EDH+AESGCM"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       proxy_set_header X-SSL-CERT $ssl_client_escaped_cert;
-    nginx.ingress.kubernetes.io/enable-modsecurity: "true"
-    nginx.ingress.kubernetes.io/enable-owasp-core-rules: "true"
-    nginx.ingress.kubernetes.io/service-upstream: "true"
-    {{- with .Values.ingress.customAnnotations }}
+    {{- with .Values.ingressMtls.customAnnotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
