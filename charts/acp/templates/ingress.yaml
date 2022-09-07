@@ -23,11 +23,16 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-ssl-ciphers: "EECDH+AESGCM:EDH+AESGCM"
     nginx.ingress.kubernetes.io/proxy-ssl-protocols: "TLSv1.2"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-ssl-secret: "{{ .Release.Namespace }}/{{ include "acp.fullname" . }}-tls"
+    nginx.ingress.kubernetes.io/proxy-ssl-server-name: "on"
     nginx.ingress.kubernetes.io/proxy-buffer-size: "8k"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/ssl-ciphers: "EECDH+AESGCM:EDH+AESGCM"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       proxy_set_header X-SSL-CERT "";
+    nginx.ingress.kubernetes.io/enable-modsecurity: "true"
+    nginx.ingress.kubernetes.io/enable-owasp-core-rules: "true"
+    nginx.ingress.kubernetes.io/service-upstream: "true"
     {{- with .Values.ingress.customAnnotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -86,7 +91,7 @@ metadata:
     {{- end }}
     nginx.ingress.kubernetes.io/auth-tls-verify-client: "optional_no_ca"
     nginx.ingress.kubernetes.io/auth-tls-verify-depth: "2"
-    nginx.ingress.kubernetes.io/auth-tls-secret: {{ include "acp.mtls.secrets" . }}
+    nginx.ingress.kubernetes.io/auth-tls-secret: "{{ include "acp.mtls.secrets" . }}"
     {{- if .Values.tlsDisabled }}
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     {{- else }}
@@ -94,12 +99,17 @@ metadata:
     {{- end }}
     nginx.ingress.kubernetes.io/proxy-ssl-ciphers: "EECDH+AESGCM:EDH+AESGCM"
     nginx.ingress.kubernetes.io/proxy-ssl-protocols: "TLSv1.2"
+    nginx.ingress.kubernetes.io/proxy-ssl-secret: "{{ .Release.Namespace }}/{{ include "acp.fullname" . }}-tls"
+    nginx.ingress.kubernetes.io/proxy-ssl-server-name: "on"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/proxy-buffer-size: "8k"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/ssl-ciphers: "EECDH+AESGCM:EDH+AESGCM"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       proxy_set_header X-SSL-CERT $ssl_client_escaped_cert;
+    nginx.ingress.kubernetes.io/enable-modsecurity: "true"
+    nginx.ingress.kubernetes.io/enable-owasp-core-rules: "true"
+    nginx.ingress.kubernetes.io/service-upstream: "true"
     {{- with .Values.ingress.customAnnotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
