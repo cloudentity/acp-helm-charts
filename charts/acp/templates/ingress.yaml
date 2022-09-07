@@ -20,12 +20,12 @@ metadata:
     {{- else }}
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     {{- end }}
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "8k"
     nginx.ingress.kubernetes.io/proxy-ssl-ciphers: "EECDH+AESGCM:EDH+AESGCM"
     nginx.ingress.kubernetes.io/proxy-ssl-protocols: "TLSv1.2"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/proxy-ssl-secret: "{{ .Release.Namespace }}/{{ include "acp.fullname" . }}-tls"
     nginx.ingress.kubernetes.io/proxy-ssl-server-name: "on"
-    nginx.ingress.kubernetes.io/proxy-buffer-size: "8k"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/ssl-ciphers: "EECDH+AESGCM:EDH+AESGCM"
     nginx.ingress.kubernetes.io/configuration-snippet: |
@@ -94,12 +94,12 @@ metadata:
     {{- else }}
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     {{- end }}
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "8k"
     nginx.ingress.kubernetes.io/proxy-ssl-ciphers: "EECDH+AESGCM:EDH+AESGCM"
     nginx.ingress.kubernetes.io/proxy-ssl-protocols: "TLSv1.2"
     nginx.ingress.kubernetes.io/proxy-ssl-secret: "{{ .Release.Namespace }}/{{ include "acp.fullname" . }}-tls"
     nginx.ingress.kubernetes.io/proxy-ssl-server-name: "on"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/proxy-buffer-size: "8k"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/ssl-ciphers: "EECDH+AESGCM:EDH+AESGCM"
     nginx.ingress.kubernetes.io/configuration-snippet: |
