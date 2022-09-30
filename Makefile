@@ -13,7 +13,7 @@ HELM_CHARTS = acp-cd,acp,istio-authorizer,kube-acp-stack
 ISTIO_VERSION ?= 1.13.3
 
 # ACP helm chart version
-ACP_VERSION ?= 2.6.0
+ACP_VERSION ?= 2.7.0
 export ACP_VERSION
 
 ### TARGETS ###
@@ -51,7 +51,7 @@ install-base-stack:
 	helm upgrade acp .kube-acp-stack-test \
 		--values ./tests/config/kube-acp-stack.yaml \
 		--namespace ${NAMESPACE} \
-		--timeout 5m \
+		--timeout 10m \
 		--install
 
 install-ingress-controller:
