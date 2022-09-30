@@ -51,7 +51,7 @@ install-base-stack:
 	helm upgrade acp .kube-acp-stack-test \
 		--values ./tests/config/kube-acp-stack.yaml \
 		--namespace ${NAMESPACE} \
-		--timeout 5m \
+		--timeout 10m \
 		--install
 
 install-ingress-controller:
