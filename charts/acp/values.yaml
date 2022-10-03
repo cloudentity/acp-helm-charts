@@ -449,6 +449,12 @@ certificate:
 ##
 # sql: {}
 
+## TimeScaleDB client
+## The data should match acp configuration options
+## https://docs.operations.cloudentity.com/reference/acp-configuration/
+##
+# timescaledb: {}
+
 ## Redis client
 ## The data should match acp configuration options
 ## https://docs.operations.cloudentity.com/reference/acp-configuration/
