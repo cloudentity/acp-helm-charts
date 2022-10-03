@@ -43,3 +43,9 @@ redis-cluster:
     extraVolumeMounts:
       - mountPath: /redismodules
         name: redismodules
+timescaledb:        
+  postInit:
+    - configMap:
+        name: timescale-post-init
+    - secret:
+        name: timescale-post-init-pw
