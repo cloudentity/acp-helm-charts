@@ -14,6 +14,12 @@ dependencies:
     version: "7.6.3"
     repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
     condition: redis-cluster.enabled
+  - name: timescaledb
+    version: 0.13.1
+    repository: https://charts.timescale.com
+    #TODO: specify this chart to use: timescale/timescaledb-single
+    #TODO: prereq postInit script for secrets and all.
+    condition: timescaledb.enabled
   - name: acp
     version: "2.7.0"
     repository: https://charts.cloudentity.io
