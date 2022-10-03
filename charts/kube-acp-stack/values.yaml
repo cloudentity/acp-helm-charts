@@ -8,6 +8,9 @@ acp:
     data:
       redis:
         redis_search: true
+        timescale:
+          enabled: true
+          url: postgres://acp:PaSsW0rD@timescaledb.acp-db.svc.cluster.local/acpdb?sslmode=require
 cockroachdb:
   enabled: true
   tls:
