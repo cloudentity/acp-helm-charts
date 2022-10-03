@@ -8,9 +8,6 @@ acp:
     data:
       redis:
         redis_search: true
-      timescale:
-        enabled: true
-        url: postgres://acp:PaSsW0rD@timescaledb.acp-db.svc.cluster.local/acpdb?sslmode=require
 cockroachdb:
   enabled: true
   tls:
@@ -43,7 +40,8 @@ redis-cluster:
     extraVolumeMounts:
       - mountPath: /redismodules
         name: redismodules
-timescaledb:        
+timescaledb:
+  enabled: true
   secrets:
   # This map should contain environment variables that influence Patroni,
   # for example PATRONI_SUPERUSER_PASSWORD or PATRONI_REPLICATION_PASSWORD
