@@ -39,12 +39,11 @@ data:
       {{- else }}
       url: "postgres://root@{{ .Release.Name }}-cockroachdb-public:26257/defaultdb?sslmode=disable"
       {{- end }}
-    timescaledb:
+    timescaledb-single:
       {{- with .Values.timescaledb }}
         {{- toYaml . | nindent 6 }}
       {{- else }}
-      url: "postgres://postgres:PaSsW0rD@timescale.default.svc.cluster.local/postgres?sslmode=require"
-      #TODO: Get the Release, Namespace and Cluster Name dynamically. Even Password?
+      url: "postgres://postgres:PaSsW0rD@{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local/postgres?sslmode=require"
       {{- end }}
     redis:
       {{- with .Values.redis }}
