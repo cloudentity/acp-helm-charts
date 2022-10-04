@@ -453,7 +453,7 @@ certificate:
 ## The data should match acp configuration options
 ## https://docs.operations.cloudentity.com/reference/acp-configuration/
 ##
-# timescaledb-single: {}
+# timescale: {}
 
 ## Redis client
 ## The data should match acp configuration options
