@@ -6,9 +6,11 @@ on:
     branches:
       - 'release/**'
     paths:
+      - 'charts/kube-acp-stack/Chart.yaml'
       - 'charts/acp-cd/Chart.yaml'
   pull_request:
     paths:
+    - 'charts/kube-acp-stack/**'
     - 'charts/acp/**'
     - 'tests/**'
 
