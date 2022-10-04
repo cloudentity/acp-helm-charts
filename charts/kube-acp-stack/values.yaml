@@ -45,5 +45,3 @@ timescaledb-single:
   secrets:
     credentials:
       PATRONI_SUPERUSER_PASSWORD: "PaSsW0rD"
-      PATRONI_REPLICATION_PASSWORD: "PaSsW0rD"
-      PATRONI_admin_PASSWORD: "PaSsW0rD"
