@@ -6,10 +6,12 @@ on:
     branches:
       - 'release/**'
     paths:
+      - 'charts/istio-authorizer/Chart.yaml'
       - 'charts/kube-acp-stack/Chart.yaml'
       - 'charts/acp-cd/Chart.yaml'
   pull_request:
     paths:
+    - 'charts/istio-authorizer/**'
     - 'charts/kube-acp-stack/**'
     - 'charts/acp/**'
     - 'tests/**'
