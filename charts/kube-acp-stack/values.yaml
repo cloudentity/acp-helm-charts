@@ -40,13 +40,13 @@ redis-cluster:
     extraVolumeMounts:
       - mountPath: /redismodules
         name: redismodules
-timescaledb:
+timescaledb-single:
   enabled: true
   secrets:
-  # This map should contain environment variables that influence Patroni,
-  # for example PATRONI_SUPERUSER_PASSWORD or PATRONI_REPLICATION_PASSWORD
-  # https://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#postgresql
-  credentials:
-    PATRONI_SUPERUSER_PASSWORD: "PaSsW0rD"
-    PATRONI_REPLICATION_PASSWORD: "PaSsW0rD"
-    PATRONI_admin_PASSWORD: "PaSsW0rD"
+    # This map should contain environment variables that influence Patroni,
+    # for example PATRONI_SUPERUSER_PASSWORD or PATRONI_REPLICATION_PASSWORD
+    # https://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#postgresql
+    credentials:
+      PATRONI_SUPERUSER_PASSWORD: "PaSsW0rD"
+      PATRONI_REPLICATION_PASSWORD: "PaSsW0rD"
+      PATRONI_admin_PASSWORD: "PaSsW0rD"
