@@ -7,7 +7,7 @@ sources:
   - https://github.com/cloudentity/acp-helm-charts
 dependencies:
   - name: cockroachdb
-    version: "7.0.0"
+    version: "8.1.7"
     repository: https://charts.cockroachdb.com
     condition: cockroachdb.enabled
   - name: redis-cluster
