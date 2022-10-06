@@ -39,11 +39,11 @@ data:
       {{- else }}
       url: "postgres://root@{{ .Release.Name }}-cockroachdb-public:26257/defaultdb?sslmode=disable"
       {{- end }}
-    timescaledb-single:
-      {{- with .Values.timescaledb }}
+    timescale:
+      {{- with .Values.timescale }}
         {{- toYaml . | nindent 6 }}
       {{- else }}
-      url: "postgres://postgres:PaSsW0rD@{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local/postgres?sslmode=require"
+      url: "postgres://postgres:PaSsW0rD@{{ .Values.clusterName }}.{{ .Release.Namespace }}.svc.cluster.local/postgres?sslmode=require"
       {{- end }}
     redis:
       {{- with .Values.redis }}

@@ -42,6 +42,7 @@ redis-cluster:
         name: redismodules
 timescaledb-single:
   enabled: true
+  clusterName: timescale
   secrets:
     credentials:
       PATRONI_SUPERUSER_PASSWORD: "PaSsW0rD"
