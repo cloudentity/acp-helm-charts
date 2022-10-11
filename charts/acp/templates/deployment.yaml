@@ -80,7 +80,7 @@ spec:
               containerPort: 9000
               protocol: TCP
             - name: grpc
-              containerPort: 50051
+              containerPort: 9443
               protocol: TCP
           livenessProbe:
             httpGet:
