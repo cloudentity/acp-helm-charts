@@ -79,6 +79,9 @@ spec:
             - name: metrics
               containerPort: 9000
               protocol: TCP
+            - name: grpc
+              containerPort: 9443
+              protocol: TCP
           livenessProbe:
             httpGet:
               path: /alive
