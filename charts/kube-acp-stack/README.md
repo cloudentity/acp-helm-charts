@@ -63,7 +63,7 @@ _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documen
 
 ### From 2.6.0 to 2.7.3
 
-Timescaledb helm chart is introduced as a dependency. With this, timescaledb will get installed and configured in addition to existing components. ACP is able to make connection with timescaledb with default or custom configuration.
+Timescaledb helm chart is introduced as a dependency. With this, timescaledb gets installed and configured in addition to the existing components and acp is able to make connection with timescaledb with default or custom configuration.
 
 ### From 0.14.x, 0.15.3 to 0.16.3
 
