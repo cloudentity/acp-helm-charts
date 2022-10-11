@@ -61,6 +61,10 @@ $ helm upgrade [RELEASE_NAME] acp/kube-acp-stack
 
 _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
 
+### From 2.6.0 to 2.7.3
+
+Timescaledb helm chart is introduced as a dependency. With this, timescaledb will get installed and configured in addition to existing components. ACP is able to make connection with timescaledb with default or custom configuration.
+
 ### From 0.14.x, 0.15.3 to 0.16.3
 
 Dependency redis helm chart was replaced by redis-cluster helm chart. The old redis instances will be destroyed in favour of new redis-cluster. Data migration is not supported but could be done manually which is out of the scope of this chart.
