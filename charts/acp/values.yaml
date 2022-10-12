@@ -556,6 +556,10 @@ fission:
   ##
   enabled: false
 
+  ## Define provider mode
+  ##
+  provider: fission
+
   ## Define namespace where the Fission Environment can be deployed
   ##
   namespace: acp-faas
