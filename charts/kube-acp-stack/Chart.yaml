@@ -2,7 +2,7 @@ apiVersion: v2
 name: kube-acp-stack
 description: kube-acp-stack collects acp charts combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster
 type: application
-version: 2.7.1-1
+version: 2.7.1-2
 sources:
   - https://github.com/cloudentity/acp-helm-charts
 dependencies:
@@ -15,6 +15,6 @@ dependencies:
     repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
     condition: redis-cluster.enabled
   - name: acp
-    version: "2.7.1-1"
+    version: "2.7.1-2"
     repository: https://charts.cloudentity.io
     condition: acp.enabled
