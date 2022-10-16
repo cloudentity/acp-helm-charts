@@ -40,3 +40,22 @@ redis-cluster:
     extraVolumeMounts:
       - mountPath: /redismodules
         name: redismodules
+keydb:
+  enabled: true
+  extraInitContainers:
+    - name: redismodules
+      image: alpine
+      command:
+        [
+          "sh",
+          "-c",
+          "wget https://redismodules.s3.amazonaws.com/redisearch-oss/redisearch-oss.Linux-buster-x86_64.2.2.0.zip -O /tmp/redisearch-oss.zip &&
+          unzip /tmp/redisearch-oss.zip -d /data/"
+        ]
+      volumeMounts:
+        - mountPath: /data
+          name: keydb-data
+  configExtraArgs:
+    - loadmodule: "/data/redisearch.so"
+  persistentVolume:
+    size: 10Gi

@@ -18,3 +18,7 @@ dependencies:
     version: "2.7.1-2"
     repository: https://charts.cloudentity.io
     condition: acp.enabled
+  - name: keydb
+    version: "0.42.1"
+    repository: https://enapter.github.io/charts/
+    condition: keydb.enabled
