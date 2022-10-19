@@ -58,5 +58,6 @@ keydb:
           name: keydb-data
   configExtraArgs:
     - loadmodule: "/data/redisearch.so"
+    - cluster-enabled: "yes"
   persistentVolume:
     size: 10Gi
