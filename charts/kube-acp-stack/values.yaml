@@ -42,6 +42,7 @@ redis-cluster:
         name: redismodules
 keydb:
   enabled: true
+  password: p@ssw0rd!
   extraInitContainers:
     - name: redismodules
       image: alpine
