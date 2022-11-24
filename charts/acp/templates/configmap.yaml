@@ -50,7 +50,7 @@ data:
       {{- end }}
     {{- if .Values.fission.enabled }}
     faas:
-      provider: fission
+      provider: {{ .Values.fission.provider }}
     fission:
       function_settings:
         idle_timeout: {{ .Values.fission.idleTimeout }}
