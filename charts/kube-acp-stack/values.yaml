@@ -24,13 +24,13 @@ redis-cluster:
     initContainers:
       - name: redismodules
         image: alpine
-        command:
-          [
-            "sh",
-            "-c",
-            "wget https://redismodules.s3.amazonaws.com/redisearch-oss/redisearch-oss.Linux-buster-x86_64.2.2.0.zip -O /tmp/redisearch-oss.zip &&
-            unzip /tmp/redisearch-oss.zip -d /redismodules/"
-          ]
+        command: [
+          "sh",
+          "-c",
+          "wget https://cloudentity-redisearch.s3.amazonaws.com/redisearch-oss-coord-v2.4.16.so -O /tmp/redisearch-oss.zip &&
+          wget https://redismodules.s3.amazonaws.com/redistimeseries/redistimeseries.Linux-bullseye-x86_64.1.6.17.zip -O /tmp/redistimeseries.zip &&
+          unzip /tmp/redistimeseries.zip -od /redismodules/",
+        ]
         volumeMounts:
           - mountPath: /redismodules
             name: redismodules
