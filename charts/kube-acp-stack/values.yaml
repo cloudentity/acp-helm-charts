@@ -20,18 +20,15 @@ redis-cluster:
   password: p@ssw0rd!
   redis:
     configmap: |
-      loadmodule /redismodules/redisearch.so
-      loadmodule /redismodules/redistimeseries.so
+      loadmodule /redismodules/redisearch.so OSS_GLOBAL_PASSWORD p@ssw0rd!
     initContainers:
       - name: redismodules
         image: alpine
         command: [
           "sh",
           "-c",
-          "wget https://cloudentity-redisearch.s3.amazonaws.com/redisearch-oss-coord-v2.4.16.so -O /redismodules/redisearch.so &&
-          chmod +x /redismodules/redisearch.so &&
-          wget https://redismodules.s3.amazonaws.com/redistimeseries/redistimeseries.Linux-bullseye-x86_64.1.6.17.zip -O /tmp/redistimeseries.zip &&
-          unzip /tmp/redistimeseries.zip -od /redismodules/"
+          "wget https://cloudentity-redisearch.s3.amazonaws.com/redisearch-oss-coord-v2.4.15.so -O /redismodules/redisearch.so &&
+          chmod +x /redismodules/redisearch.so"
         ]
         volumeMounts:
           - mountPath: /redismodules
