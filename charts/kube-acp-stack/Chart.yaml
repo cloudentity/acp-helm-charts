@@ -2,7 +2,7 @@ apiVersion: v2
 name: kube-acp-stack
 description: kube-acp-stack collects acp charts combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster
 type: application
-version: 2.8.1
+version: 2.8.1-1
 sources:
   - https://github.com/cloudentity/acp-helm-charts
 dependencies:
