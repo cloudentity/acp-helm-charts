@@ -43,7 +43,7 @@ data:
       {{- with .Values.timescale }}
         {{- toYaml . | nindent 6 }}
       {{- else }}
-      url: "postgres://postgres:PaSsW0rD@{{ .Values.clusterName }}.{{ .Release.Namespace }}.svc.cluster.local/postgres?sslmode=require"
+      url: "postgres://postgres:PaSsW0rD@{{ .Values.clusterName }}.{{ .Release.Namespace }}.svc.cluster.local/postgres"
       {{- end }}
     redis:
       {{- with .Values.redis }}

@@ -22,4 +22,3 @@ dependencies:
     version: "2.7.0"
     repository: https://charts.cloudentity.io
     condition: acp.enabled
-
