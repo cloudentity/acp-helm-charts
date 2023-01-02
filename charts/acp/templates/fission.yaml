@@ -32,7 +32,7 @@ spec:
   poolsize: {{ .Values.fission.poolsize }}
   terminationGracePeriod: 1
   runtime:
-    image: docker.cloudentity.io/node-env:4
+    image: {{ .Values.fission.images.node }}
     podspec:
       containers:
         - name: nodejs-v2
@@ -73,7 +73,7 @@ spec:
   poolsize: {{ .Values.fission.poolsize }}
   terminationGracePeriod: 1
   runtime:
-    image: docker.cloudentity.io/rego-env:4
+    image: {{ .Values.fission.images.rego }}
     podspec:
       containers:
         - name: rego-v2

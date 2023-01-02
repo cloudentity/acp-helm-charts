@@ -603,6 +603,13 @@ fission:
   ##
   poolsize: 3
 
+  ## Define docker images for Fission environments
+  images:
+    ## nodejs environment image
+    node: docker.cloudentity.com/node-env:4
+    ## rego environment image
+    rego: docker.cloudentity.com/rego-env:5
+
   ## Specify a imagePullPolicy
   ##
   imagePullPolicy: IfNotPresent
