@@ -6,11 +6,12 @@ metadata:
     {{- include "acp.labels" . | nindent 4 }}
   name: {{ include "acp.fullname" . }}-migrate
   annotations:
-    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook: pre-install,pre-upgrade,pre-rollback
     helm.sh/hook-delete-policy: before-hook-creation
     helm.sh/hook-weight: "5"
 spec:
   backoffLimit: 8
+  ttlSecondsAfterFinished: 86400
   template:
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -116,7 +117,7 @@ metadata:
   labels:
     {{- include "acp.labels" . | nindent 4 }}
   annotations:
-    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook: pre-install,pre-upgrade,pre-rollback
     helm.sh/hook-delete-policy: before-hook-creation
     helm.sh/hook-weight: "0"
 type: kubernetes.io/tls
@@ -140,7 +141,7 @@ metadata:
   labels:
     {{- include "acp.labels" . | nindent 4 }}
   annotations:
-    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook: pre-install,pre-upgrade,pre-rollback
     helm.sh/hook-delete-policy: before-hook-creation
     helm.sh/hook-weight: "0"
 data:
@@ -155,7 +156,7 @@ metadata:
   labels:
     {{- include "acp.labels" . | nindent 4 }}
   annotations:
-    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook: pre-install,pre-upgrade,pre-rollback
     helm.sh/hook-delete-policy: before-hook-creation
     helm.sh/hook-weight: "0"
 spec:
@@ -193,7 +194,7 @@ metadata:
   labels:
     {{- include "acp.labels" . | nindent 4 }}
   annotations:
-    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook: pre-install,pre-upgrade,pre-rollback
     helm.sh/hook-delete-policy: before-hook-creation
     helm.sh/hook-weight: "0"
 stringData:
@@ -210,7 +211,7 @@ metadata:
   labels:
     {{- include "acp.labels" . | nindent 4 }}
   annotations:
-    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook: pre-install,pre-upgrade,pre-rollback
     helm.sh/hook-delete-policy: before-hook-creation
     helm.sh/hook-weight: "0"
 data:
