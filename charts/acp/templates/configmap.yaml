@@ -48,6 +48,14 @@ data:
       - "{{ .Release.Name }}-redis-cluster-headless:6379"
       - "{{ .Release.Name }}-redis-cluster-headless:6379"
       {{- end }}
+    {{- if .Values.timescale.enabled }}
+    timescale:
+      {{- with .Values.timescale }}
+        {{- toYaml . | nindent 6 }}
+      {{- else }}
+      enabled: true
+      {{- end }}
+    {{- end }}
     {{- if .Values.fission.enabled }}
     faas:
       provider: {{ .Values.fission.provider }}

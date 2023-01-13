@@ -34,7 +34,7 @@ clean: delete-cluster clean-helm
 # auxiliaries
 create-cluster:
 	kind create cluster \
-		--name chart-test \
+		--name acp-helm-charts \
 		--config tests/config/kind.yaml
 	kubectl create namespace ${NAMESPACE}
 	kubectl create secret docker-registry docker.cloudentity.io \
@@ -79,7 +79,7 @@ clean-helm:
 	rm --recursive --force .kube-acp-stack-test
 
 delete-cluster:
-	kind delete cluster --name chart-test
+	kind delete cluster --name acp-helm-charts
 
 docker:
 	docker build --tag cloudentity/helm-tools - < Dockerfile
