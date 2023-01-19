@@ -39,3 +39,11 @@ redis-cluster:
     extraVolumeMounts:
       - mountPath: /redismodules
         name: redismodules
+timescaledb-single:
+  enabled: true
+  clusterName: timescale
+  serviceAccount:
+    name: timescale
+  secrets:
+    credentials:
+      PATRONI_SUPERUSER_PASSWORD: "PaSsW0rD"

@@ -14,6 +14,10 @@ dependencies:
     version: "7.6.4"
     repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
     condition: redis-cluster.enabled
+  - name: timescaledb-single
+    version: "0.30.0"
+    repository: https://charts.timescale.com
+    condition: timescaledb-single.enabled
   - name: acp
     version: "2.9.1"
     repository: https://charts.cloudentity.io
