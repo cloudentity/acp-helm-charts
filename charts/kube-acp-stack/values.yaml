@@ -5,6 +5,7 @@ acp:
       redis:
         password: p@ssw0rd!
   config:
+    create: true
     data:
       timescale:
         enabled: true
