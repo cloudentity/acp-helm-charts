@@ -15,7 +15,7 @@ dependencies:
     repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
     condition: redis-cluster.enabled
   - name: timescaledb-single
-    version: "0.30.0"
+    version: "0.33.1"
     repository: https://charts.timescale.com
     condition: timescaledb-single.enabled
   - name: acp
