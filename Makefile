@@ -49,7 +49,7 @@ install-base-stack:
 	yq eval '(.dependencies[]|select(.name == "acp").repository) |= "file://../charts/acp"' .kube-acp-stack-test/Chart.yaml --inplace
 	helm dependency update .kube-acp-stack-test
 	helm upgrade acp .kube-acp-stack-test \
-		--values charts/kube-acp-stack/values.yaml \
+		--values ./tests/config/kube-acp-stack.yaml \
 		--namespace ${NAMESPACE} \
 		--timeout 10m \
 		--install
@@ -149,3 +149,6 @@ update-istio-configmap:
 
 bump-acp-version:
 	tests/scripts/bump-acp-version.sh ${HELM_CHARTS} ${ACP_VERSION}
+
+status:
+	kubectl get pods --all-namespaces
