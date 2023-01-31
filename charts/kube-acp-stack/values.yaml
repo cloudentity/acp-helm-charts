@@ -46,6 +46,7 @@ redis-cluster:
         name: redismodules
 timescaledb-single:
   enabled: true
+  fullnameOverride: timescale
   clusterName: timescale
   serviceAccount:
     name: timescale
