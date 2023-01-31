@@ -44,6 +44,8 @@ jobs:
         run: make verify
       - name: Helm tests
         run: make helm-test
+      - name: Status
+        run: make status
       - name: Debug
         if: failure()
         run: make debug

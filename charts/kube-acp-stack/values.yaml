@@ -47,6 +47,7 @@ redis-cluster:
 timescaledb-single:
   enabled: true
   clusterName: timescale
+  fullnameOverride: timescale
   serviceAccount:
     name: timescale
   secrets:
