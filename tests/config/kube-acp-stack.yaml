@@ -16,7 +16,11 @@ acp:
       redis:
         password: p@ssw0rd!
   config:
+    create: true
     data:
+      timescale:
+        enabled: true
+        url: postgres://postgres:PaSsW0rD@timescale.acp-system.svc.cluster.local/postgres?sslmode=require
       redis:
         redis_search: true
   importJob:

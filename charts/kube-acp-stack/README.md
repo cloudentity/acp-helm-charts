@@ -18,6 +18,13 @@ helm repo update
 
 _See [helm repo](https://helm.sh/docs/helm/helm_repo/) for command documentation._
 
+## Create Role and RoleBinding
+Inorder to fix the know issue, create a Role and RoleBinding. Please download the manifest file: timescale-role-binding.yaml from acp-helm-charts/tests/config and run the following command.
+
+```console
+$ kubectl apply -f timescale-role-binding.yaml
+```
+
 ## Install Chart
 
 ```console
