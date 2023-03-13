@@ -522,7 +522,7 @@ workers:
 
     ## Service annotations
     ##
-    annotations: {}
+    # annotations: {}
 
   ## ServiceMonitor configuration
   ##
