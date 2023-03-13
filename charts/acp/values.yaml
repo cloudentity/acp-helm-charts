@@ -520,6 +520,10 @@ workers:
     ##
     type: ClusterIP
 
+    ## Service annotations
+    ##
+    annotations: {}
+
   ## ServiceMonitor configuration
   ##
   serviceMonitor:
