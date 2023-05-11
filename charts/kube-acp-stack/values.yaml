@@ -1,23 +1,28 @@
 acp:
   enabled: true
+  sql:
+    url: "postgres://root@cockroachdb-public:26257/defaultdb?sslmode=disable"
+  redis:
+    addrs:
+      - "redis-cluster-headless:6379"
+      - "redis-cluster-headless:6379"
+    redis_search: true
+  timescale:
+    enabled: true
   secretConfig:
     data:
       redis:
         password: p@ssw0rd!
-  config:
-    create: true
-    data:
       timescale:
-        enabled: true
-        url: postgres://postgres:PaSsW0rD@timescale.default.svc.cluster.local/postgres?sslmode=require
-      redis:
-        redis_search: true
+        url: "postgres://postgres:PaSsW0rD@timescaledb/postgres"
 cockroachdb:
   enabled: true
+  fullnameOverride: cockroachdb
   tls:
     enabled: false
 redis-cluster:
   enabled: true
+  fullnameOverride: redis-cluster
   cluster:
     nodes: 3
     replicas: 0
@@ -45,10 +50,7 @@ redis-cluster:
         name: redismodules
 timescaledb-single:
   enabled: true
-  fullnameOverride: timescale
-  clusterName: timescale
-  serviceAccount:
-    name: timescale
+  fullnameOverride: timescaledb
   secrets:
     credentials:
       PATRONI_SUPERUSER_PASSWORD: "PaSsW0rD"
