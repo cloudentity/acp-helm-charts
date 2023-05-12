@@ -13,7 +13,7 @@ metadata:
   name: timescaledb-patch-binding
 subjects:
 - kind: ServiceAccount
-  name: timescale
+  name: timescaledb
 roleRef:
   kind: Role
   name: timescaledb-patch-to-remove
