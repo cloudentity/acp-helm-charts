@@ -33,34 +33,17 @@ data:
       security:
         sslredirect: false
       {{- end }}
+    {{- with .Values.sql }}
     sql:
-      {{- with .Values.sql }}
-        {{- toYaml . | nindent 6 }}
-      {{- else }}
-      url: "postgres://root@{{ .Release.Name }}-cockroachdb-public:26257/defaultdb?sslmode=disable"
-      {{- end }}
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .Values.timescale }}
     timescale:
-      {{- with .Values.timescale }}
-        {{- toYaml . | nindent 6 }}
-      {{- else }}
-      url: "postgres://postgres:PaSsW0rD@{{ .Values.clusterName }}.{{ .Release.Namespace }}.svc.cluster.local/postgres"
-      {{- end }}
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .Values.redis }}
     redis:
-      {{- with .Values.redis }}
-        {{- toYaml . | nindent 6 }}
-      {{- else }}
-      enabled: true
-      addrs:
-      - "{{ .Release.Name }}-redis-cluster-headless:6379"
-      - "{{ .Release.Name }}-redis-cluster-headless:6379"
-      {{- end }}
-    {{- if .Values.timescale.enabled }}
-    timescale:
-      {{- with .Values.timescale }}
-        {{- toYaml . | nindent 6 }}
-      {{- else }}
-      enabled: true
-      {{- end }}
+      {{- toYaml . | nindent 6 }}
     {{- end }}
     {{- if .Values.fission.enabled }}
     faas:

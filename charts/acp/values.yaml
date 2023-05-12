@@ -449,12 +449,6 @@ certificate:
 ##
 # sql: {}
 
-## TimeScaleDB client
-## The data should match acp configuration options
-## https://docs.operations.cloudentity.com/reference/acp-configuration/
-##
-# timescale: {}
-
 ## Redis client
 ## The data should match acp configuration options
 ## https://cloudentity.com/developers/deployment-and-operations/reference/configuration-reference/
@@ -465,10 +459,7 @@ certificate:
 ## The data should match acp configuration options
 ## https://cloudentity.com/developers/deployment-and-operations/reference/configuration-reference/
 ##
-timescale:
-  ## Enables timescale for ACP
-  ##
-  enabled: false
+# timescale: {}
 
 ## Workers chart configuration
 ## Worker nodes are used to create seperate ACP deployment for asynchronous jobs handling
