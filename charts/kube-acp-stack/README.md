@@ -68,6 +68,10 @@ $ helm upgrade [RELEASE_NAME] acp/kube-acp-stack
 
 _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
 
+### From 2.x to 2.13.1
+
+Default values for charts dependencies now set `fullnameOverride` to standarize database connection URLs. Users that want to keep old databases naming should set this values to `null`.
+
 ### From 2.6.0 to 2.7.3
 
 Timescaledb helm chart is introduced as a dependency. With this, timescaledb gets installed and configured in addition to the existing components and acp is able to make connection with timescaledb with default or custom configuration.
