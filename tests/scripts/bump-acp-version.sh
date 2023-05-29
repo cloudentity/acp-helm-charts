@@ -7,8 +7,7 @@ ACP_VERSION=$2
 CI=${CI:-false}
 
 create-release-branch() {
-  git fetch
-  git checkout master && git checkout release/${ACP_VERSION} || git checkout -b release/${ACP_VERSION}
+  git fetch && git checkout master && git checkout release/${ACP_VERSION} || git checkout -b release/${ACP_VERSION}
 }
 
 bump-acp-version() {
