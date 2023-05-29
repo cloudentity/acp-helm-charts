@@ -7,7 +7,11 @@ ACP_VERSION=$2
 CI=${CI:-false}
 
 create-release-branch() {
-  git fetch && git checkout master && git checkout release/${ACP_VERSION} || git checkout -b release/${ACP_VERSION}
+  git stash
+  git fetch
+  git checkout master
+  git checkout release/${ACP_VERSION} || git checkout -b release/${ACP_VERSION}
+  git stash apply
 }
 
 bump-acp-version() {
@@ -26,6 +30,7 @@ bump-acp-version() {
 git-config() {
   git config --global user.name "Cloudentity CI"
   git config --global user.email devops@cloudentity.com
+  git config push.default current
 }
 
 commit-release-branch() {
@@ -33,7 +38,7 @@ commit-release-branch() {
 }
 
 push-release-branch() {
-  git config push.default current && git push origin release/${ACP_VERSION}:release/${ACP_VERSION}
+  git push origin release/${ACP_VERSION}:release/${ACP_VERSION}
 }
 
 create-release-branch
