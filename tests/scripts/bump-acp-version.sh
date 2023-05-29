@@ -30,7 +30,7 @@ bump-acp-version() {
 git-config() {
   git config --global user.name "Cloudentity CI"
   git config --global user.email devops@cloudentity.com
-  git config push.default current
+  git config --global push.default current
 }
 
 commit-release-branch() {
