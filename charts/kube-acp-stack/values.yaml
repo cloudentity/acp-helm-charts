@@ -36,7 +36,7 @@ redis-cluster:
         command: [
           "sh",
           "-c",
-          "wget https://cloudentity-redisearch.s3.amazonaws.com/redisearch-oss-coord-v2.6.5.so -O /redismodules/redisearch.so &&
+          "wget https://cloudentity-redisearch.s3.amazonaws.com/redisearch-oss-coord-v2.6.10.so -O /redismodules/redisearch.so &&
           chmod +x /redismodules/redisearch.so"
         ]
         volumeMounts:
