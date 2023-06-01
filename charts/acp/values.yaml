@@ -618,7 +618,7 @@ fission:
     ## nodejs environment image
     node: docker.cloudentity.io/node-env:4
     ## rego environment image
-    rego: docker.cloudentity.io/rego-env:5
+    rego: docker.cloudentity.io/rego-env:5.1
 
   ## Specify a imagePullPolicy
   ##
