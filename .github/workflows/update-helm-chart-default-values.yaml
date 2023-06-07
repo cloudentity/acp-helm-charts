@@ -21,6 +21,8 @@ jobs:
   set-new-default-value:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Set key & value
         uses: mikefarah/yq@v4.34.1
         with:
