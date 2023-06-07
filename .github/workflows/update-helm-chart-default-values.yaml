@@ -35,4 +35,3 @@ jobs:
           template: .github/HELM_VALUE_UPDATE_PULL_REQUEST_TEMPLATE.md
           label: "auto-upgrade"
           reviewer: cloudentity/devops
-    
