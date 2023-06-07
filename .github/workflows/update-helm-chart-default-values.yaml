@@ -1,0 +1,37 @@
+name: update helm chart default values
+on:
+  workflow_dispatch:
+    inputs:
+      chart:
+        type: choice
+        description: Chart to update
+        options: 
+          - acp-cd
+          - acp
+          - istio-authorizer
+          - kube-acp-stack
+          - openbanking
+      key:
+        description: "Key to update"
+        required: true
+      value:
+        description: "Value to set"
+        required: true 
+jobs:
+  set-new-default-value:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set key & value
+        uses: mikefarah/yq@v4.34.1
+        with:
+          cmd: yq -i '${{ inputs.key }} = "${{ inputs.value }}"' charts/${{ inputs.chart }}/values.yaml
+      - name: Create Pull Request
+        id: pr
+        uses: devops-infra/action-pull-request@v0.5.5
+        with:
+          github_token: ${{ secrets.GH_PRIVATE_REPO_ACCESS_TOKEN }}
+          target_branch: master
+          title: "[${{ inputs.chart }}] Update default value of ${{ inputs.key }}"
+          template: .github/HELM_VALUE_UPDATE_PULL_REQUEST_TEMPLATE.md
+          label: "auto-upgrade"
+          reviewer: cloudentity/devops
