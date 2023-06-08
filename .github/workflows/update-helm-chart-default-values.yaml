@@ -40,7 +40,7 @@ jobs:
         uses: devops-infra/action-pull-request@v0.5.5
         with:
           github_token: ${{ secrets.CLOUDENTITY_CI_TOKEN }}
-          target_branch: master
+          target_branch: feature/DEVOPS-2561
           title: "[${{ inputs.chart }}] Update default value of ${{ inputs.key }}"
           template: .github/HELM_VALUE_UPDATE_PULL_REQUEST_TEMPLATE.md
           label: "auto-upgrade"
