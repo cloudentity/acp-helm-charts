@@ -19,7 +19,7 @@ spec:
       labels:
         {{- include "openbanking.consentAdmin.labels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ template "openbanking.serviceAccountName.bank" . }}
+      serviceAccountName: {{ template "openbanking.serviceAccountName.consentAdmin" . }}
       {{- if .Values.consentAdmin.extraInitContainers }}
       initContainers:
 {{ toYaml .Values.consentAdmin.extraInitContainers | indent 8 }}
