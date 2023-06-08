@@ -4,28 +4,22 @@ image:
   ## Image repository
   ##
   repository: docker.cloudentity.io/acp
-
   ## Image pull policy
   ##
   pullPolicy: IfNotPresent
-
   ## Image tag (immutable tags are recommended)
   ##
   tag:
-
 ## Global Docker registry secret names as an array
 ##
 imagePullSecrets:
   - name: docker.cloudentity.io
-
 ## Public ACP URL
 ##
 serverURL: "https://acp.local:8443"
-
 ## Public ACP URL for Ingress working in mTLS
 ##
 serverURLMtls: "https://mtls.acp.local:8443"
-
 ## String to partially override acp.name
 ##
 # nameOverride: ""
@@ -37,22 +31,18 @@ serverURLMtls: "https://mtls.acp.local:8443"
 ## Additional labels to apply to all Kubernetes resources created by this chart.
 ##
 labels: {}
-
 ## Define serviceAccount
 ##
 serviceAccount:
   ## Specifies whether a service account should be created
   ##
   create: true
-
   ## Annotations to add to the service account
   ##
   annotations: {}
-
   ## The name of the service account to use.
   ## If not set and create is true, a name is generated using the fullname template
   # name: ""
-
 ## Array with container arguments to add to the ACP container
 ##
 args:
@@ -62,7 +52,6 @@ args:
   - --metrics
   - --create-default-tenant
   - --create-default-workspaces
-
 ## Enables custom config
 ##
 # configPath:
@@ -77,25 +66,21 @@ service:
   ## ACP service type
   ##
   type: ClusterIP
-
 ## Define ingress
 ##
 ingress:
   ## Enables the Ingress for ACP
   ##
   enabled: true
-
   ## Name of the ingress class
   ##
   ingressClassName: nginx
-
   ## Ingress additional custom annotations
   ##
   customAnnotations:
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
     nginx.ingress.kubernetes.io/enable-owasp-core-rules: "true"
     nginx.ingress.kubernetes.io/service-upstream: "true"
-
   ## Ingress hostnames with paths
   ##
   hosts:
@@ -103,7 +88,6 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-
   ## Ingress TLS configuration
   ## Secrets must be manually created in the namespace
   ## or automatically using `tlsSecrets` variable
@@ -126,24 +110,20 @@ ingress:
   #     -----BEGIN RSA PRIVATE KEY-----
   #
   #     -----END RSA PRIVATE KEY-----
-
 ingressMtls:
   ## Enables mTLS Ingress for ACP
   ## This is an independent instance from the one above.
   ##
   enabled: false
-
   ## Name of the ingress class
   ##
   ingressClassName: nginx
-
   ## mTLS Ingress additional custom annotations
   ##
   customAnnotations:
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
     nginx.ingress.kubernetes.io/enable-owasp-core-rules: "true"
     nginx.ingress.kubernetes.io/service-upstream: "true"
-
   ## mTLS Ingress hostnames with paths
   ##
   hosts:
@@ -151,7 +131,6 @@ ingressMtls:
       paths:
         - path: /
           pathType: ImplementationSpecific
-
   ## Ingress mTLS configuration
   ## Secrets must be manually created in the namespace
   ## or automatically using `tlsSecrets` variable
@@ -177,18 +156,15 @@ ingressMtls:
   #   caCert: |
   #     -----BEGIN CERTIFICATE-----
   #     -----END CERTIFICATE-----
-
 ## ServiceMonitor configuration
 ##
 serviceMonitor:
   ## Enables the ServiceMonitor integration
   ##
   enabled: false
-
   ## Define ServiceMonitor endpoint config
   ##
   endpointConfig: {}
-
 ## Deployment annotations
 ##
 # annotations: {}
@@ -199,7 +175,6 @@ autoscaling:
   ## Enable autoscaling
   ##
   enabled: false
-
   ## Define mix replica count
   ##
   # minReplicas: 0
@@ -219,11 +194,9 @@ autoscaling:
   ## Custom scaling behavior
   ##
   #  behavior: {}
-
 ## Number of ACP replicas to deploy
 ##
 replicaCount: 1
-
 ## Pod annotations
 ##
 # podAnnotations: {}
@@ -232,7 +205,6 @@ replicaCount: 1
 ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
 ##
 resources: {}
-
 ## ACP node selector
 ##
 # nodeSelector: {}
@@ -261,7 +233,6 @@ resources: {}
 podSecurityContext:
   fsGroup: 65535
   runAsNonRoot: true
-
 ## Container security context
 ##
 containerSecurityContext:
@@ -274,7 +245,6 @@ containerSecurityContext:
   capabilities:
     drop:
       - ALL
-
 ## ACP feature flags
 ## To enable a feature, enter its key-value pair, as in:
 ## https://docs.operations.cloudentity.com/reference/acp-configuration/
@@ -287,15 +257,12 @@ certManager:
   ## Enables the cert-manager integration
   ##
   enabled: false
-
   ## The requested ‘duration’ (i.e. lifetime) of the Certificate
   ##
   duration: 2160h
-
   ## How long before the currently issued certificate’s expiry cert-manager should renew the certificate.
   ##
   renewBefore: 720h
-
   ## The Common Name (AKA CN) represents the server name protected by the SSL certificate
   ##
   # commonName:
@@ -305,28 +272,23 @@ certManager:
   privateKey:
     size: 2048
     algorithm: RSA
-
   ## extraNames is a list of DNS subjectAltNames to be set on the Certificate.
   ##
   extraNames: []
-
   ## IssuerRef is a reference to the issuer for this certificate
   ##
   issuerRef:
     name: ca-issuer
     kind: ClusterIssuer
-
 ## Disables TLS in ACP
 ##
 tlsDisabled: false
-
 ## Migrate Job configuration
 ##
 migrateJob:
   ## Enables the SQL migrate job
   ##
   enabled: false
-
   ## Enables custom config
   ##
   # configPath:
@@ -335,14 +297,12 @@ migrateJob:
   ## https://docs.operations.cloudentity.com/reference/acp-configuration/
   ##
   config: {}
-
 ## Import Job configuration
 ##
 importJob:
   ## Enables the import job
   ##
   enabled: false
-
   ## Enables custom config
   ##
   # configPath:
@@ -350,19 +310,15 @@ importJob:
   ## Import mode (update, fail, ignore)
   ##
   mode: update
-
   ## Input file format: yaml or json
   ##
   format: yaml
-
   ## Path to the input file
   ##
   input: /import/seed.yaml
-
   ## Extra args for import command
   ##
   extraArgs: []
-
   ## The data should match import configuration endpoint request body
   ## https://docs.authorization.cloudentity.com/api/system/#operation/importConfiguration
   ##
@@ -370,17 +326,14 @@ importJob:
     tenants: []
     servers: []
     clients: []
-
   ## ACP import job resource requests and limits
   ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
   ##
   resources: {}
-
 ## Enable Default ACP config
 ##
 config:
   create: true
-
   ## The data should match acp configuration options
   ## https://docs.operations.cloudentity.com/reference/acp-configuration/
   ##
@@ -391,14 +344,12 @@ config:
   ## Config name if create false
   ##
   # name:
-
 ## ACP config file from secret
 ##
 secretConfig:
   ## Enable secret config
   ##
   create: true
-
   ## Secret name if create false
   ##
   # name:
@@ -413,14 +364,13 @@ secretConfig:
   data: {}
   #  system:
   #     secret: mysecret
-
 ## ACP http client configuration
 ##
 # client:
-  # rootCa: |
-  #   -----BEGIN CERTIFICATE-----
-  #
-  #   -----END CERTIFICATE-----
+# rootCa: |
+#   -----BEGIN CERTIFICATE-----
+#
+#   -----END CERTIFICATE-----
 
 ## ACP certificate
 ##
@@ -429,7 +379,6 @@ certificate:
   ## root folder.
   ##
   create: true
-
   ## Enable if want to take certificate and key from values instead of
   ## files/ folder
   ##
@@ -442,7 +391,6 @@ certificate:
   #   -----BEGIN RSA PRIVATE KEY-----
   #
   #   -----END RSA PRIVATE KEY-----
-
 ## SQL client
 ## The data should match acp configuration options
 ## https://cloudentity.com/developers/deployment-and-operations/reference/configuration-reference/
@@ -468,14 +416,12 @@ workers:
   ## Enables worker nodes for ACP
   ##
   enabled: false
-
   ## Autoscaling parameters
   ##
   autoscaling:
     ## Enable autoscaling
     ##
     enabled: false
-
     ## Define mix replica count
     ##
     # minReplicas: 0
@@ -495,37 +441,30 @@ workers:
     ## Custom scaling behavior
     ##
     #  behavior: {}
-
   ## Number of ACP workers replicas to deploy
   ##
   replicaCount: 1
-
   ## Define workers service
   ##
   service:
     ## Enables workers service for ACP
     ##
     enabled: false
-
     ## ACP workers service type
     ##
     type: ClusterIP
-
     ## Service annotations
     ##
     # annotations: {}
-
   ## ServiceMonitor configuration
   ##
   serviceMonitor:
     ## Enables workers ServiceMonitor integration
     ##
     enabled: false
-
     ## Define workers ServiceMonitor endpoint config
     ##
     endpointConfig: {}
-
   ## Deployment annotations
   ##
   # annotations: {}
@@ -538,7 +477,6 @@ workers:
   ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
   ##
   resources: {}
-
   ## ACP workers node selector
   ##
   # nodeSelector: {}
@@ -558,22 +496,18 @@ workers:
   ## ACP workers Pod disruption budget
   ##
   # podDisruptionBudget: {}
-
 ## Fission chart configuration
 ##
 fission:
   ## Enables the Fission for ACP
   ##
   enabled: false
-
   ## Define provider mode
   ##
   provider: fission
-
   ## Define namespace where the Fission Environment can be deployed
   ##
   namespace: acp-faas
-
   ## Define NetworkPolicy Egress rules for Fission deployment
   ##
   networkPolicy:
@@ -583,7 +517,6 @@ fission:
         - 10.0.0.0/8
         - 192.168.0.0/16
         - 172.16.0.0/20
-
   ## Pod security context
   ##
   podSecurityContext:
@@ -591,7 +524,6 @@ fission:
     runAsUser: 65535
     runAsGroup: 65535
     runAsNonRoot: true
-  
   ## Container security context
   ##
   containerSecurityContext:
@@ -604,7 +536,6 @@ fission:
     capabilities:
       drop:
         - ALL
-
   ## Annotations to add to the Environment resource created for Fission
   annotations: {}
   # cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
@@ -612,22 +543,18 @@ fission:
   ## Define the pool size
   ##
   poolsize: 3
-
   ## Define docker images for Fission environments
   images:
     ## nodejs environment image
-    node: docker.cloudentity.io/node-env:4
+    node: docker.cloudentity.io/node-env:5
     ## rego environment image
     rego: docker.cloudentity.io/rego-env:5.1
-
   ## Specify a imagePullPolicy
   ##
   imagePullPolicy: IfNotPresent
-
   ## Docker registry secret name
   ##
   imagepullsecret: docker.cloudentity.io
-
   ## Affinity for pod assignment
   affinity: {}
   #   nodeAffinity:
