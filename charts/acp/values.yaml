@@ -277,7 +277,7 @@ containerSecurityContext:
 
 ## ACP feature flags
 ## To enable a feature, enter its key-value pair, as in:
-## https://docs.operations.cloudentity.com/reference/acp-configuration/
+## https://cloudentity.com/developers/deployment-and-operations/reference/configuration-reference/
 ##
 # features: {}
 
@@ -332,7 +332,7 @@ migrateJob:
   # configPath:
 
   ## The data should match acp configuration options
-  ## https://docs.operations.cloudentity.com/reference/acp-configuration/
+  ## https://cloudentity.com/developers/deployment-and-operations/reference/configuration-reference/
   ##
   config: {}
 
@@ -382,7 +382,7 @@ config:
   create: true
 
   ## The data should match acp configuration options
-  ## https://docs.operations.cloudentity.com/reference/acp-configuration/
+  ## https://cloudentity.com/developers/deployment-and-operations/reference/configuration-reference/
   ##
   data:
   #  logging:
@@ -408,7 +408,7 @@ secretConfig:
   # annotations: {}
 
   ## The data should match acp configuration options
-  ## https://docs.operations.cloudentity.com/reference/acp-configuration/
+  ## https://cloudentity.com/developers/deployment-and-operations/reference/configuration-reference/
   ##
   data: {}
   #  system:
