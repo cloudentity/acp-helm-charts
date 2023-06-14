@@ -79,7 +79,7 @@ config:
   create: true
 
   ## The data should match acp configuration options
-  ## https://docs.operations.cloudentity.com/reference/acp-configuration/
+  ## https://cloudentity.com/developers/deployment-and-operations/reference/configuration-reference/
   ##
   data:
   #  logging:
