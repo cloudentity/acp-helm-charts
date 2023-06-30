@@ -49,6 +49,10 @@ $ helm upgrade [RELEASE_NAME] [CHART] --install
 
 _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
 
+### Update to 2.15.0
+
+Please skip version 2.15.0 and go directly to 2.15.1. 2.15.0 has a problematic node-env version (4.1) which does not support read-only file systems.
+
 ### From 2.4.0 to 2.4.1
 
 `IngressMtls.secret` was renamed to `IngressMtls.tlsSecrets` to match other ingress format. Type was changed from map to array.
