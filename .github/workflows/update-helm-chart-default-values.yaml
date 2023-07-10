@@ -28,7 +28,11 @@ jobs:
       - name: Set key & value
         uses: mikefarah/yq@v4.34.1
         with:
-          cmd: yq -i '${{ inputs.key }} = "${{ inputs.value }}"' charts/${{ inputs.chart }}/values.yaml
+          cmd: yq '${{ inputs.key }} = "${{ inputs.value }}"' charts/${{ inputs.chart }}/values.yaml > charts/${{ inputs.chart }}/values-updated.yaml
+      - name: Keep empty lines
+        run: |
+          diff -U0 -w -b --ignore-blank-lines charts/${{ inputs.chart }}/values.yaml charts/${{ inputs.chart }}/values-updated.yaml > charts/${{ inputs.chart }}/values.yaml.diff || true
+          patch charts/${{ inputs.chart }}/values.yaml < charts/${{ inputs.chart }}/values.yaml.diff
       - name: Commit and push changes
         uses: EndBug/add-and-commit@v9.1.3
         with:
