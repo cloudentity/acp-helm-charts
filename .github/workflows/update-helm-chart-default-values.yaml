@@ -31,6 +31,8 @@ jobs:
           cmd: yq '${{ inputs.key }} = "${{ inputs.value }}"' charts/${{ inputs.chart }}/values.yaml > charts/${{ inputs.chart }}/values-updated.yaml
       - name: Keep empty lines
         run: |
+          cat charts/${{ inputs.chart }}/values.yaml
+          cat charts/${{ inputs.chart }}/values-updated.yaml
           diff -U0 -w -b --ignore-blank-lines charts/${{ inputs.chart }}/values.yaml charts/${{ inputs.chart }}/values-updated.yaml > charts/${{ inputs.chart }}/values.yaml.diff
           patch charts/${{ inputs.chart }}/values.yaml < charts/${{ inputs.chart }}/values.yaml.diff
       - name: Commit and push changes
