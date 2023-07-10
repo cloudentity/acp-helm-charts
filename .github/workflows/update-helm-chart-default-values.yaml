@@ -33,7 +33,6 @@ jobs:
         run: |
           diff -U0 -w -b --ignore-blank-lines charts/${{ inputs.chart }}/values.yaml charts/${{ inputs.chart }}/values-updated.yaml > charts/${{ inputs.chart }}/values.yaml.diff
           patch charts/${{ inputs.chart }}/values.yaml < charts/${{ inputs.chart }}/values.yaml.diff
-        shell: bash
       - name: Commit and push changes
         uses: EndBug/add-and-commit@v9.1.3
         with:
