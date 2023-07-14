@@ -228,6 +228,39 @@ replicaCount: 1
 ##
 # podAnnotations: {}
 
+## Custom Startup Probe
+##
+customStartupProbe: {}
+  # failureThreshold: 10
+  # periodSeconds: 10
+  # timeoutSeconds: 10
+  # httpGet:
+  #   path: /alive
+  #   scheme: HTTPS
+  #   port: 8443
+
+## Custom Liveness Probe
+customLivenessProbe: {}
+  # failureThreshold: 10
+  # initialDelaySeconds: 3
+  # periodSeconds: 10
+  # timeoutSeconds: 10
+  # httpGet:
+  #   path: /alive
+  #   scheme: HTTPS
+  #   port: 8443
+
+## Custom Readiness Probe
+customReadinessProbe: {}
+  # failureThreshold: 3
+  # initialDelaySeconds: 5
+  # periodSeconds: 10
+  # timeoutSeconds: 10
+  # httpGet:
+  #   path: /alive
+  #   scheme: HTTPS
+  #   port: 8443
+
 ## ACP resource requests and limits
 ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
 ##
@@ -688,7 +721,6 @@ fission:
       # httpGet:
       #   path: /healthz
       #   port: 8888
-
 
   ## Custom rego env configuration
   ##
