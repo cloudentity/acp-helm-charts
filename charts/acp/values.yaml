@@ -657,3 +657,31 @@ fission:
   ## Fission function idle timeout
   ##
   idleTimeout: 3m0s
+
+  ## Custom Startup Probe
+  customStrtupProbe: {}
+    # failureThreshold: 10
+    # periodSeconds: 10
+    # httpGet:
+    #   path: /healthz
+    #   port: 8888
+
+  ## Custom Liveness Probe
+  customLivenessProbe: {}
+    # failureThreshold: 3
+    # initialDelaySeconds: 3
+    # periodSeconds: 10
+    # timeoutSeconds: 0
+    # httpGet:
+    #   path: /healthz
+    #   port: 8888
+
+  ## Custom Rediness Probe
+  customReadinessProbe: {}
+    # failureThreshold: 15
+    # initialDelaySeconds: 5
+    # periodSeconds: 1
+    # timeoutSeconds: 1
+    # httpGet:
+    #   path: /healthz
+    #   port: 8888

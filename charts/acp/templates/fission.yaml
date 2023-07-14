@@ -42,20 +42,29 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           startupProbe:
+          {{- if .Values.fission.customStartupProbe }}
+            {{ toYaml .Values.fission.customLivenessProbe | nindent 12 }}
+          {{- else }}
             failureThreshold: 10
             periodSeconds: 10
             httpGet:
               path: /healthz
               port: 8888
           readinessProbe:
-            failureThreshold: 15
-            initialDelaySeconds: 5
-            periodSeconds: 1
-            timeoutSeconds: 1
+          {{- if .Values.fission.customReadinessProbe }}
+            {{ toYaml .Values.fission.customReadinessProbe | nindent 12 }}
+          {{- else }}
+            failureThreshold: 3
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 0
             httpGet:
               path: /healthz
               port: 8888
           livenessProbe:
+          {{- if .Values.fission.customLivenessProbe }}
+            {{ toYaml .Values.fission.customLivenessProbe | nindent 12 }}
+          {{- else }}
             failureThreshold: 3
             initialDelaySeconds: 3
             periodSeconds: 10
