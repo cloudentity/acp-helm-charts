@@ -564,7 +564,7 @@ workers:
 fission:
   ## Enables the Fission for ACP
   ##
-  enabled: true
+  enabled: false
 
   ## Define provider mode
   ##
