@@ -43,7 +43,7 @@ spec:
           {{- end }}
           startupProbe:
           {{- if .Values.fission.node.customStartupProbe }}
-            {{ toYaml .Values.fission.node.customLivenessProbe | nindent 12 }}
+            {{ toYaml .Values.fission.node.customStartupProbe | nindent 12 }}
           {{- else }}
             failureThreshold: 10
             periodSeconds: 10
@@ -118,7 +118,7 @@ spec:
           {{- end }}
           startupProbe:
           {{- if .Values.fission.rego.customStartupProbe }}
-            {{ toYaml .Values.fission.rego.customLivenessProbe | nindent 12 }}
+            {{ toYaml .Values.fission.rego.customStartupProbe | nindent 12 }}
           {{- else }}
             failureThreshold: 10
             periodSeconds: 10

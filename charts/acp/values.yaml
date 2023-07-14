@@ -662,7 +662,7 @@ fission:
   ##
   node:
     ## Custom Startup Probe
-    customStrtupProbe: {}
+    customStartupProbe: {}
       # failureThreshold: 10
       # periodSeconds: 10
       # httpGet:
@@ -694,7 +694,7 @@ fission:
   ##
   rego:
     ## Custom Startup Probe
-    customStrtupProbe: {}
+    customStartupProbe: {}
       # failureThreshold: 10
       # periodSeconds: 10
       # httpGet:
