@@ -564,7 +564,7 @@ workers:
 fission:
   ## Enables the Fission for ACP
   ##
-  enabled: false
+  enabled: true
 
   ## Define provider mode
   ##
@@ -658,30 +658,65 @@ fission:
   ##
   idleTimeout: 3m0s
 
-  ## Custom Startup Probe
-  customStrtupProbe: {}
-    # failureThreshold: 10
-    # periodSeconds: 10
-    # httpGet:
-    #   path: /healthz
-    #   port: 8888
+  ## Custom node env configuration
+  ##
+  node:
+    ## Custom Startup Probe
+    customStrtupProbe: {}
+      # failureThreshold: 10
+      # periodSeconds: 10
+      # httpGet:
+      #   path: /healthz
+      #   port: 8888
 
-  ## Custom Liveness Probe
-  customLivenessProbe: {}
-    # failureThreshold: 3
-    # initialDelaySeconds: 3
-    # periodSeconds: 10
-    # timeoutSeconds: 0
-    # httpGet:
-    #   path: /healthz
-    #   port: 8888
+    ## Custom Liveness Probe
+    customLivenessProbe: {}
+      # failureThreshold: 3
+      # initialDelaySeconds: 3
+      # periodSeconds: 10
+      # timeoutSeconds: 0
+      # httpGet:
+      #   path: /healthz
+      #   port: 8888
 
-  ## Custom Readiness Probe
-  customReadinessProbe: {}
-    # failureThreshold: 15
-    # initialDelaySeconds: 5
-    # periodSeconds: 1
-    # timeoutSeconds: 1
-    # httpGet:
-    #   path: /healthz
-    #   port: 8888
+    ## Custom Readiness Probe
+    customReadinessProbe: {}
+      # failureThreshold: 15
+      # initialDelaySeconds: 5
+      # periodSeconds: 1
+      # timeoutSeconds: 1
+      # httpGet:
+      #   path: /healthz
+      #   port: 8888
+
+
+  ## Custom rego env configuration
+  ##
+  rego:
+    ## Custom Startup Probe
+    customStrtupProbe: {}
+      # failureThreshold: 10
+      # periodSeconds: 10
+      # httpGet:
+      #   path: /healthz
+      #   port: 8888
+
+    ## Custom Liveness Probe
+    customLivenessProbe: {}
+      # failureThreshold: 3
+      # initialDelaySeconds: 3
+      # periodSeconds: 10
+      # timeoutSeconds: 0
+      # httpGet:
+      #   path: /healthz
+      #   port: 8888
+
+    ## Custom Readiness Probe
+    customReadinessProbe: {}
+      # failureThreshold: 15
+      # initialDelaySeconds: 5
+      # periodSeconds: 1
+      # timeoutSeconds: 1
+      # httpGet:
+      #   path: /healthz
+      #   port: 8888
