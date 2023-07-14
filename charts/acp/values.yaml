@@ -676,7 +676,7 @@ fission:
     #   path: /healthz
     #   port: 8888
 
-  ## Custom Rediness Probe
+  ## Custom Readiness Probe
   customReadinessProbe: {}
     # failureThreshold: 15
     # initialDelaySeconds: 5
