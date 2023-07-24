@@ -82,20 +82,10 @@ spec:
             - name: grpc
               containerPort: 9443
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /alive
-              {{- if .Values.tlsDisabled }}
-              scheme: HTTP
-              {{- else }}
-              scheme: HTTPS
-              {{- end }}
-              port: {{ include "acp.portNumber" . }}
-            initialDelaySeconds: 3
-            failureThreshold: 10
-            periodSeconds: 10
-            timeoutSeconds: 10
           startupProbe:
+          {{- if .Values.customStartupProbe }}
+            {{ toYaml .Values.customStartupProbe | nindent 12 }}
+          {{- else }}
             httpGet:
               path: /alive
               {{- if .Values.tlsDisabled }}
@@ -107,7 +97,11 @@ spec:
             failureThreshold: 10
             periodSeconds: 10
             timeoutSeconds: 10
+          {{- end }}
           readinessProbe:
+          {{- if .Values.customReadinessProbe }}
+            {{ toYaml .Values.customReadinessProbe | nindent 12 }}
+          {{- else }}
             httpGet:
               path: /alive
               {{- if .Values.tlsDisabled }}
@@ -120,6 +114,24 @@ spec:
             failureThreshold: 3
             periodSeconds: 10
             timeoutSeconds: 10
+          {{- end }}
+          livenessProbe:
+          {{- if .Values.customLivenessProbe }}
+            {{ toYaml .Values.customLivenessProbe | nindent 12 }}
+          {{- else }}
+            httpGet:
+              path: /alive
+              {{- if .Values.tlsDisabled }}
+              scheme: HTTP
+              {{- else }}
+              scheme: HTTPS
+              {{- end }}
+              port: {{ include "acp.portNumber" . }}
+            initialDelaySeconds: 3
+            failureThreshold: 10
+            periodSeconds: 10
+            timeoutSeconds: 10
+          {{- end }}
           volumeMounts:
             - mountPath: /data
               name: data

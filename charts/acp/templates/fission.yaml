@@ -41,6 +41,40 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          startupProbe:
+          {{- if .Values.fission.node.customStartupProbe }}
+            {{ toYaml .Values.fission.node.customStartupProbe | nindent 12 }}
+          {{- else }}
+            failureThreshold: 10
+            periodSeconds: 10
+            httpGet:
+              path: /healthz
+              port: 8888
+          {{- end }}
+          readinessProbe:
+          {{- if .Values.fission.node.customReadinessProbe }}
+            {{ toYaml .Values.fission.node.customReadinessProbe | nindent 12 }}
+          {{- else }}
+            failureThreshold: 10
+            initialDelaySeconds: 5
+            periodSeconds: 1
+            timeoutSeconds: 1
+            httpGet:
+              path: /healthz
+              port: 8888
+          {{- end }}
+          livenessProbe:
+          {{- if .Values.fission.node.customLivenessProbe }}
+            {{ toYaml .Values.fission.node.customLivenessProbe | nindent 12 }}
+          {{- else }}
+            failureThreshold: 3
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 0
+            httpGet:
+              path: /healthz
+              port: 8888
+          {{- end }}
       {{- with .Values.fission.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -81,6 +115,40 @@ spec:
           {{- with .Values.fission.containerSecurityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
+          {{- end }}
+          startupProbe:
+          {{- if .Values.fission.rego.customStartupProbe }}
+            {{ toYaml .Values.fission.rego.customStartupProbe | nindent 12 }}
+          {{- else }}
+            failureThreshold: 10
+            periodSeconds: 10
+            httpGet:
+              path: /healthz
+              port: 8888
+          {{- end }}
+          readinessProbe:
+          {{- if .Values.fission.rego.customReadinessProbe }}
+            {{ toYaml .Values.fission.rego.customReadinessProbe | nindent 12 }}
+          {{- else }}
+            failureThreshold: 10
+            initialDelaySeconds: 5
+            periodSeconds: 1
+            timeoutSeconds: 1
+            httpGet:
+              path: /healthz
+              port: 8888
+          {{- end }}
+          livenessProbe:
+          {{- if .Values.fission.rego.customLivenessProbe }}
+            {{ toYaml .Values.fission.rego.customLivenessProbe | nindent 12 }}
+          {{- else }}
+            failureThreshold: 3
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 0
+            httpGet:
+              path: /healthz
+              port: 8888
           {{- end }}
       {{- with .Values.fission.podSecurityContext }}
       securityContext:

@@ -228,6 +228,39 @@ replicaCount: 1
 ##
 # podAnnotations: {}
 
+## Custom Startup Probe
+##
+customStartupProbe: {}
+  # failureThreshold: 10
+  # periodSeconds: 10
+  # timeoutSeconds: 10
+  # httpGet:
+  #   path: /alive
+  #   scheme: HTTPS
+  #   port: 8443
+
+## Custom Liveness Probe
+customLivenessProbe: {}
+  # failureThreshold: 10
+  # initialDelaySeconds: 3
+  # periodSeconds: 10
+  # timeoutSeconds: 10
+  # httpGet:
+  #   path: /alive
+  #   scheme: HTTPS
+  #   port: 8443
+
+## Custom Readiness Probe
+customReadinessProbe: {}
+  # failureThreshold: 3
+  # initialDelaySeconds: 5
+  # periodSeconds: 10
+  # timeoutSeconds: 10
+  # httpGet:
+  #   path: /alive
+  #   scheme: HTTPS
+  #   port: 8443
+
 ## ACP resource requests and limits
 ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
 ##
@@ -591,7 +624,7 @@ fission:
     runAsUser: 65535
     runAsGroup: 65535
     runAsNonRoot: true
-  
+
   ## Container security context
   ##
   containerSecurityContext:
@@ -657,3 +690,65 @@ fission:
   ## Fission function idle timeout
   ##
   idleTimeout: 3m0s
+
+  ## Custom node env configuration
+  ##
+  node:
+    ## Custom Startup Probe
+    customStartupProbe: {}
+      # failureThreshold: 10
+      # periodSeconds: 10
+      # httpGet:
+      #   path: /healthz
+      #   port: 8888
+
+    ## Custom Liveness Probe
+    customLivenessProbe: {}
+      # failureThreshold: 3
+      # initialDelaySeconds: 3
+      # periodSeconds: 10
+      # timeoutSeconds: 0
+      # httpGet:
+      #   path: /healthz
+      #   port: 8888
+
+    ## Custom Readiness Probe
+    customReadinessProbe: {}
+      # failureThreshold: 15
+      # initialDelaySeconds: 5
+      # periodSeconds: 1
+      # timeoutSeconds: 1
+      # httpGet:
+      #   path: /healthz
+      #   port: 8888
+
+  ## Custom rego env configuration
+  ##
+  rego:
+    ## Custom Startup Probe
+    customStartupProbe: {}
+      # failureThreshold: 10
+      # periodSeconds: 10
+      # httpGet:
+      #   path: /healthz
+      #   port: 8888
+
+    ## Custom Liveness Probe
+    customLivenessProbe: {}
+      # failureThreshold: 3
+      # initialDelaySeconds: 3
+      # periodSeconds: 10
+      # timeoutSeconds: 0
+      # httpGet:
+      #   path: /healthz
+      #   port: 8888
+
+    ## Custom Readiness Probe
+    customReadinessProbe: {}
+      # failureThreshold: 15
+      # initialDelaySeconds: 5
+      # periodSeconds: 1
+      # timeoutSeconds: 1
+      # httpGet:
+      #   path: /healthz
+      #   port: 8888
