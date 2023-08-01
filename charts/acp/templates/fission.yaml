@@ -68,7 +68,7 @@ spec:
             {{ toYaml .Values.fission.node.customLivenessProbe | nindent 12 }}
           {{- else }}
             failureThreshold: 3
-            initialDelaySeconds: 3
+            initialDelaySeconds: 1
             periodSeconds: 10
             timeoutSeconds: 0
             httpGet:
@@ -143,7 +143,7 @@ spec:
             {{ toYaml .Values.fission.rego.customLivenessProbe | nindent 12 }}
           {{- else }}
             failureThreshold: 3
-            initialDelaySeconds: 3
+            initialDelaySeconds: 1
             periodSeconds: 10
             timeoutSeconds: 0
             httpGet:
