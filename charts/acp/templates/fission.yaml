@@ -56,7 +56,7 @@ spec:
             {{ toYaml .Values.fission.node.customReadinessProbe | nindent 12 }}
           {{- else }}
             failureThreshold: 10
-            initialDelaySeconds: 5
+            initialDelaySeconds: 1
             periodSeconds: 1
             timeoutSeconds: 1
             httpGet:
@@ -131,7 +131,7 @@ spec:
             {{ toYaml .Values.fission.rego.customReadinessProbe | nindent 12 }}
           {{- else }}
             failureThreshold: 10
-            initialDelaySeconds: 5
+            initialDelaySeconds: 1
             periodSeconds: 1
             timeoutSeconds: 1
             httpGet:
