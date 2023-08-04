@@ -45,8 +45,9 @@ spec:
           {{- if .Values.fission.node.customStartupProbe }}
             {{ toYaml .Values.fission.node.customStartupProbe | nindent 12 }}
           {{- else }}
-            failureThreshold: 10
-            periodSeconds: 10
+            failureThreshold: 3
+            initialDelaySeconds: 1
+            periodSeconds: 2
             httpGet:
               path: /healthz
               port: 8888
@@ -55,9 +56,8 @@ spec:
           {{- if .Values.fission.node.customReadinessProbe }}
             {{ toYaml .Values.fission.node.customReadinessProbe | nindent 12 }}
           {{- else }}
-            failureThreshold: 10
-            initialDelaySeconds: 1
-            periodSeconds: 1
+            failureThreshold: 3
+            periodSeconds: 10
             timeoutSeconds: 1
             httpGet:
               path: /healthz
@@ -68,9 +68,8 @@ spec:
             {{ toYaml .Values.fission.node.customLivenessProbe | nindent 12 }}
           {{- else }}
             failureThreshold: 3
-            initialDelaySeconds: 1
             periodSeconds: 10
-            timeoutSeconds: 0
+            timeoutSeconds: 1
             httpGet:
               path: /healthz
               port: 8888
