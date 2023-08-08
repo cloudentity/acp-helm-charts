@@ -726,8 +726,9 @@ fission:
   rego:
     ## Custom Startup Probe
     customStartupProbe: {}
-      # failureThreshold: 10
-      # periodSeconds: 10
+      # failureThreshold: 3
+      # initialDelaySeconds: 2
+      # periodSeconds: 2
       # httpGet:
       #   path: /healthz
       #   port: 8888
@@ -735,18 +736,16 @@ fission:
     ## Custom Liveness Probe
     customLivenessProbe: {}
       # failureThreshold: 3
-      # initialDelaySeconds: 3
       # periodSeconds: 10
-      # timeoutSeconds: 0
+      # timeoutSeconds: 1
       # httpGet:
       #   path: /healthz
       #   port: 8888
 
     ## Custom Readiness Probe
     customReadinessProbe: {}
-      # failureThreshold: 15
-      # initialDelaySeconds: 5
-      # periodSeconds: 1
+      # failureThreshold: 3
+      # periodSeconds: 10
       # timeoutSeconds: 1
       # httpGet:
       #   path: /healthz
