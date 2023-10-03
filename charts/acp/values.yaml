@@ -595,7 +595,7 @@ workers:
 ## Available FaaS providers: fission, docker, hybrid
 ##
 faas:
-  provider: ""
+  provider: fission
 
 ## Fission function as a service provider
 ##
