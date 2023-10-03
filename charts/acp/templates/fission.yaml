@@ -1,4 +1,4 @@
-{{- if ne .Values.faas.provider "docker" }}
+{{- if or (eq .Values.faas.provider "fission") (eq .Values.faas.provider "hybrid") }}
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:

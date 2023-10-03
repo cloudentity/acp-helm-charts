@@ -47,7 +47,7 @@ data:
     {{- end }}
     faas:
       provider: {{ .Values.faas.provider }}
-    {{- if ne .Values.faas.provider "docker" }}
+    {{- if or (eq .Values.faas.provider "fission") (eq .Values.faas.provider "hybrid") }}
     fission:
       function_settings:
         idle_timeout: {{ .Values.fission.idleTimeout }}
