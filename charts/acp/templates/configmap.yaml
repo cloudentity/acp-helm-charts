@@ -1,4 +1,4 @@
-{{- if .Values.config.create -}}
+charts/acp/templates/configmap.yaml{{- if .Values.config.create -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -45,9 +45,9 @@ data:
     redis:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-    {{- if .Values.fission.enabled }}
     faas:
-      provider: {{ .Values.fission.provider }}
+      provider: {{ .Values.faas.provider }}
+    {{- if ne .Values.faas.provider "docker" }}
     fission:
       function_settings:
         idle_timeout: {{ .Values.fission.idleTimeout }}

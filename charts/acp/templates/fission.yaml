@@ -1,4 +1,4 @@
-{{- if .Values.fission.enabled -}}
+{{- if ne .Values.faas.provider "docker" }}
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
