@@ -1,4 +1,4 @@
-{{- if or (eq .Values.faas.provider "fission") (eq .Values.faas.provider "hybrid") }}
+{{- if or (eq .Values.faas.provider "fission") (eq .Values.faas.provider "hybrid") (eq .Values.fission.enabled "true")}}
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:

@@ -601,6 +601,10 @@ faas:
 ## Fission function as a service provider
 ##
 fission:
+  ## Enables the Fission for ACP
+  ##
+  enabled: false
+
   ## Define namespace where the Fission Environment can be deployed
   ##
   namespace: acp-faas
