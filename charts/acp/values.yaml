@@ -596,14 +596,15 @@ workers:
 ## https://cloudentity.com/developers/deployment-and-operations/configure/configure-fission-for-faas/#fission-integration-for-faas
 ##
 faas:
-  provider:
+  provider: "fission"
+
+  ## Enables the FaaS function for ACP
+  ##
+  enabled: false
 
 ## Fission function as a service provider
 ##
 fission:
-  ## Enables the Fission for ACP
-  ##
-  enabled: false
 
   ## Define namespace where the Fission Environment can be deployed
   ##

@@ -45,12 +45,14 @@ data:
     redis:
       {{- toYaml . | nindent 6 }}
     {{- end }}
+    {{- if .Values.faas.enabled }}
     faas:
       provider: {{ .Values.faas.provider }}
     {{- if or (eq .Values.faas.provider "fission") (eq .Values.faas.provider "hybrid") }}
     fission:
       function_settings:
         idle_timeout: {{ .Values.fission.idleTimeout }}
+    {{- end }}
     {{- end }}
     {{- with .Values.features }}
     features:
