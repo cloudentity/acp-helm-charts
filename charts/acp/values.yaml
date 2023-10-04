@@ -593,6 +593,7 @@ workers:
   # podDisruptionBudget: {}
 
 ## Available FaaS providers: fission, docker, hybrid
+## https://cloudentity.com/developers/deployment-and-operations/configure/configure-fission-for-faas/#fission-integration-for-faas
 ##
 faas:
   provider:
