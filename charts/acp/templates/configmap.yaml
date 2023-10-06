@@ -45,7 +45,7 @@ data:
     redis:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-    {{- if .Values.faas.enabled }}
+    {{- if or (eq .Values.faas.enabled true) (eq .Values.fission.enabled true) }}
     faas:
       provider: {{ .Values.faas.provider }}
     {{- if or (eq .Values.faas.provider "fission") (eq .Values.faas.provider "hybrid") }}
