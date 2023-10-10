@@ -28,7 +28,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  version: 1
+  version: 3
   imagepullsecret: {{ .Values.fission.imagepullsecret }}
   poolsize: {{ .Values.fission.poolsize }}
   terminationGracePeriod: 1
@@ -102,7 +102,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  version: 1
+  version: 3
   imagepullsecret: {{ .Values.fission.imagepullsecret }}
   poolsize: {{ .Values.fission.poolsize }}
   terminationGracePeriod: 1
