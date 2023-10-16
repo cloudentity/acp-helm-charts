@@ -594,16 +594,19 @@ workers:
   ##
   # podDisruptionBudget: {}
 
-## Fission chart configuration
+## Available FaaS providers: fission, docker, hybrid
+## https://cloudentity.com/developers/deployment-and-operations/configure/configure-fission-for-faas/#fission-integration-for-faas
 ##
-fission:
-  ## Enables the Fission for ACP
+faas:
+  provider: "fission"
+
+  ## Enables the FaaS function for ACP
   ##
   enabled: false
 
-  ## Define provider mode
-  ##
-  provider: fission
+## Fission function as a service provider
+##
+fission:
 
   ## Define namespace where the Fission Environment can be deployed
   ##
