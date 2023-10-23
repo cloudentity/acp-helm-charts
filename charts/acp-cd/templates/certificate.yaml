@@ -1,0 +1,27 @@
+{{- if .Values.certManager.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "acp-cd.fullname" . }}
+  labels:
+    {{- include "acp-cd.labels" . | nindent 4 }}
+spec:
+  duration: {{ .Values.certManager.duration }}
+  renewBefore: {{ .Values.certManager.renewBefore }}
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth
+    - client auth
+  privateKey:
+    size: {{ .Values.certManager.privateKey.size }}
+    algorithm: {{ .Values.certManager.privateKey.algorithm }}
+  dnsNames:
+    - {{ include "acp-cd.fullname" . }}
+    - {{ include "acp-cd.fullname" . }}.{{ .Release.Namespace }}
+    - {{ include "acp-cd.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+  secretName: {{ include "acp-cd.fullname" . }}-tls
+  issuerRef:
+    name: {{ .Values.certManager.issuerRef.name }}
+    kind: {{ .Values.certManager.issuerRef.kind }}
+{{- end }}

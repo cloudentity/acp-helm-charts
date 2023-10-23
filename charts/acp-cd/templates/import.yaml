@@ -21,14 +21,21 @@ spec:
         - name: import
           configMap:
             name: {{ include "acp-cd.fullname" . }}-import
-        {{- if ((.Values.client).rootCa) }}
+        {{- if or .Values.certManager.enabled ((.Values.client).rootCa) }}
         - name: tls
           projected:
             defaultMode: 384
             sources:
+            {{- if .Values.certManager.enabled }}
             - secret:
-                name: {{ include "acp-cd.fullname" . }}-client-tls
+                name: {{ include "acp.fullname" . }}-tls
+            {{- end }}
+            {{- if ((.Values.client).rootCa) }}
+            - secret:
+                name: {{ include "acp.fullname" . }}-client-tls
+            {{- end }}
         {{- end }}
+      serviceAccountName: {{ include "acp-cd.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -78,9 +85,23 @@ spec:
             - mountPath: /import
               name: import
               readOnly: true
-            {{- if ((.Values.client).rootCa) }}
+            {{- if or .Values.certManager.enabled ((.Values.client).rootCa) }}
             - mountPath: /tls
               name: tls
               readOnly: true
-            {{ end }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       restartPolicy: Never

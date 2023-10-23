@@ -9,7 +9,7 @@ data:
   config.yaml: |
     {{- if ((.Values.client).rootCa) }}
     client:
-      root_ca: /tls/client-ca.crt
+      root_ca: /tls/ca.crt
     {{- end }}
   extraconfig.yaml: |
     {{- with .Values.config.data }}

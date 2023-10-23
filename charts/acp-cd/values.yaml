@@ -18,6 +18,50 @@ image:
 imagePullSecrets:
   - name: docker.cloudentity.io
 
+## String to partially override acp.name
+##
+# nameOverride: ""
+
+## String to fully override acp.fullname
+##
+# fullnameOverride: ""
+
+## Additional labels to apply to all Kubernetes resources created by this chart.
+##
+labels: {}
+
+## Define serviceAccount
+##
+serviceAccount:
+  ## Specifies whether a service account should be created
+  ##
+  create: true
+
+  ## Annotations to add to the service account
+  ##
+  annotations: {}
+
+  ## The name of the service account to use.
+  ## If not set and create is true, a name is generated using the fullname template
+  # name: ""
+
+## ACP-CD resource requests and limits
+## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+##
+resources: {}
+
+## ACP-CD node selector
+##
+# nodeSelector: {}
+
+## ACP-CD pod affinity
+##
+# affinity: {}
+
+## ACP-CD pod tolerations
+##
+# tolerations: {}
+
 ## A security context defines privilege and access control settings for a Pod or Container
 ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 ##
@@ -28,6 +72,34 @@ podSecurityContext:
   runAsGroup: 1000
   runAsNonRoot: true
   runAsUser: 1000
+
+## Cert-manager configuration
+##
+certManager:
+  ## Enables the cert-manager integration
+  ##
+  enabled: false
+
+  ## The requested ‘duration’ (i.e. lifetime) of the Certificate
+  ##
+  duration: 2160h
+
+  ## How long before the currently issued certificate’s expiry cert-manager should renew the certificate.
+  ##
+  renewBefore: 720h
+
+  ## Options to control private keys used for the Certificate.
+  ##
+  privateKey:
+    size: 2048
+    algorithm: RSA
+
+  ## IssuerRef is a reference to the issuer for this certificate
+  ##
+  issuerRef:
+    name: ca-issuer
+    kind: ClusterIssuer
+
 
 ## Import mode (update, fail, ignore)
 ##
@@ -65,7 +137,7 @@ clientCredentials:
 ##
 # configPath:
 
-## ACP http client configuration
+## ACP-CD http client configuration
 ##
 # client:
   # rootCa: |
@@ -73,7 +145,7 @@ clientCredentials:
   #
   #   -----END CERTIFICATE-----
 
-## Enable Default ACP config
+## Enable Default ACP-CD config
 ##
 config:
   create: true
