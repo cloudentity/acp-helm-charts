@@ -7,7 +7,7 @@ metadata:
     {{- include "acp-cd.labels" . | nindent 4 }}
 data:
   config.yaml: |
-    {{- if ((.Values.client).rootCa) }}
+    {{- if or .Values.certManager.enabled ((.Values.client).rootCa) }}
     client:
       root_ca: /tls/ca.crt
     {{- end }}

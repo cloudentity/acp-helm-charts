@@ -28,11 +28,11 @@ spec:
             sources:
             {{- if .Values.certManager.enabled }}
             - secret:
-                name: {{ include "acp.fullname" . }}-tls
+                name: {{ include "acp-cd.fullname" . }}-tls
             {{- end }}
             {{- if ((.Values.client).rootCa) }}
             - secret:
-                name: {{ include "acp.fullname" . }}-client-tls
+                name: {{ include "acp-cd.fullname" . }}-client-tls
             {{- end }}
         {{- end }}
       serviceAccountName: {{ include "acp-cd.serviceAccountName" . }}
