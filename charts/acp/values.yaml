@@ -3,7 +3,7 @@
 image:
   ## Image repository
   ##
-  repository: docker.cloudentity.io/acp
+  repository: docker.cloudentity.io/acp-distroless
 
   ## Image pull policy
   ##
