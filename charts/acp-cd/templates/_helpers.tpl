@@ -51,6 +51,17 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Create the name of the service account to use
+*/}}
+{{- define "acp-cd.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "acp-cd.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}
+
+{{/*
 Create the name of the client secret to use
 */}}
 {{- define "acp-cd.clientCredentialsName" -}}
