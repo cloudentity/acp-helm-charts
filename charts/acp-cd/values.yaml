@@ -3,7 +3,7 @@
 image:
   ## Image repository
   ##
-  repository: docker.cloudentity.io/acp
+  repository: docker.cloudentity.io/acp-distroless
 
   ## Image pull policy
   ##
@@ -44,6 +44,10 @@ serviceAccount:
   ## The name of the service account to use.
   ## If not set and create is true, a name is generated using the fullname template
   # name: ""
+
+## Array with environment variables to add to the ACP-CD container
+##
+# env: []
 
 ## ACP-CD resource requests and limits
 ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
