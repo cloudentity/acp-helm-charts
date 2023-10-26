@@ -639,6 +639,8 @@ fission:
     privileged: false
     readOnlyRootFilesystem: true
     allowPrivilegeEscalation: false
+    seccompProfile:
+      type: RuntimeDefault
     capabilities:
       drop:
         - ALL
