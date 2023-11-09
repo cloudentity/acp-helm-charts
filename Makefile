@@ -13,7 +13,7 @@ HELM_CHARTS = acp-cd,acp,istio-authorizer,kube-acp-stack
 ISTIO_VERSION ?= 1.13.3
 
 # ACP helm chart version
-ACP_VERSION ?= 2.19.0
+ACP_VERSION ?= 2.16.4-2
 export ACP_VERSION
 
 ### TARGETS ###
