@@ -74,6 +74,10 @@ args:
 ## Define service
 ##
 service:
+  ## Enables ACP service
+  ##
+  enabled: true
+
   ## ACP service type
   ##
   type: ClusterIP
