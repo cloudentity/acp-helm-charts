@@ -1,23 +1,5 @@
-{{- if or (eq .Values.faas.enabled true) (eq .Values.fission.enabled true) }}
+{{- if .Values.faas.enabled -}}
 {{- if or (eq .Values.faas.provider "fission") (eq .Values.faas.provider "hybrid") }}
-kind: NetworkPolicy
-apiVersion: networking.k8s.io/v1
-metadata:
-  name: only-allow-internet
-  namespace: {{ .Values.fission.namespace }}
-spec:
-  policyTypes:
-    - Egress
-  podSelector: {}
-  egress:
-    - to:
-        - ipBlock:
-            cidr: {{ .Values.fission.networkPolicy.ipBlock.cidr }}
-            {{- with .Values.fission.networkPolicy.ipBlock.except }}
-            except:
-              {{- toYaml . | nindent 14 }}
-            {{- end }}
----
 apiVersion: fission.io/v1
 kind: Environment
 metadata:

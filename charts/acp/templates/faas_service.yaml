@@ -1,0 +1,29 @@
+{{- if .Values.faas.enabled }}
+{{- range $envType, $envConfigs := .Values.faas.environments }}
+{{- if or (eq $envType "node") (eq $envType "rego") }}
+{{- range $version, $details := $envConfigs }}
+{{- if $details.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-v{{ $version }}
+  namespace: {{ $.Values.faas.namespace.name }}
+  labels:
+    {{- include "acp.labels" $ | nindent 4 }}
+spec:
+  type: {{ default $.Values.faas.environments.settings.service.type (($details.service).type) }}
+  ports:
+    {{- $defaultPorts := $.Values.faas.environments.settings.ports }}
+    {{- range $portName, $port := coalesce $details.ports $defaultPorts }}
+    - name: {{ $portName }}
+      port: {{ $port }}
+      targetPort: {{ $port }}
+      protocol: TCP
+    {{- end }}
+  selector:
+    {{- include "acp.faas.selectorLabels" (dict "Environment" $envType "Version" $version "Root" $) | nindent 4 }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

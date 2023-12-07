@@ -64,14 +64,31 @@ app.kubernetes.io/name: {{ include "acp.name" . }}-workers
 app.kubernetes.io/instance: {{ .Release.Name }}-workers
 {{- end }}
 
+{{- define "acp.faas.selectorLabels" -}}
+app.kubernetes.io/instance: {{ .Root.Release.Name }}-faas
+app.kubernetes.io/environment: {{ .Environment }}
+app.kubernetes.io/version: {{ .Version }}
+{{- end }}
+
 {{/*
-Create the name of the service account to use
+Create the name of the acp service account to use
 */}}
 {{- define "acp.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
 {{- default (include "acp.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the faas service account to use
+*/}}
+{{- define "faas.serviceAccountName" -}}
+{{- if .Values.faas.serviceAccount.create }}
+{{- default (print (include "acp.fullname" .) "-faas") .Values.faas.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.faas.serviceAccount.name }}
 {{- end }}
 {{- end }}
 
@@ -118,3 +135,38 @@ Create mtls secret list
 {{- end }}
 {{- join "," $list }}
 {{- end }}
+
+{{/*
+Create shared URL for Node or Rego environment.
+*/}}
+{{- define "acp.sharedEnvironmentUrl" -}}
+  {{- $environmentType := index . "environmentType" }}
+  {{- $rootContext := index . "root" }}
+  {{- $kedaEnabled := $rootContext.Values.faas.environments.autoscaling.keda.enabled }}
+  {{- $envCount := 0 }}
+  {{- $singleEnvVersion := "" }}
+
+  {{- /* Iterate over the environments to count how many are enabled and get the version of the single enabled environment if applicable. */}}
+  {{- range $version, $details := index $rootContext.Values.faas.environments $environmentType }}
+    {{- if $details.enabled }}
+      {{- $envCount = add $envCount 1 }}
+      {{- $singleEnvVersion = $version }}
+    {{- end }}
+  {{- end }}
+
+  {{- /* Determine the version suffix based on the count of enabled environments. */}}
+  {{- $versionSuffix := "" }}
+  {{- if eq $envCount 1 }}
+    {{- $versionSuffix = $singleEnvVersion }}
+  {{- else }}
+    {{- $versionSuffix = "{{envVersion}}" }}
+  {{- end }}
+
+  {{- /* Determine the port and proxy suffix based on whether Keda is enabled. */}}
+  {{- $port := ternary $rootContext.Values.faas.environments.autoscaling.keda.port $rootContext.Values.faas.environments.settings.ports.http $kedaEnabled }}
+  {{- $proxySuffix := ternary "" "-proxy" (not $kedaEnabled) }}
+
+  {{- /* Construct the full URL. */}}
+  {{-  "http://" }}{{ include "acp.fullname" $rootContext }}-faas-{{ $environmentType }}-v{{ $versionSuffix }}{{ $proxySuffix }}.{{ $rootContext.Values.faas.namespace.name }}:{{ $port }}
+{{- end }}
+

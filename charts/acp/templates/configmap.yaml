@@ -45,14 +45,12 @@ data:
     redis:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-    {{- if or (eq .Values.faas.enabled true) (eq .Values.fission.enabled true) }}
+    {{- if .Values.faas.enabled }}
     faas:
       provider: {{ .Values.faas.provider }}
-    {{- if or (eq .Values.faas.provider "fission") (eq .Values.faas.provider "hybrid") }}
-    fission:
-      function_settings:
-        idle_timeout: {{ .Values.fission.idleTimeout }}
-    {{- end }}
+    docker:
+      shared_node_url: {{ include "acp.sharedEnvironmentUrl" (dict "root" $ "environmentType" "node") }}
+      shared_rego_url: {{ include "acp.sharedEnvironmentUrl" (dict "root" $ "environmentType" "rego") }}
     {{- end }}
     {{- with .Values.features }}
     features:

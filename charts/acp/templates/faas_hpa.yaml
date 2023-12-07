@@ -1,0 +1,45 @@
+{{- if and .Values.faas.enabled .Values.faas.environments.autoscaling.hpa.enabled (not .Values.faas.environments.autoscaling.keda.enabled) }}
+{{- range $envType, $envConfigs := .Values.faas.environments }}
+{{- if or (eq $envType "node") (eq $envType "rego") }}
+{{- range $version, $details := $envConfigs }}
+{{- if $details.enabled }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-v{{ $version }}
+  namespace: {{ $.Values.faas.namespace.name }}
+  labels:
+    {{- include "acp.labels" $ | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-v{{ $version }}
+  minReplicas: {{ $.Values.faas.environments.autoscaling.hpa.minReplicas }}
+  maxReplicas: {{ $.Values.faas.environments.autoscaling.hpa.maxReplicas }}
+  metrics:
+  {{- if $.Values.faas.environments.autoscaling.hpa.targetCPUUtilizationPercentage }}
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: {{$.Values.faas.environments.autoscaling.hpa.targetCPUUtilizationPercentage }}
+  {{- end }}
+  {{- if $.Values.faas.environments.autoscaling.hpa.targetMemoryUtilizationPercentage }}
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: {{$.Values.faas.environments.autoscaling.hpa.targetMemoryUtilizationPercentage }}
+  {{- end }}
+  {{- with $.Values.faas.environments.autoscaling.hpa.behavior }}
+  behavior:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

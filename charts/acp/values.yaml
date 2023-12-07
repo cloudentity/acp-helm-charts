@@ -602,162 +602,270 @@ workers:
 ## https://cloudentity.com/developers/deployment-and-operations/configure/configure-fission-for-faas/#fission-integration-for-faas
 ##
 faas:
-  provider: "fission"
-
   ## Enables the FaaS function for ACP
   ##
   enabled: false
 
-## Fission function as a service provider
-##
-fission:
-
-  ## Define namespace where the Fission Environment can be deployed
+  ## Define type of the Environment can be deployed
   ##
-  namespace: acp-faas
+  provider: "docker"
 
-  ## Define NetworkPolicy Egress rules for Fission deployment
+  namespace:
+    ## Define namespace name where the environments can be deployed
+    ##
+    name: acp-faas
+
+    ## Create namespace
+    ##
+    create: true
+
+  environments:
+    node:
+      4:
+        ## Enables environment
+        ##
+        enabled: false
+
+        ## Environment image
+        ##
+        image: docker.cloudentity.io/node-env:v4-20231201-110927-d511a9a7
+
+        ## Environment expiration date
+        ##
+        valid_until: ""
+
+        ## Environment packages
+        ##
+        package_json: {}
+
+      5:
+        ## Enables environment
+        ##
+        enabled: true
+
+        ## Environment image
+        ##
+        image: docker.cloudentity.io/node-env:v5-20231201-110927-d511a9a7
+
+        ## Environment expiration date
+        ##
+        valid_until: ""
+
+        ## Environment packages
+        ##
+        package_json: {}
+
+    rego:
+      5:
+        ## Enables environment
+        ##
+        enabled: true
+
+        ## Environment image
+        ##
+        image: docker.cloudentity.io/rego-env:v5-20231201-110927-d511a9a7
+
+        ## Environment expiration date
+        ##
+        valid_until: ""
+
+    ## Each setting below can be set in a version specific block within 'environments' to override these default settings
+    ##
+    settings:
+      ## Enviornment number of replicas
+      ##
+      replicaCount: 3
+
+
+      ## Annotations to add to the Environment deployment
+      ##
+      # annotations: {}
+
+      ## Specify a imagePullPolicy
+      ##
+      imagePullPolicy: IfNotPresent
+  
+      ## Docker registry secret name
+      ##
+      imagePullSecret: docker.cloudentity.io
+  
+      ## Array with environment variables to add to the container
+      ##
+      # env: []
+      
+      ## Array with ports to add to the container
+      ##
+      ports:
+        http: 8888
+      
+      ## Define service
+      ##
+      service:
+        ## Enables service
+        ##
+        enabled: true
+      
+        ## Service type
+        ##
+        type: ClusterIP
+
+      ## Pod security context
+      ##
+      podSecurityContext:
+        fsGroup: 65535
+        runAsUser: 65535
+        runAsGroup: 65535
+        runAsNonRoot: true
+
+      ## Container security context
+      ##
+      containerSecurityContext:
+        runAsUser: 65535
+        runAsGroup: 65535
+        runAsNonRoot: true
+        privileged: false
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+        capabilities:
+          drop:
+            - ALL
+
+      ## Startup Probe configuration
+      ##
+      startupProbe:
+        failureThreshold: 3
+        initialDelaySeconds: 2
+        periodSeconds: 2
+        httpGet:
+          path: /healthz
+          port: 8888
+      
+      ## Liveness Probe configuration
+      ##
+      livenessProbe:
+        failureThreshold: 3
+        periodSeconds: 10
+        timeoutSeconds: 1
+        httpGet:
+          path: /healthz
+          port: 8888
+      
+      ## Readiness Probe configuration
+      ##
+      readinessProbe:
+        failureThreshold: 3
+        periodSeconds: 10
+        timeoutSeconds: 1
+        httpGet:
+          path: /healthz
+          port: 8888
+ 
+      ## Pod resources definition
+      ##
+      # resources: {}
+      
+      ## Pod node selector
+      ##
+      # nodeSelector: {}
+      
+      ## Pod affinity
+      ##
+      # affinity: {}
+      
+      ## Pod tolerations
+      ##
+      # tolerations: {}
+      
+      ## Pod topology spread constraints
+      ##
+      # topologySpreadConstraints: {}
+
+      ## Deployment lifecycle
+      ##
+      lifecycle:
+        preStop:
+          exec:
+            command:
+              - /bin/sleep
+              - "10"
+
+    ## Autoscaling parameters
+    ##
+    autoscaling:
+      ## Keda based autoscaling
+      ##
+      keda:
+        ## Enable autoscaling
+        ##
+        enabled: false
+
+        ## Define mix replica count
+        ##
+        minReplicas: 1
+
+        ## Define max replica count
+        ##
+        maxReplicas: 3
+
+        ## Define scaled object port
+        ##
+        port: 8080
+
+        ## Define scaled object targetPendingRequests
+        ##
+        targetPendingRequests: 1
+
+        ## Define keda interceptor proxy dns
+        ##
+        interceptor_dns: keda-add-ons-http-interceptor-proxy.keda.svc.cluster.local
+
+      hpa:
+        ## Enable autoscaling
+        ##
+        enabled: false
+
+        ## Define mix replica count
+        ##
+        minReplicas: 1
+
+        ## Define max replica count
+        ##
+        maxReplicas: 3
+
+        ## The average CPU usage of a all pods in a deployment
+        ##
+        targetCPUUtilizationPercentage: "50"
+
+        ## The average memory usage of a all pods in a deployment
+        ##
+        targetMemoryUtilizationPercentage: "50"
+
+        ## Custom scaling behavior
+        ##
+        #  behavior: {}
+
+  serviceAccount:
+    ## Specifies whether a service account should be created
+    ##
+    create: true
+  
+    ## Annotations to add to the service account
+    ##
+    annotations: {}
+  
+    ## The name of the service account to use.
+    ## If not set and create is true, a name is generated using the fullname template
+    # name: ""
+
+  ## Define NetworkPolicy Egress rules for FaaS deployment
   ##
   networkPolicy:
+    create: true
     ipBlock:
       cidr: 0.0.0.0/0
       except:
         - 10.0.0.0/8
         - 192.168.0.0/16
         - 172.16.0.0/20
-
-  ## Pod security context
-  ##
-  podSecurityContext:
-    fsGroup: 65535
-    runAsUser: 65535
-    runAsGroup: 65535
-    runAsNonRoot: true
-
-  ## Container security context
-  ##
-  containerSecurityContext:
-    runAsUser: 65535
-    runAsGroup: 65535
-    runAsNonRoot: true
-    privileged: false
-    readOnlyRootFilesystem: true
-    allowPrivilegeEscalation: false
-    seccompProfile:
-      type: RuntimeDefault
-    capabilities:
-      drop:
-        - ALL
-
-  ## Annotations to add to the Environment resource created for Fission
-  annotations: {}
-  # cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
-
-  ## Define the pool size
-  ##
-  poolsize: 3
-
-  ## Define docker images for Fission environments
-  images:
-    ## nodejs environment image
-    node: docker.cloudentity.io/node-env:5.2
-    ## rego environment image
-    rego: docker.cloudentity.io/rego-env:5.1
-
-  ## Specify a imagePullPolicy
-  ##
-  imagePullPolicy: IfNotPresent
-
-  ## Docker registry secret name
-  ##
-  imagepullsecret: docker.cloudentity.io
-
-  ## Affinity for pod assignment
-  affinity: {}
-  #   nodeAffinity:
-  #     requiredDuringSchedulingIgnoredDuringExecution:
-  #       nodeSelectorTerms:
-  #         - matchExpressions:
-  #             - key: fission
-  #               operator: In
-  #              values:
-  #                 - "true"
-
-  ## Tolerations for pod assignment
-  tolerations: []
-  # - key: fission
-  #   value: "true"
-  #   effect: NoSchedule
-
-  ## Pod resources definition
-  resources: {}
-  #   requests:
-  #     cpu: 10m
-  #     memory: 48Mi
-  #   limits:
-  #     cpu: 100m
-  #     memory: 96Mi
-
-  ## Fission function idle timeout
-  ##
-  idleTimeout: 3m0s
-
-  ## Custom node env configuration
-  ##
-  node:
-    ## Custom Startup Probe
-    customStartupProbe: {}
-      # failureThreshold: 3
-      # initialDelaySeconds: 2
-      # periodSeconds: 2
-      # httpGet:
-      #   path: /healthz
-      #   port: 8888
-
-    ## Custom Liveness Probe
-    customLivenessProbe: {}
-      # failureThreshold: 3
-      # periodSeconds: 10
-      # timeoutSeconds: 1
-      # httpGet:
-      #   path: /healthz
-      #   port: 8888
-
-    ## Custom Readiness Probe
-    customReadinessProbe: {}
-      # failureThreshold: 3
-      # periodSeconds: 10
-      # timeoutSeconds: 1
-      # httpGet:
-      #   path: /healthz
-      #   port: 8888
-
-  ## Custom rego env configuration
-  ##
-  rego:
-    ## Custom Startup Probe
-    customStartupProbe: {}
-      # failureThreshold: 3
-      # initialDelaySeconds: 2
-      # periodSeconds: 2
-      # httpGet:
-      #   path: /healthz
-      #   port: 8888
-
-    ## Custom Liveness Probe
-    customLivenessProbe: {}
-      # failureThreshold: 3
-      # periodSeconds: 10
-      # timeoutSeconds: 1
-      # httpGet:
-      #   path: /healthz
-      #   port: 8888
-
-    ## Custom Readiness Probe
-    customReadinessProbe: {}
-      # failureThreshold: 3
-      # periodSeconds: 10
-      # timeoutSeconds: 1
-      # httpGet:
-      #   path: /healthz
-      #   port: 8888

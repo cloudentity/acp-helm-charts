@@ -1,0 +1,67 @@
+{{- if .Values.faas.enabled }}
+{{- range $envType, $envConfigs := .Values.faas.environments }}
+{{- if or (eq $envType "node") (eq $envType "rego") }}
+{{- range $version, $details := $envConfigs }}
+{{- if $details.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-v{{ $version }}
+  namespace: {{ $.Values.faas.namespace.name }}
+  labels:
+    {{- include "acp.labels" $ | nindent 4 }}
+  annotations:
+    {{- $defaultAnnotations := $.Values.faas.environments.settings.annotations }}
+    {{- $actualAnnotations := coalesce $details.annotations $defaultAnnotations }}
+    {{- toYaml $actualAnnotations | nindent 4 }}
+spec:
+  {{- if and (not $.Values.faas.environments.autoscaling.keda.enabled) (not $.Values.faas.environments.autoscaling.hpa.enabled) }}
+  replicas: {{ default $.Values.faas.environments.settings.replicaCount $details.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "acp.faas.selectorLabels" (dict "Environment" $envType "Version" $version "Root" $) | nindent 4 }}
+  template:
+    metadata:
+      labels:
+        {{- include "acp.faas.selectorLabels" (dict "Environment" $envType "Version" $version "Root" $) | nindent 8 }}
+      annotations:
+        {{- $defaultPodAnnotations := $.Values.faas.environments.settings.podAnnotations }}
+        {{- $actualPodAnnotations := coalesce $details.podAnnotations $defaultPodAnnotations }}
+        {{- toYaml $actualPodAnnotations | nindent 8 }}
+    spec:
+      serviceAccountName: {{ default (include "faas.serviceAccountName" $ ) $.Values.faas.serviceAccount.name }}
+      securityContext:
+        {{- toYaml $.Values.faas.environments.settings.podSecurityContext | nindent 8 }}
+      imagePullSecrets: {{ default $.Values.faas.environments.settings.imagePullSecret $details.imagePullSecret }}
+      containers:
+      - name: {{ $envType }}-v{{ $version }}
+        image: {{ $details.image }}
+        imagePullPolicy: {{ default $.Values.faas.environments.settings.imagePullPolicy $details.imagePullPolicy }}
+        ports:
+          {{- $defaultPorts := $.Values.faas.environments.settings.ports }}
+          {{- range $portName, $port := coalesce $details.ports $defaultPorts }}
+          - containerPort: {{ $port }}
+            name: {{ $portName }}
+          {{- end }}
+        resources:
+          {{- toYaml (default $.Values.faas.environments.settings.resources $details.resources) | nindent 10 }}
+        livenessProbe:
+          {{- toYaml (default $.Values.faas.environments.settings.livenessProbe $details.livenessProbe) | nindent 10 }}
+        readinessProbe:
+          {{- toYaml (default $.Values.faas.environments.settings.readinessProbe $details.readinessProbe) | nindent 10 }}
+        startupProbe:
+          {{- toYaml (default $.Values.faas.environments.settings.startupProbe $details.startupProbe) | nindent 10 }}
+        securityContext:
+          {{- toYaml (default $.Values.faas.environments.settings.containerSecurityContext $details.containerSecurityContext) | nindent 10 }}
+        env:
+          {{- $defaultEnv := $.Values.faas.environments.settings.env }}
+          {{- $actualEnv := coalesce $details.env $defaultEnv }}
+          {{- toYaml $actualEnv | nindent 10 }}
+        lifecycle:
+          {{- toYaml (default $.Values.faas.environments.settings.lifecycle $details.lifecycle) | nindent 10 }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
