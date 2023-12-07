@@ -687,7 +687,8 @@ faas:
   
       ## Docker registry secret name
       ##
-      imagePullSecret: docker.cloudentity.io
+      imagePullSecret:
+        - name: docker.cloudentity.io
   
       ## Array with environment variables to add to the container
       ##

@@ -20,7 +20,7 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "acp.faas.selectorLabels" (dict "Environment" $envType "Version" $version "Root" $) | nindent 4 }}
+      {{- include "acp.faas.selectorLabels" (dict "Environment" $envType "Version" $version "Root" $) | nindent 6 }}
   template:
     metadata:
       labels:
@@ -33,7 +33,10 @@ spec:
       serviceAccountName: {{ default (include "faas.serviceAccountName" $ ) $.Values.faas.serviceAccount.name }}
       securityContext:
         {{- toYaml $.Values.faas.environments.settings.podSecurityContext | nindent 8 }}
-      imagePullSecrets: {{ default $.Values.faas.environments.settings.imagePullSecret $details.imagePullSecret }}
+      {{- with $.Values.faas.environments.settings.imagePullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
       - name: {{ $envType }}-v{{ $version }}
         image: {{ $details.image }}

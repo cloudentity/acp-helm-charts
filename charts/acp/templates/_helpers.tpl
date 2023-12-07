@@ -67,7 +67,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}-workers
 {{- define "acp.faas.selectorLabels" -}}
 app.kubernetes.io/instance: {{ .Root.Release.Name }}-faas
 app.kubernetes.io/environment: {{ .Environment }}
-app.kubernetes.io/version: {{ .Version }}
+app.kubernetes.io/version: "{{ .Version }}"
 {{- end }}
 
 {{/*
