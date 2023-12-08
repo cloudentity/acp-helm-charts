@@ -49,6 +49,30 @@ $ helm upgrade [RELEASE_NAME] [CHART] --install
 
 _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
 
+### Update to 2.21.0
+
+Support for docker faas envs has beed added at `faas.environments`
+support for creating faas namespace has beed added at `faas.namespace.create`
+
+Below `fission` values have beed moved to support new environments format
+
+| Old Configuration                 | New Configuration                               |
+|-----------------------------------|-------------------------------------------------|
+| `fission.enabled`                 | Replaced by `faas.enabled` and `faas.provider=fission`. |
+| `fission.namespace`               | `faas.namespace.name`                           |
+| `fission.poolsize`                | `faas.environments.settings.replicaCount`       |
+| `fission.podSecurityContext`      | `faas.environments.settings.podSecurityContext` |
+| `fission.containerSecurityContext`| `faas.environments.settings.containerSecurityContext` |
+| `fission.annotations`             | `faas.environments.settings.annotations`        |
+| `fission.imagePullPolicy`         | `faas.environments.settings.imagePullPolicy`    |
+| `fission.imagepullsecret`         | `faas.environments.settings.imagepullsecret`    |
+| `fission.affinity`                | `faas.environments.settings.affinity`           |
+| `fission.resources`               | `faas.environments.settings.resources`          |
+| `fission.node`                    | `faas.environments.node`                        |
+| `fission.rego`                    | `faas.environments.rego`                        |
+| `fission.images.node`             | `faas.environments.node.<version>.image`        |
+| `fission.images.rego`             | `faas.environments.rego.<version>.image`        |
+
 ### Update to 2.15.0
 
 Please skip version 2.15.0 and go directly to 2.15.1. 2.15.0 has a problematic node-env version (4.1) which does not support read-only file systems.
