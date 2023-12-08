@@ -22,6 +22,7 @@ spec:
   hosts:
     - {{ include "acp.fullname" $ }}-faas-{{ $envType }}-v{{ $version }}-proxy
     - {{ include "acp.fullname" $ }}-faas-{{ $envType }}-v{{ $version }}-proxy.{{ $.Values.faas.namespace.name }}
+---
 {{- end }}
 {{- end }}
 {{- end }}

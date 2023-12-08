@@ -55,6 +55,7 @@ spec:
         {{- toYaml (default $.Values.faas.environments.settings.topologySpreadConstraints $details.topologySpreadConstraints) | nindent 8 }}
       resources:
         {{- toYaml (default $.Values.faas.environments.settings.resources $details.resources) | nindent 8 }}
+---
 {{- end }}
 {{- end }}
 {{- end }}
