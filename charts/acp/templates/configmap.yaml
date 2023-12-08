@@ -48,9 +48,23 @@ data:
     {{- if .Values.faas.enabled }}
     faas:
       provider: {{ .Values.faas.provider }}
+    {{- if or (eq .Values.faas.provider "docker") (eq .Values.faas.provider "hybrid") }}
     docker:
+      {{- if eq .Values.faas.provider "docker" }}
       shared_node_url: {{ include "acp.sharedEnvironmentUrl" (dict "root" $ "environmentType" "node") }}
       shared_rego_url: {{ include "acp.sharedEnvironmentUrl" (dict "root" $ "environmentType" "rego") }}
+      {{- else if eq .Values.faas.provider "hybrid" }}
+      node_url: {{ include "acp.sharedEnvironmentUrl" (dict "root" $ "environmentType" "node") }}
+      rego_url: {{ include "acp.sharedEnvironmentUrl" (dict "root" $ "environmentType" "rego") }}
+      {{- end }}
+    {{- end }}
+    {{- if or (eq .Values.faas.provider "fission") (eq .Values.faas.provider "hybrid") }}
+    fission:
+      namespace: {{ .Values.faas.namespace.name }}
+      envs_v2:
+        js: {{ include "acp.fissionEnvName" (dict "root" $ "environmentType" "node") }}
+        rego: {{ include "acp.fissionEnvName" (dict "root" $ "environmentType" "rego") }}
+    {{- end }}
     {{- end }}
     {{- with .Values.features }}
     features:

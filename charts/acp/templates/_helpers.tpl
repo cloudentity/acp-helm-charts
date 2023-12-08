@@ -170,3 +170,22 @@ Create shared URL for Node or Rego environment.
   {{-  "http://" }}{{ include "acp.fullname" $rootContext }}-faas-{{ $environmentType }}-v{{ $versionSuffix }}{{ $proxySuffix }}.{{ $rootContext.Values.faas.namespace.name }}:{{ $port }}
 {{- end }}
 
+{{/*
+Create fission name for Node or Rego environment.
+*/}}
+{{- define "acp.fissionEnvName" -}}
+  {{- $environmentType := index . "environmentType" }}
+  {{- $rootContext := index . "root" }}
+  {{- $envVersion := "" }}
+
+  {{- /* Iterate over the environments to count how many are enabled and get the version of the single enabled environment if applicable. */}}
+  {{- range $version, $details := index $rootContext.Values.faas.environments $environmentType }}
+    {{- if $details.enabled }}
+      {{- $envVersion = $version }}
+    {{- end }}
+  {{- end }}
+
+  {{- /* Construct the full URL. */}}
+  {{- include "acp.fullname" $rootContext }}-faas-{{ $environmentType }}-v{{ $envVersion }}
+{{- end }}
+
