@@ -57,7 +57,7 @@ data:
           {{- if $details.package_json }}
             {{- toYaml $details.package_json | nindent 12 }}
           {{- else }}
-            {{- ($.Files.Get (printf "files/node-v%s-package.json" $version) | trimSuffix "\n") | nindent 12 }}
+            {{- ($.Files.Get (printf "files/node-v%s-package.yaml" $version) | trimSuffix "\n") | nindent 12 }}
           {{- end }}
         {{- end }}
       {{- end }}
