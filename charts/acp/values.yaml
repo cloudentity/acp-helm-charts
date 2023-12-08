@@ -660,7 +660,7 @@ fission:
   ## Define docker images for Fission environments
   images:
     ## nodejs environment image
-    node: docker.cloudentity.io/node-env:5.2
+    node: docker.cloudentity.io/node-env:5.3
     ## rego environment image
     rego: docker.cloudentity.io/rego-env:5.1
 
