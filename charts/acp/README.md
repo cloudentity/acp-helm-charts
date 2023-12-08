@@ -58,7 +58,7 @@ Below `fission` values have beed moved to support new environments format
 
 | Old Configuration                 | New Configuration                                    |
 |-----------------------------------|------------------------------------------------------|
-| `fission.enabled`                 | `faas.enabled` and `faas.provider=fission`.          |
+| `fission.enabled`                 | `faas.enabled` and `faas.provider="fission"`.          |
 | `fission.namespace`               | `faas.namespace.name`                                |
 | `fission.poolsize`                | `faas.environments.settings.replicaCount`            |
 | `fission.podSecurityContext`      | `faas.environments.settings.podSecurityContext`      |
@@ -164,7 +164,7 @@ acp:
 
 ## Fission
 
-Install the [fission](https://fission.io/docs/installation/), version [v1.14.1](https://github.com/fission/fission/releases/tag/1.14.1).
+Install the [fission](https://fission.io/docs/installation/).
 
 ### Docker Pull Credentials
 
