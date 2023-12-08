@@ -1,4 +1,4 @@
-{{- if .Values.faas.enabled }}
+{{- if and .Values.faas.enabled (or (eq .Values.faas.provider "docker") (eq .Values.faas.provider "hybrid")) }}
 {{- range $envType, $envConfigs := .Values.faas.environments }}
 {{- if or (eq $envType "node") (eq $envType "rego") }}
 {{- range $version, $details := $envConfigs }}
@@ -63,6 +63,14 @@ spec:
           {{- toYaml $actualEnv | nindent 10 }}
         lifecycle:
           {{- toYaml (default $.Values.faas.environments.settings.lifecycle $details.lifecycle) | nindent 10 }}
+      nodeSelector:
+        {{- toYaml (default $.Values.faas.environments.settings.nodeSelector $details.nodeSelector) | nindent 8 }}
+      affinity:
+        {{- toYaml (default $.Values.faas.environments.settings.affinity $details.affinity) | nindent 8 }}
+      tolerations:
+        {{- toYaml (default $.Values.faas.environments.settings.tolerations $details.tolerations) | nindent 8 }}
+      topologySpreadConstraints:
+        {{- toYaml (default $.Values.faas.environments.settings.topologySpreadConstraints $details.topologySpreadConstraints) | nindent 8 }}
 {{- end }}
 {{- end }}
 {{- end }}

@@ -1,4 +1,4 @@
-{{- if .Values.faas.enabled }}
+{{- if and .Values.faas.enabled (or (eq .Values.faas.provider "docker") (eq .Values.faas.provider "hybrid")) }}
 {{- range $envType, $envConfigs := .Values.faas.environments }}
 {{- if or (eq $envType "node") (eq $envType "rego") }}
 {{- range $version, $details := $envConfigs }}

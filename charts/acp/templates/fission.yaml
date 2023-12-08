@@ -1,151 +1,62 @@
-{{- if .Values.faas.enabled -}}
-{{- if or (eq .Values.faas.provider "fission") (eq .Values.faas.provider "hybrid") }}
+{{- if and .Values.faas.enabled (or (eq .Values.faas.provider "fission") (eq .Values.faas.provider "hybrid")) }}
+{{- range $envType, $envConfigs := .Values.faas.environments }}
+{{- if or (eq $envType "node") (eq $envType "rego") }}
+{{- range $version, $details := $envConfigs }}
+{{- if $details.enabled }}
 apiVersion: fission.io/v1
 kind: Environment
 metadata:
-  name: nodejs-v2
-  namespace: {{ .Values.fission.namespace }}
-    {{- with .Values.fission.annotations }}
+  name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-v{{ $version }}
+  namespace: {{ $.Values.faas.namespace.name }}
+  labels:
+    {{- include "acp.labels" $ | nindent 4 }}
   annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- $defaultAnnotations := $.Values.faas.environments.settings.annotations }}
+    {{- $actualAnnotations := coalesce $details.annotations $defaultAnnotations }}
+    {{- toYaml $actualAnnotations | nindent 4 }}
 spec:
   version: 3
-  imagepullsecret: {{ .Values.fission.imagepullsecret }}
-  poolsize: {{ .Values.fission.poolsize }}
+  poolsize: {{ default $.Values.faas.environments.settings.replicaCount $details.replicaCount }}
   terminationGracePeriod: 1
   runtime:
-    image: {{ .Values.fission.images.node }}
+    image: {{ $details.image }}
     podspec:
+      serviceAccountName: {{ default (include "faas.serviceAccountName" $ ) $.Values.faas.serviceAccount.name }}
+      {{- with $.Values.faas.environments.settings.imagePullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
-        - name: nodejs-v2
-          imagePullPolicy: {{ .Values.fission.imagePullPolicy }}
-          {{- with .Values.fission.containerSecurityContext }}
-          securityContext:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          startupProbe:
-          {{- if .Values.fission.node.customStartupProbe }}
-            {{ toYaml .Values.fission.node.customStartupProbe | nindent 12 }}
-          {{- else }}
-            failureThreshold: 3
-            initialDelaySeconds: 2
-            periodSeconds: 2
-            httpGet:
-              path: /healthz
-              port: 8888
-          {{- end }}
-          readinessProbe:
-          {{- if .Values.fission.node.customReadinessProbe }}
-            {{ toYaml .Values.fission.node.customReadinessProbe | nindent 12 }}
-          {{- else }}
-            failureThreshold: 3
-            periodSeconds: 10
-            timeoutSeconds: 1
-            httpGet:
-              path: /healthz
-              port: 8888
-          {{- end }}
+        - name: {{ $envType }}-v{{ $version }}
+          imagePullPolicy: {{ default $.Values.faas.environments.settings.imagePullPolicy $details.imagePullPolicy }}
           livenessProbe:
-          {{- if .Values.fission.node.customLivenessProbe }}
-            {{ toYaml .Values.fission.node.customLivenessProbe | nindent 12 }}
-          {{- else }}
-            failureThreshold: 3
-            periodSeconds: 10
-            timeoutSeconds: 1
-            httpGet:
-              path: /healthz
-              port: 8888
-          {{- end }}
-      {{- with .Values.fission.podSecurityContext }}
-      securityContext:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.fission.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.fission.tolerations }}
-      tolerations:
-          {{- toYaml . | nindent 8 }}
-      {{- end }}
-  {{- with .Values.fission.resources }}
-  resources:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
----
-apiVersion: fission.io/v1
-kind: Environment
-metadata:
-  name: rego-v2
-  namespace: {{ .Values.fission.namespace }}
-    {{- with .Values.fission.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
-spec:
-  version: 3
-  imagepullsecret: {{ .Values.fission.imagepullsecret }}
-  poolsize: {{ .Values.fission.poolsize }}
-  terminationGracePeriod: 1
-  runtime:
-    image: {{ .Values.fission.images.rego }}
-    podspec:
-      containers:
-        - name: rego-v2
-          imagePullPolicy: {{ .Values.fission.imagePullPolicy }}
-          {{- with .Values.fission.containerSecurityContext }}
-          securityContext:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          startupProbe:
-          {{- if .Values.fission.rego.customStartupProbe }}
-            {{ toYaml .Values.fission.rego.customStartupProbe | nindent 12 }}
-          {{- else }}
-            failureThreshold: 3
-            initialDelaySeconds: 2
-            periodSeconds: 2
-            httpGet:
-              path: /healthz
-              port: 8888
-          {{- end }}
+            {{- toYaml (default $.Values.faas.environments.settings.livenessProbe $details.livenessProbe) | nindent 12 }}
           readinessProbe:
-          {{- if .Values.fission.rego.customReadinessProbe }}
-            {{ toYaml .Values.fission.rego.customReadinessProbe | nindent 12 }}
-          {{- else }}
-            failureThreshold: 3
-            periodSeconds: 10
-            timeoutSeconds: 1
-            httpGet:
-              path: /healthz
-              port: 8888
-          {{- end }}
-          livenessProbe:
-          {{- if .Values.fission.rego.customLivenessProbe }}
-            {{ toYaml .Values.fission.rego.customLivenessProbe | nindent 12 }}
-          {{- else }}
-            failureThreshold: 3
-            periodSeconds: 10
-            timeoutSeconds: 1
-            httpGet:
-              path: /healthz
-              port: 8888
-          {{- end }}
-      {{- with .Values.fission.podSecurityContext }}
+            {{- toYaml (default $.Values.faas.environments.settings.readinessProbe $details.readinessProbe) | nindent 12 }}
+          startupProbe:
+            {{- toYaml (default $.Values.faas.environments.settings.startupProbe $details.startupProbe) | nindent 12 }}
+          securityContext:
+            {{- toYaml (default $.Values.faas.environments.settings.containerSecurityContext $details.containerSecurityContext) | nindent 12 }}
+          env:
+            {{- $defaultEnv := $.Values.faas.environments.settings.env }}
+            {{- $actualEnv := coalesce $details.env $defaultEnv }}
+            {{- toYaml $actualEnv | nindent 12 }}
+          lifecycle:
+            {{- toYaml (default $.Values.faas.environments.settings.lifecycle $details.lifecycle) | nindent 12 }}
       securityContext:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.fission.affinity }}
+        {{- toYaml $.Values.faas.environments.settings.podSecurityContext | nindent 8 }}
+      nodeSelector:
+        {{- toYaml (default $.Values.faas.environments.settings.nodeSelector $details.nodeSelector) | nindent 8 }}
       affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.fission.tolerations }}
+        {{- toYaml (default $.Values.faas.environments.settings.affinity $details.affinity) | nindent 8 }}
       tolerations:
-          {{- toYaml . | nindent 8 }}
-      {{- end }}
-  {{- with .Values.fission.resources }}
-  resources:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+        {{- toYaml (default $.Values.faas.environments.settings.tolerations $details.tolerations) | nindent 8 }}
+      topologySpreadConstraints:
+        {{- toYaml (default $.Values.faas.environments.settings.topologySpreadConstraints $details.topologySpreadConstraints) | nindent 8 }}
+      resources:
+        {{- toYaml (default $.Values.faas.environments.settings.resources $details.resources) | nindent 8 }}
+{{- end }}
+{{- end }}
+{{- end }}
 {{- end }}
 {{- end }}
