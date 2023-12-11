@@ -45,13 +45,46 @@ data:
     redis:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-    {{- if or (eq .Values.faas.enabled true) (eq .Values.fission.enabled true) }}
+    {{- if .Values.faas.enabled }}
     faas:
       provider: {{ .Values.faas.provider }}
+      node_env_versions:
+      {{- range $version, $details := .Values.faas.environments.node }}
+        {{- if $details.enabled }}
+        - version: "{{ $version }}"
+          valid_until: "{{ $details.valid_until }}"
+          package_json:
+          {{- if $details.package_json }}
+            {{- toYaml $details.package_json | nindent 12 }}
+          {{- else }}
+            {{- ($.Files.Get (printf "files/node-v%s-package.yaml" $version) | trimSuffix "\n") | nindent 12 }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+      rego_env_versions:
+      {{- range $version, $details := .Values.faas.environments.rego }}
+        {{- if $details.enabled }}
+        - version: "{{ $version }}"
+          valid_until: "{{ $details.valid_until }}"
+          package_json: null
+        {{- end }}
+      {{- end }}
+    {{- if or (eq .Values.faas.provider "docker") (eq .Values.faas.provider "hybrid") }}
+    docker:
+      {{- if eq .Values.faas.provider "docker" }}
+      shared_node_url: {{ include "acp.sharedEnvironmentUrl" (dict "root" $ "environmentType" "node") }}
+      shared_rego_url: {{ include "acp.sharedEnvironmentUrl" (dict "root" $ "environmentType" "rego") }}
+      {{- else if eq .Values.faas.provider "hybrid" }}
+      node_url: {{ include "acp.sharedEnvironmentUrl" (dict "root" $ "environmentType" "node") }}
+      rego_url: {{ include "acp.sharedEnvironmentUrl" (dict "root" $ "environmentType" "rego") }}
+      {{- end }}
+    {{- end }}
     {{- if or (eq .Values.faas.provider "fission") (eq .Values.faas.provider "hybrid") }}
     fission:
-      function_settings:
-        idle_timeout: {{ .Values.fission.idleTimeout }}
+      namespace: {{ .Values.faas.namespace.name }}
+      envs_v2:
+        js: {{ include "acp.fissionEnvName" (dict "root" $ "environmentType" "node") }}
+        rego: {{ include "acp.fissionEnvName" (dict "root" $ "environmentType" "rego") }}
     {{- end }}
     {{- end }}
     {{- with .Values.features }}

@@ -1,0 +1,30 @@
+{{- if and .Values.faas.enabled .Values.faas.environments.autoscaling.keda.enabled (not .Values.faas.environments.autoscaling.hpa.enabled) (or (eq .Values.faas.provider "docker") (eq .Values.faas.provider "hybrid")) }}
+{{- range $envType, $envConfigs := .Values.faas.environments }}
+{{- if or (eq $envType "node") (eq $envType "rego") }}
+{{- range $version, $details := $envConfigs }}
+{{- if $details.enabled }}
+apiVersion: http.keda.sh/v1alpha1
+kind: HTTPScaledObject
+metadata:
+  name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-v{{ $version }}
+  namespace: {{ $.Values.faas.namespace.name }}
+  labels:
+    {{- include "acp.labels" $ | nindent 4 }}
+spec:
+  scaleTargetRef:
+    deployment: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-v{{ $version }}
+    service: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-v{{ $version }}
+    port: {{ $.Values.faas.environments.autoscaling.keda.port }}
+  replicas:
+    min: {{ $.Values.faas.environments.autoscaling.keda.minReplicas }}
+    max: {{ $.Values.faas.environments.autoscaling.keda.maxReplicas }}
+  targetPendingRequests: {{$.Values.faas.environments.autoscaling.keda.targetPendingRequests }}
+  hosts:
+    - {{ include "acp.fullname" $ }}-faas-{{ $envType }}-v{{ $version }}-proxy
+    - {{ include "acp.fullname" $ }}-faas-{{ $envType }}-v{{ $version }}-proxy.{{ $.Values.faas.namespace.name }}
+---
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
