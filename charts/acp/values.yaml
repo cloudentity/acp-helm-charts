@@ -621,7 +621,7 @@ faas:
 
   environments:
     node:
-      4:
+      v4:
         ## Enables environment
         ##
         enabled: false
@@ -638,7 +638,7 @@ faas:
         ##
         package_json: {}
 
-      5:
+      v5:
         ## Enables environment
         ##
         enabled: true
@@ -656,7 +656,7 @@ faas:
         package_json: {}
 
     rego:
-      5:
+      v5:
         ## Enables environment
         ##
         enabled: true

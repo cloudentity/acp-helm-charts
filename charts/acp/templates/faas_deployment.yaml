@@ -6,7 +6,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-v{{ $version }}
+  name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-{{ $version }}
   namespace: {{ $.Values.faas.namespace.name }}
   labels:
     {{- include "acp.labels" $ | nindent 4 }}
@@ -38,7 +38,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-      - name: {{ $envType }}-v{{ $version }}
+      - name: {{ $envType }}-{{ $version }}
         image: {{ $details.image }}
         imagePullPolicy: {{ default $.Values.faas.environments.settings.imagePullPolicy $details.imagePullPolicy }}
         ports:

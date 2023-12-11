@@ -6,7 +6,7 @@
 apiVersion: fission.io/v1
 kind: Environment
 metadata:
-  name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-v{{ $version }}
+  name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-{{ $version }}
   namespace: {{ $.Values.faas.namespace.name }}
   labels:
     {{- include "acp.labels" $ | nindent 4 }}
@@ -27,7 +27,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-        - name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-v{{ $version }}
+        - name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-{{ $version }}
           imagePullPolicy: {{ default $.Values.faas.environments.settings.imagePullPolicy $details.imagePullPolicy }}
           livenessProbe:
             {{- toYaml (default $.Values.faas.environments.settings.livenessProbe $details.livenessProbe) | nindent 12 }}
