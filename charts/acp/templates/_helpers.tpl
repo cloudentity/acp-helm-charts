@@ -67,7 +67,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}-workers
 {{- define "acp.faas.selectorLabels" -}}
 app.kubernetes.io/instance: {{ .Root.Release.Name }}-faas
 app.kubernetes.io/environment: {{ .Environment }}
-app.kubernetes.io/version: "{{ .Version }}"
+app.kubernetes.io/version: {{ .Version }}
 {{- end }}
 
 {{/*
@@ -167,7 +167,7 @@ Create shared URL for Node or Rego environment.
   {{- $proxySuffix := ternary "" "-proxy" (not $kedaEnabled) }}
 
   {{- /* Construct the full URL. */}}
-  {{-  "http://" }}{{ include "acp.fullname" $rootContext }}-faas-{{ $environmentType }}-v{{ $versionSuffix }}{{ $proxySuffix }}.{{ $rootContext.Values.faas.namespace.name }}:{{ $port }}
+  {{-  "http://" }}{{ include "acp.fullname" $rootContext }}-faas-{{ $environmentType }}-{{ $versionSuffix }}{{ $proxySuffix }}.{{ $rootContext.Values.faas.namespace.name }}:{{ $port }}
 {{- end }}
 
 {{/*
@@ -186,6 +186,6 @@ Create fission name for Node or Rego environment.
   {{- end }}
 
   {{- /* Construct the full URL. */}}
-  {{- include "acp.fullname" $rootContext }}-faas-{{ $environmentType }}-v{{ $envVersion }}
+  {{- include "acp.fullname" $rootContext }}-faas-{{ $environmentType }}-{{ $envVersion }}
 {{- end }}
 

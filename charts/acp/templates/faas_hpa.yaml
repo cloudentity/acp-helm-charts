@@ -6,7 +6,7 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-v{{ $version }}
+  name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-{{ $version }}
   namespace: {{ $.Values.faas.namespace.name }}
   labels:
     {{- include "acp.labels" $ | nindent 4 }}
@@ -14,7 +14,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-v{{ $version }}
+    name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-{{ $version }}
   minReplicas: {{ $.Values.faas.environments.autoscaling.hpa.minReplicas }}
   maxReplicas: {{ $.Values.faas.environments.autoscaling.hpa.maxReplicas }}
   metrics:
