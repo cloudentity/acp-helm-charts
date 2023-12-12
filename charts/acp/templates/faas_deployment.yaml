@@ -33,7 +33,7 @@ spec:
       serviceAccountName: {{ default (include "faas.serviceAccountName" $ ) $.Values.faas.serviceAccount.name }}
       securityContext:
         {{- toYaml $.Values.faas.environments.settings.podSecurityContext | nindent 8 }}
-      {{- with $.Values.faas.environments.settings.imagePullSecret }}
+      {{- with $.Values.faas.environments.settings.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
