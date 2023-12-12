@@ -159,7 +159,7 @@ Create shared URL for Node or Rego environment.
   {{- if eq $envCount 1 }}
     {{- $versionSuffix = $singleEnvVersion }}
   {{- else }}
-    {{- $versionSuffix = "{{envVersion}}" }}
+    {{- $versionSuffix = "v{{envVersion}}" }}
   {{- end }}
 
   {{- /* Determine the port and proxy suffix based on whether Keda is enabled. */}}
