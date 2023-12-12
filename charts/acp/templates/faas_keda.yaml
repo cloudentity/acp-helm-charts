@@ -14,7 +14,7 @@ spec:
   scaleTargetRef:
     deployment: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-{{ $version }}
     service: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-{{ $version }}
-    port: {{ $.Values.faas.environments.autoscaling.keda.port }}
+    port: {{ default $.Values.faas.environments.settings.ports.http (($details.ports).http) }}
   replicas:
     min: {{ $.Values.faas.environments.autoscaling.keda.minReplicas }}
     max: {{ $.Values.faas.environments.autoscaling.keda.maxReplicas }}
@@ -22,6 +22,16 @@ spec:
   hosts:
     - {{ include "acp.fullname" $ }}-faas-{{ $envType }}-{{ $version }}-proxy
     - {{ include "acp.fullname" $ }}-faas-{{ $envType }}-{{ $version }}-proxy.{{ $.Values.faas.namespace.name }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-{{ $version }}-proxy
+  labels:
+    {{- include "acp.labels" $ | nindent 4 }}
+spec:
+  type: ExternalName
+  externalName: {{ $.Values.faas.environments.autoscaling.keda.interceptor_dns }}
 ---
 {{- end }}
 {{- end }}
