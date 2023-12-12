@@ -23,6 +23,16 @@ spec:
     - {{ include "acp.fullname" $ }}-faas-{{ $envType }}-{{ $version }}-proxy
     - {{ include "acp.fullname" $ }}-faas-{{ $envType }}-{{ $version }}-proxy.{{ $.Values.faas.namespace.name }}
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "acp.fullname" $ }}-faas-{{ $envType }}-{{ $version }}-proxy
+  labels:
+    {{- include "acp.labels" $ | nindent 4 }}
+spec:
+  type: ExternalName
+  externalName: {{ $.Values.faas.environments.autoscaling.keda.interceptor_dns }}
+---
 {{- end }}
 {{- end }}
 {{- end }}
