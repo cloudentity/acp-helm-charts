@@ -7,7 +7,7 @@ on:
       node_v4:
         description: 'Update Node v4 (true/false)'
         required: true
-        default: 'false'
+        default: 'true'
       node_v5:
         description: 'Update Node v5 (true/false)'
         required: true
@@ -15,10 +15,11 @@ on:
       rego_v5:
         description: 'Update Rego v5 (true/false)'
         required: true
-        default: 'false'
+        default: 'true'
       tag:
         description: 'Image Tag'
         required: true
+        default: 'testing'
 
 jobs:
   update-faas-images:
