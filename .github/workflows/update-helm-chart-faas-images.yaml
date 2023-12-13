@@ -36,9 +36,12 @@ jobs:
             if [ "${{ github.event.inputs[env] }}" = "true" ]; then
               version=${env##*_}
               component=${env%%_*}
+              echo $version
+              echo $component
               yq e -i ".faas.environments.$component.$version.image = \"${component}-env:v${version}-${{ github.event.inputs.tag }}\"" charts/acp/values.yaml
             fi
           done
+          yq --version
           cat charts/acp/values.yaml
           #      - name: Create Pull Request
           #        uses: peter-evans/create-pull-request@v5
