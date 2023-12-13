@@ -1,0 +1,49 @@
+name: Update FaaS Images
+
+on:
+  workflow_dispatch:
+    inputs:
+      node_v4:
+        description: 'Update Node v4 (true/false)'
+        required: true
+        default: 'false'
+      node_v5:
+        description: 'Update Node v5 (true/false)'
+        required: true
+        default: 'false'
+      rego_v5:
+        description: 'Update Rego v5 (true/false)'
+        required: true
+        default: 'false'
+      tag:
+        description: 'Image Tag'
+        required: true
+
+jobs:
+  update-faas-images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.CLOUDENTITY_CI_TOKEN }}
+      - name: Update Helm Values File
+        run: |
+          environments=("node_v4" "node_v5" "rego_v5")
+          for env in "${environments[@]}"; do
+            if [ "${{ github.event.inputs[env] }}" = "true" ]; then
+              version=${env##*_}
+              component=${env%%_*}
+              yq e -i ".faas.environments.$component.$version.image = \"${component}-env:v${version}-${{ github.event.inputs.tag }}\"" charts/acp/values.yaml
+            fi
+          done
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.CLOUDENTITY_CI_TOKEN }}
+          branch: "feature/update-faas-images"
+          delete-branch: ttru
+          title: "Update FaaS images"
+          body-path: .github/HELM_VALUE_UPDATE_PULL_REQUEST_TEMPLATE.md
+          labels: "auto-upgrade"
+          team-reviewers: cloudentity/devops
