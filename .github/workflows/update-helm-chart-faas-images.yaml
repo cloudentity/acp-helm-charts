@@ -1,6 +1,7 @@
 name: Update FaaS Images
 
 on:
+  pull_request:
   workflow_dispatch:
     inputs:
       node_v4:
@@ -37,13 +38,14 @@ jobs:
               yq e -i ".faas.environments.$component.$version.image = \"${component}-env:v${version}-${{ github.event.inputs.tag }}\"" charts/acp/values.yaml
             fi
           done
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.CLOUDENTITY_CI_TOKEN }}
-          branch: "feature/update-faas-images"
-          delete-branch: ttru
-          title: "Update FaaS images"
-          body-path: .github/HELM_VALUE_UPDATE_PULL_REQUEST_TEMPLATE.md
-          labels: "auto-upgrade"
-          team-reviewers: cloudentity/devops
+          cat charts/acp/values.yaml
+          #      - name: Create Pull Request
+          #        uses: peter-evans/create-pull-request@v5
+          #        with:
+          #          token: ${{ secrets.CLOUDENTITY_CI_TOKEN }}
+          #          branch: "feature/update-faas-images"
+          #          delete-branch: ttru
+          #          title: "Update FaaS images"
+          #          body-path: .github/HELM_VALUE_UPDATE_PULL_REQUEST_TEMPLATE.md
+          #          labels: "auto-upgrade"
+          #          team-reviewers: cloudentity/devops
