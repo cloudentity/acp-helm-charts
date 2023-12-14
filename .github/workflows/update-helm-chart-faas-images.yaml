@@ -37,17 +37,15 @@ jobs:
       - name: Update Helm Values File
         shell: bash
         run: |
-          environments=("NODE_V4" "NODE_V5" "REGO_v5")
+          environments=("NODE_V4" "NODE_V5" "REGO_V5")
           for env in "${environments[@]}"; do
-          echo "env: $env"
             update=$(eval echo "\$$(echo ${env^^})")
-            echo "update: $update"
             if [ "$update" = "true" ]; then
               version=${env##*_}
               component=${env%%_*}
               echo "version: $version"
               echo "component: $component"
-              yq e -i ".faas.environments.$component.$version.image = \"${component}-env:v${version}-$TAG\"" charts/acp/values.yaml
+              yq e -i ".faas.environments.${component,,}.${version,,}.image = \"docker.cloudentity.io/${component,,}-env:${version,,}-$TAG\"" charts/acp/values.yaml
             fi
           done
           cat charts/acp/values.yaml
