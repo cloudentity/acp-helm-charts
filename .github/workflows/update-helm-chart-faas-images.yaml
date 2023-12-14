@@ -48,18 +48,19 @@ jobs:
               image=docker.cloudentity.io/${component,,}-env:${version,,}-$TAG
               yq e -i ".faas.environments.${component,,}.${version,,}.image = \"${image}\"" charts/acp/values.yaml
               if [ "$component" = "NODE" ]; then
-                docker run ${image} cat package.json | yq --prettyPrint --output-format yaml '(pick(["engines", "dependencies"]))' > charts/acp/files/${component}_${version}.test
+                docker run ${image} cat package.json | yq --prettyPrint --output-format yaml '(pick(["engines", "dependencies"]))' > charts/acp/files/${component,,}-${version,,}-package.yaml
               fi
             fi
           done
-          cat charts/acp/files/*.test
-          #      - name: Create Pull Request
-          #        uses: peter-evans/create-pull-request@v5
-          #        with:
-          #          token: ${{ secrets.CLOUDENTITY_CI_TOKEN }}
-          #          branch: "feature/update-faas-images"
-          #          delete-branch: ttru
-          #          title: "Update FaaS images"
-          #          body-path: .github/HELM_VALUE_UPDATE_PULL_REQUEST_TEMPLATE.md
-          #          labels: "auto-upgrade"
-          #          team-reviewers: cloudentity/devops
+          ls -la charts/acp/files/node*
+          cat charts/acp/files/node*
+          #- name: Create Pull Request
+          #  uses: peter-evans/create-pull-request@v5
+          #  with:
+          #    token: ${{ secrets.CLOUDENTITY_CI_TOKEN }}
+          #    branch: "feature/update-faas-images"
+          #    delete-branch: ttru
+          #    title: "Update FaaS images"
+          #    body-path: .github/HELM_VALUE_UPDATE_PULL_REQUEST_TEMPLATE.md
+          #    labels: "auto-upgrade"
+          #    team-reviewers: cloudentity/devops
