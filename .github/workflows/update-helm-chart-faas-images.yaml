@@ -34,7 +34,7 @@ jobs:
           echo "NODE_V5=${{ github.event.inputs.node_v5 }}" >> $GITHUB_ENV
           echo "REGO_V5=${{ github.event.inputs.rego_v5 }}" >> $GITHUB_ENV
           echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
-      - name: example.com docker registry login
+      - name: Docker Registry Login
         run: echo "${{ secrets.PUBLIC_DOCKER_CLOUDENTITY_REPO_DEV_PASSWORD }}" | docker login docker.cloudentity.io -u "${{ secrets.PUBLIC_DOCKER_CLOUDENTITY_REPO_DEV_USERNAME }}" --password-stdin
       - name: Update Helm Values File
         shell: bash
@@ -47,7 +47,9 @@ jobs:
               component=${env%%_*}
               image=docker.cloudentity.io/${component,,}-env:${version,,}-$TAG
               yq e -i ".faas.environments.${component,,}.${version,,}.image = \"${image}\"" charts/acp/values.yaml
-              docker run --rm ${image} cat package.json
+              if [ "$component" = "NODE" ]; then
+                docker run ${image} cat package.json
+              fi
             fi
           done
           #      - name: Create Pull Request
