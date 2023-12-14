@@ -46,7 +46,7 @@ jobs:
               image=docker.cloudentity.io/${component,,}-env:${version,,}-$TAG
               yq e -i ".faas.environments.${component,,}.${version,,}.image = \"${image}\"" charts/acp/values.yaml
               cat charts/acp/values.yaml
-              docker run -it --rm ${image} cat package.json
+              docker run --rm ${image} cat package.json
             fi
           done
           #      - name: Create Pull Request
