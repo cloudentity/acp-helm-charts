@@ -39,17 +39,16 @@ jobs:
         run: |
           environments=("NODE_V4" "NODE_V5" "REGO_V5")
           for env in "${environments[@]}"; do
-            update=$(eval echo "\$$(echo ${env^^})")
+            update=$(eval echo "\$$env")
             if [ "$update" = "true" ]; then
               version=${env##*_}
               component=${env%%_*}
-              echo "version: $version"
-              echo "component: $component"
-              yq e -i ".faas.environments.${component,,}.${version,,}.image = \"docker.cloudentity.io/${component,,}-env:${version,,}-$TAG\"" charts/acp/values.yaml
+              image=docker.cloudentity.io/${component,,}-env:${version,,}-$TAG
+              yq e -i ".faas.environments.${component,,}.${version,,}.image = ${image}" charts/acp/values.yaml
+              cat charts/acp/values.yaml
+              docker run -it --rm $image cat package.json
             fi
           done
-          cat charts/acp/values.yaml
-
           #      - name: Create Pull Request
           #        uses: peter-evans/create-pull-request@v5
           #        with:
