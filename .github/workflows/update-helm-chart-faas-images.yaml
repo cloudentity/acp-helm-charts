@@ -30,18 +30,20 @@ jobs:
         with:
           token: ${{ secrets.CLOUDENTITY_CI_TOKEN }}
       - name: Update Helm Values File
+        shell: bash
         run: |
           environments=("node_v4" "node_v5" "rego_v5")
           for env in "${environments[@]}"; do
+            echo ${env}
             if [ "${{ github.event.inputs[env] }}" = "true" ]; then
               version=${env##*_}
               component=${env%%_*}
-              echo $version
-              echo $component
+              echo ${version}
+              echo ${component}
               yq e -i ".faas.environments.$component.$version.image = \"${component}-env:v${version}-${{ github.event.inputs.tag }}\"" charts/acp/values.yaml
+              echo "yq e -i \".faas.environments.$component.$version.image = \"${component}-env:v${version}-${{ github.event.inputs.tag }}\"\"" charts/acp/values.yaml
             fi
           done
-          yq --version
           cat charts/acp/values.yaml
           #      - name: Create Pull Request
           #        uses: peter-evans/create-pull-request@v5
