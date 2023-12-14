@@ -39,8 +39,6 @@ jobs:
       - name: Update Helm Values File
         shell: bash
         run: |
-          yq --help
-          yq --version
           exit 0
           environments=("NODE_V4" "NODE_V5" "REGO_V5")
           for env in "${environments[@]}"; do
@@ -51,7 +49,7 @@ jobs:
               image=docker.cloudentity.io/${component,,}-env:${version,,}-$TAG
               yq e -i ".faas.environments.${component,,}.${version,,}.image = \"${image}\"" charts/acp/values.yaml
               if [ "$component" = "NODE" ]; then
-                docker run ${image} cat package.json | yq -y '{engines: .engines, dependencies: .dependencies}' > charts/acp/files/${component}_${version}.test
+                docker run ${image} cat package.json | yq --prettyPrint --output-format yaml '(pick(["engines", "dependencies"]))' > charts/acp/files/${component}_${version}.test
               fi
             fi
           done
