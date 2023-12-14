@@ -52,15 +52,13 @@ jobs:
               fi
             fi
           done
-          ls -la charts/acp/files/node*
-          cat charts/acp/files/node*
-          #- name: Create Pull Request
-          #  uses: peter-evans/create-pull-request@v5
-          #  with:
-          #    token: ${{ secrets.CLOUDENTITY_CI_TOKEN }}
-          #    branch: "feature/update-faas-images"
-          #    delete-branch: ttru
-          #    title: "Update FaaS images"
-          #    body-path: .github/HELM_VALUE_UPDATE_PULL_REQUEST_TEMPLATE.md
-          #    labels: "auto-upgrade"
-          #    team-reviewers: cloudentity/devops
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.CLOUDENTITY_CI_TOKEN }}
+          branch: "feature/update-faas-images"
+          delete-branch: true
+          title: "Update FaaS images"
+          body-path: .github/HELM_VALUE_UPDATE_PULL_REQUEST_TEMPLATE.md
+          labels: "auto-upgrade"
+            #team-reviewers: cloudentity/devops
