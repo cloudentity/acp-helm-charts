@@ -36,7 +36,6 @@ jobs:
           environments=("node_v4" "node_v5" "rego_v5")
           for env in "${environments[@]}"; do
             echo ${env}
-            echo ${{ github.event.inputs.[env] }}
             echo ${{ github.event.inputs[env] }}
             echo ${{ github.event.inputs[${env}] }}
             if [ "${{ github.event.inputs[env] }}" = "true" ]; then
