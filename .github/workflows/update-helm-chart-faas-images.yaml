@@ -32,16 +32,20 @@ jobs:
       - name: Update Helm Values File
         shell: bash
         run: |
+          echo ${{ github.event.inputs.node_v4 }}
           environments=("node_v4" "node_v5" "rego_v5")
           for env in "${environments[@]}"; do
             echo ${env}
+            echo ${{ github.event.inputs.${env} }}
+            echo ${{ github.event.inputs.[${env}] }}
             if [ "${{ github.event.inputs[env] }}" = "true" ]; then
               version=${env##*_}
               component=${env%%_*}
               echo ${version}
               echo ${component}
               yq e -i ".faas.environments.$component.$version.image = \"${component}-env:v${version}-${{ github.event.inputs.tag }}\"" charts/acp/values.yaml
-              echo "yq e -i \".faas.environments.$component.$version.image = \"${component}-env:v${version}-${{ github.event.inputs.tag }}\"\"" charts/acp/values.yaml
+              echo "yq e -i \".faas.environments.$component.$version.image = \"${component}-env:v${version}-${{ github.event.inputs.tag }}\"\""
+              echo "qq"
             fi
           done
           cat charts/acp/values.yaml
