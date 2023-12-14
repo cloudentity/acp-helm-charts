@@ -37,7 +37,6 @@ jobs:
           for env in "${environments[@]}"; do
             echo ${env}
             echo ${{ github.event.inputs[env] }}
-            echo ${{ github.event.inputs[${env}] }}
             if [ "${{ github.event.inputs[env] }}" = "true" ]; then
               version=${env##*_}
               component=${env%%_*}
