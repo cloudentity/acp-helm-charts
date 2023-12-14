@@ -2,7 +2,6 @@ name: Update FaaS Images
 
 on:
   pull_request:
-  workflow_dispatch:
     inputs:
       node_v4:
         description: 'Update Node v4 (true/false)'
@@ -20,6 +19,7 @@ on:
         description: 'Image Tag'
         required: true
         default: 'testing'
+  workflow_dispatch:
 
 jobs:
   update-faas-images:
