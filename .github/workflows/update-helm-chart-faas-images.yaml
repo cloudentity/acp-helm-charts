@@ -34,6 +34,8 @@ jobs:
           echo "NODE_V5=${{ github.event.inputs.node_v5 }}" >> $GITHUB_ENV
           echo "REGO_V5=${{ github.event.inputs.rego_v5 }}" >> $GITHUB_ENV
           echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
+      - name: example.com docker registry login
+        run: echo "${{ secrets.DOCKER_CLOUDENTITY_REPO_PASSWORD }}" | docker login docker.cloudentity.io -u "${{ secrets.DOCKER_CLOUDENTITY_REPO_USERNAME }}" --password-stdin
       - name: Update Helm Values File
         shell: bash
         run: |
@@ -45,7 +47,6 @@ jobs:
               component=${env%%_*}
               image=docker.cloudentity.io/${component,,}-env:${version,,}-$TAG
               yq e -i ".faas.environments.${component,,}.${version,,}.image = \"${image}\"" charts/acp/values.yaml
-              cat charts/acp/values.yaml
               docker run --rm ${image} cat package.json
             fi
           done
