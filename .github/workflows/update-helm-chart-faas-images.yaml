@@ -33,6 +33,9 @@ jobs:
         shell: bash
         run: |
           echo ${{ github.event.inputs.node_v4 }}
+          echo $GITHUB_ENV
+          echo "env:"
+          env
           environments=("node_v4" "node_v5" "rego_v5")
           for env in "${environments[@]}"; do
             echo ${env}
