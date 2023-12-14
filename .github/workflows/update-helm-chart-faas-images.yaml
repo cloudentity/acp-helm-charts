@@ -35,18 +35,20 @@ jobs:
           echo "NODE_V5=${{ github.event.inputs.node_v5 }}" >> $GITHUB_ENV
           echo "REGO_V5=${{ github.event.inputs.rego_v5 }}" >> $GITHUB_ENV
           echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
+          env
       - name: Update Helm Values File
         shell: bash
         run: |
-          environments=("node_v4" "node_v5" "rego_v5")
+          environments=("NODE_V4" "NODE_V5" "REGO_v5")
           for env in "${environments[@]}"; do
+          echo "env: $env"
             update=$(eval echo "\$$(echo ${env^^})")
-            echo $update
+            echo "update: $update"
             if [ "$update" = "true" ]; then
               version=${env##*_}
               component=${env%%_*}
-              echo ${version}
-              echo ${component}
+              echo "version: $version"
+              echo "component: $component"
               yq e -i ".faas.environments.$component.$version.image = \"${component}-env:v${version}-$TAG\"" values.yaml
             fi
           done
