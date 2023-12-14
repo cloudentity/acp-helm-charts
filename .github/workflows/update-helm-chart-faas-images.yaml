@@ -43,9 +43,9 @@ jobs:
             if [ "$update" = "true" ]; then
               version=${env##*_}
               component=${env%%_*}
-              image="docker.cloudentity.io/${component,,}-env:${version,,}-$TAG"
+              image=docker.cloudentity.io/${component,,}-env:${version,,}-$TAG
               echo $image
-              yq e -i ".faas.environments.${component,,}.${version,,}.image = ${image}" charts/acp/values.yaml
+              yq e -i ".faas.environments.${component,,}.${version,,}.image = \"${image\"}" charts/acp/values.yaml
               cat charts/acp/values.yaml
               docker run -it --rm ${image} cat package.json
             fi
