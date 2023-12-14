@@ -39,7 +39,6 @@ jobs:
       - name: Update Helm Values File
         shell: bash
         run: |
-          exit 0
           environments=("NODE_V4" "NODE_V5" "REGO_V5")
           for env in "${environments[@]}"; do
             update=$(eval echo "\$$env")
