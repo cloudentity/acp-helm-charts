@@ -36,6 +36,9 @@ jobs:
           echo "REGO_V5=${{ github.event.inputs.rego_v5 }}" >> $GITHUB_ENV
           echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
           env
+      - name: Output Inputs
+        run: echo "${{ toJSON(github.event.inputs) }}"
+      - uses: LedgerHQ/actions/gh-context@main
       - name: Update Helm Values File
         shell: bash
         run: |
