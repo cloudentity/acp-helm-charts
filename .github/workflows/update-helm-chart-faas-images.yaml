@@ -54,6 +54,7 @@ jobs:
               fi
             fi
           done
+          cat charts/acp/values.yaml
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
