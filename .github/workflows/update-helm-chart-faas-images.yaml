@@ -48,10 +48,11 @@ jobs:
               image=docker.cloudentity.io/${component,,}-env:${version,,}-$TAG
               yq e -i ".faas.environments.${component,,}.${version,,}.image = \"${image}\"" charts/acp/values.yaml
               if [ "$component" = "NODE" ]; then
-                docker run ${image} cat package.json
+                docker run ${image} cat package.json | yq -y '{engines: .engines, dependencies: .dependencies}' > charts/acp/files/${component}_${version}.test
               fi
             fi
           done
+          cat charts/acp/files/*.test
           #      - name: Create Pull Request
           #        uses: peter-evans/create-pull-request@v5
           #        with:
