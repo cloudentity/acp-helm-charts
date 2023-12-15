@@ -47,12 +47,12 @@ jobs:
               component=${env%%_*}
               image=docker.cloudentity.io/${component,,}-env:${version,,}-$TAG
               yq ".faas.environments.${component,,}.${version,,}.image = \"${image}\"" charts/acp/values.yaml > values.updated
-              cat values.updated
-              yq "." charts/acp/values.yaml | diff -B - values.updated > values.noblanks
-              echo "test"
-              patch charts/acp/values.yaml values.noblanks
-              echo "test"
+              yq "." charts/acp/values.yaml > values.noblanks
+              diff -B values.noblanks values.updated > diff.patch
+              patch charts/acp/values.yaml diff.patch
+              git diff
               rm values.updated values.noblanks
+              exit 0
               if [ "$component" = "NODE" ]; then
                 docker run ${image} cat package.json | yq --prettyPrint --output-format yaml '(pick(["engines", "dependencies"]))' > charts/acp/files/${component,,}-${version,,}-package.yaml
               fi
