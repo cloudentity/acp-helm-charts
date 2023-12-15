@@ -676,7 +676,6 @@ faas:
       ##
       replicaCount: 3
 
-
       ## Annotations to add to the Environment deployment
       ##
       # annotations: {}
@@ -766,19 +765,19 @@ faas:
       ## Pod resources definition
       ##
       # resources: {}
-      
+
       ## Pod node selector
       ##
       # nodeSelector: {}
-      
+
       ## Pod affinity
       ##
       # affinity: {}
-      
+
       ## Pod tolerations
       ##
       # tolerations: {}
-      
+
       ## Pod topology spread constraints
       ##
       # topologySpreadConstraints: {}
