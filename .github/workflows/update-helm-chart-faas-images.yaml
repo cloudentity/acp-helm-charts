@@ -47,10 +47,15 @@ jobs:
               component=${env%%_*}
               image=docker.cloudentity.io/${component,,}-env:${version,,}-$TAG
               yq ".faas.environments.${component,,}.${version,,}.image = \"${image}\"" charts/acp/values.yaml > values.updated
+              echo "test1"
               yq "." charts/acp/values.yaml > values.noblanks
+              echo "test2"
               diff -B values.noblanks values.updated > diff.patch
+              echo "test3"
               patch charts/acp/values.yaml diff.patch
+              echo "test4"
               git diff
+              echo "test5"
               rm values.updated values.noblanks
               exit 0
               if [ "$component" = "NODE" ]; then
