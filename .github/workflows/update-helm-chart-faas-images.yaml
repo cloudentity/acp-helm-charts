@@ -49,19 +49,18 @@ jobs:
               yq ".faas.environments.${component,,}.${version,,}.image = \"${image}\"" charts/acp/values.yaml > values.updated
               yq "." values.yaml | diff -B - values.updated | patch values.yaml - || true
               rm values.updated
-              exit 0
               if [ "$component" = "NODE" ]; then
                 docker run ${image} cat package.json | yq --prettyPrint --output-format yaml '(pick(["engines", "dependencies"]))' > charts/acp/files/${component,,}-${version,,}-package.yaml
               fi
             fi
           done
-          #- name: Create Pull Request
-          #  uses: peter-evans/create-pull-request@v5
-          #  with:
-          #    token: ${{ secrets.CLOUDENTITY_CI_TOKEN }}
-          #    branch: "feature/update-faas-images"
-          #    delete-branch: true
-          #    title: "Update FaaS images"
-          #    body-path: .github/HELM_VALUE_UPDATE_PULL_REQUEST_TEMPLATE.md
-          #    labels: "auto-upgrade"
-          #    team-reviewers: cloudentity/devops
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.CLOUDENTITY_CI_TOKEN }}
+          branch: "feature/update-faas-images"
+          delete-branch: true
+          title: "Update FaaS images"
+          body-path: .github/HELM_VALUE_UPDATE_PULL_REQUEST_TEMPLATE.md
+          labels: "auto-upgrade"
+          team-reviewers: cloudentity/devops
