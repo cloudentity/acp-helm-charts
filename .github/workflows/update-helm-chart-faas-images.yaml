@@ -46,8 +46,7 @@ jobs:
               version=${env##*_}
               component=${env%%_*}
               image=docker.cloudentity.io/${component,,}-env:${version,,}-$TAG
-              yq --version
-              yq e ".faas.environments.${component,,}.${version,,}.image = \"${image}\"" charts/acp/values.yaml > values.updated
+              yq e ".faas.environments.${component,,}.${version,,}.image = \"${image}\"" charts/acp/values.yaml
               yq e "." charts/acp/values.yaml | diff -B - values.updated > values.noblanks
               echo "test"
               patch charts/acp/values.yaml values.noblanks
