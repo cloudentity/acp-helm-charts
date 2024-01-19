@@ -33,19 +33,14 @@ jobs:
         run: |
           diff -U0 -w -b --ignore-blank-lines charts/${{ inputs.chart }}/values.yaml charts/${{ inputs.chart }}/values-updated.yaml > charts/${{ inputs.chart }}/values.yaml.diff || true
           patch charts/${{ inputs.chart }}/values.yaml < charts/${{ inputs.chart }}/values.yaml.diff
-      - name: Commit and push changes
-        uses: EndBug/add-and-commit@v9.1.3
-        with:
-          add: "charts/${{ inputs.chart }}/values.yaml"
-          fetch: true
-          new_branch: "feature/update-${{ inputs.chart }}-${{ inputs.key }}"
       - name: Create Pull Request
-        id: pr
-        uses: devops-infra/action-pull-request@v0.5.5
+        uses: peter-evans/create-pull-request@v5
         with:
-          github_token: ${{ secrets.CLOUDENTITY_CI_TOKEN }}
-          target_branch: master
+          token: ${{ secrets.CLOUDENTITY_CI_TOKEN }}
+          branch: "feature/update-${{ inputs.chart }}-${{ inputs.key }}"
+          add-paths: "charts/${{ inputs.chart }}/values.yaml"
+          delete-branch: true
           title: "[${{ inputs.chart }}] Update default value of ${{ inputs.key }}"
-          template: .github/HELM_VALUE_UPDATE_PULL_REQUEST_TEMPLATE.md
-          label: "auto-upgrade"
-          reviewer: cloudentity/devops
+          body-path: .github/HELM_VALUE_UPDATE_PULL_REQUEST_TEMPLATE.md
+          labels: "auto-upgrade"
+          team-reviewers: cloudentity/devops
