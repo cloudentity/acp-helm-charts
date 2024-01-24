@@ -60,6 +60,7 @@ jobs:
           branch: "feature/update-faas-images"
           delete-branch: true
           title: "Update FaaS images"
+          commit-message: "Update FaaS images"
           body-path: .github/HELM_VALUE_UPDATE_PULL_REQUEST_TEMPLATE.md
           labels: "auto-upgrade"
           team-reviewers: cloudentity/devops
