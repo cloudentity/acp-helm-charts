@@ -41,6 +41,7 @@ jobs:
           add-paths: "charts/${{ inputs.chart }}/values.yaml"
           delete-branch: true
           title: "[${{ inputs.chart }}] Update default value of ${{ inputs.key }}"
+          commit-message: "Update default values"
           body-path: .github/HELM_VALUE_UPDATE_PULL_REQUEST_TEMPLATE.md
           labels: "auto-upgrade"
           team-reviewers: cloudentity/devops
