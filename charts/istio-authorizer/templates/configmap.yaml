@@ -41,6 +41,7 @@ data:
           original_token: {{ .tokenExchange.inject.headers.originalToken }}
           exchanged_token: {{ .tokenExchange.inject.headers.exchangedToken }}
           strip_bearer: {{ .tokenExchange.inject.headers.stripBearer }}
+      request_scopes: {{ .tokenExchange.requestScopes }}
     {{- end }}
   extraconfig.yaml: |
     {{- with .Values.extraConfig }}
