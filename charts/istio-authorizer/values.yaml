@@ -262,6 +262,10 @@ tokenExchange:
       ##
       stripBearer: false
 
+  # Describes what scopes should be requested for a new token
+  # One of: client | original_token
+  requestScopes: "original_token"
+
 ## ACP http client configuration
 ##
 # httpClient:
