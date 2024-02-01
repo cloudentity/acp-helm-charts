@@ -1,8 +1,8 @@
-name: release branch helm charts
+name: release branch
 
 on:
   repository_dispatch:
-    types: [release-branch-helm-charts]
+    types: [release-branch]
 
 env:
   ACP_VERSION: ${{ github.event.client_payload.acp_version }}
