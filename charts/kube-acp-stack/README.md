@@ -1,5 +1,8 @@
 # kube-acp-stack
 
+> [!IMPORTANT]
+> Please note that this repository is deprecated. It will continue to receive version updates for internal purposes only. For deploying the ACP stack, we strongly recommend using [Cloudentity's ACP on Kubernetes](https://github.com/cloudentity/acp-on-k8s).
+
 Installs the [acp](https://github.com/cloudentity/acp-helm-charts/tree/master/charts/acp), a collection of Kubernetes manifests, [CockroachDB](https://www.cockroachlabs.com/) open source, cloud-native distributed SQL database, and [Redis](https://redis.io/) in-memory data grid combined with documentation and scripts to provide easy to operate end-to-end Authorization Control Plane cluster.
 
 See the [acp](https://github.com/cloudentity/acp-helm-charts/tree/master/charts/acp) README for details about components, capabilities of OAuth/OIDC server with an advanced authorization, consent management, and developer enablement.
