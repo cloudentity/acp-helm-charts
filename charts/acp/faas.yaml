@@ -1,0 +1,12 @@
+faas:
+  enabled: true
+  environments:
+    node:
+      v5:
+        env:
+          - name: HOST_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+          - name: REGO_TRACE_EXPORTER_URL
+            value: $$(HOST_IP):4318/v1/traces
