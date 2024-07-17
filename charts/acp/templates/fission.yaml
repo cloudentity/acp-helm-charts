@@ -45,6 +45,10 @@ spec:
             {{- toYaml (default $.Values.faas.environments.settings.lifecycle $details.lifecycle) | nindent 12 }}
           resources:
             {{- toYaml (default $.Values.faas.environments.settings.resources $details.resources) | nindent 12 }}
+          volumeMounts:
+            {{- toYaml (default $.Values.faas.environments.settings.volumeMounts $details.volumeMounts) | nindent 12 }}
+      volumes:
+        {{- toYaml (default $.Values.faas.environments.settings.volumes $details.volumes) | nindent 8 }}
       securityContext:
         {{- toYaml $.Values.faas.environments.settings.podSecurityContext | nindent 8 }}
       nodeSelector:

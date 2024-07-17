@@ -63,6 +63,10 @@ spec:
           {{- toYaml $actualEnv | nindent 10 }}
         lifecycle:
           {{- toYaml (default $.Values.faas.environments.settings.lifecycle $details.lifecycle) | nindent 10 }}
+        volumeMounts:
+          {{- toYaml (default $.Values.faas.environments.settings.volumeMounts $details.volumeMounts) | nindent 10 }}
+      volumes:
+        {{- toYaml (default $.Values.faas.environments.settings.volumes $details.volumes) | nindent 8 }}
       nodeSelector:
         {{- toYaml (default $.Values.faas.environments.settings.nodeSelector $details.nodeSelector) | nindent 8 }}
       affinity:

@@ -628,7 +628,7 @@ faas:
 
         ## Environment image
         ##
-        image: docker.cloudentity.io/node-env:v4-20231201-110927-d511a9a7
+        image: docker.cloudentity.io/node-env:v4-20240613-085335-5267d099
 
         ## Environment expiration date
         ##
@@ -645,7 +645,24 @@ faas:
 
         ## Environment image
         ##
-        image: docker.cloudentity.io/node-env:v5-20231201-110927-d511a9a7
+        image: docker.cloudentity.io/node-env:v5-20240607-143144-b240b824
+
+        ## Environment expiration date
+        ##
+        valid_until: ""
+
+        ## Environment packages
+        ##
+        package_json: {}
+
+      v6:
+        ## Enables environment
+        ##
+        enabled: false
+
+        ## Environment image
+        ##
+        image: docker.cloudentity.io/node-env:v6-20240716-173159-7af79717
 
         ## Environment expiration date
         ##
@@ -656,14 +673,14 @@ faas:
         package_json: {}
 
     rego:
-      v5:
+      v6:
         ## Enables environment
         ##
         enabled: true
 
         ## Environment image
         ##
-        image: docker.cloudentity.io/rego-env:v5-20231201-110927-d511a9a7
+        image: docker.cloudentity.io/rego-env:v6-20240716-173159-7af79717
 
         ## Environment expiration date
         ##
@@ -692,7 +709,15 @@ faas:
       ## Array with environment variables to add to the container
       ##
       # env: []
-      
+
+      ## Array with volumes to add to the pod
+      ##
+      # volumes: []
+
+      ## Array with volumeMounts to add to the container
+      ##
+      # volumeMounts: []
+
       ## Array with ports to add to the container
       ##
       ports:
