@@ -18,7 +18,9 @@ spec:
   replicas:
     min: {{ $.Values.faas.environments.autoscaling.keda.minReplicas }}
     max: {{ $.Values.faas.environments.autoscaling.keda.maxReplicas }}
-  targetPendingRequests: {{$.Values.faas.environments.autoscaling.keda.targetPendingRequests }}
+  scalingMetric:
+    concurrency:
+      targetValue: {{$.Values.faas.environments.autoscaling.keda.targetPendingRequests }}
   hosts:
     - {{ include "acp.fullname" $ }}-faas-{{ $envType }}-{{ $version }}-proxy
     - {{ include "acp.fullname" $ }}-faas-{{ $envType }}-{{ $version }}-proxy.{{ $.Values.faas.namespace.name }}
