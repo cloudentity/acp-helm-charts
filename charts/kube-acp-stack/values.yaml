@@ -50,7 +50,7 @@ redis-cluster:
         name: redismodules
 timescaledb-single:
   image:
-    tag: pg16.5-ts2.17.2
+    tag: pg16-ts2.15
   enabled: true
   fullnameOverride: timescaledb
   secrets:
