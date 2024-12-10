@@ -49,6 +49,8 @@ redis-cluster:
       - mountPath: /redismodules
         name: redismodules
 timescaledb-single:
+  image:
+    tag: pg16.5-ts2.17.2
   enabled: true
   fullnameOverride: timescaledb
   secrets:
