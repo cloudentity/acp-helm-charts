@@ -11,7 +11,7 @@ on:
         description: 'Update Node v5 (true/false)'
         required: true
         default: 'false'
-      node_v5:
+      node_v6:
         description: 'Update Node v6 (true/false)'
         required: true
         default: 'false'
