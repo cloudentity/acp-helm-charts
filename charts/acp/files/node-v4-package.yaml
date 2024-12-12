@@ -2,15 +2,15 @@ engines:
   node: v16
 dependencies:
   async: 3.2.3
+  async-lock: 1.4.0
   aws-sdk: 2.1404.0
   axios: 0.25.0
   axios-retry: 3.8.0
-  async-lock: 1.4.0
   body-parser: 1.19.2
   chalk: 5.0.0
   co: 4.6.0
   debug: 4.3.3
-  express: 4.17.3
+  express: 4.19.2
   express-timeout-handler: ^2.2.2
   graphql: 16.8.1
   immutable: 4.0.0
@@ -37,5 +37,5 @@ dependencies:
   underscore: 1.13.2
   uuid: 8.3.2
   validator: 13.7.0
-  ws: 8.5.0
+  ws: 8.18.0
   xml2js: 0.5.0
