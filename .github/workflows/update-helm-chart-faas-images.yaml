@@ -29,8 +29,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.CLOUDENTITY_CI_TOKEN }}
       - name: Set Environment Variables
         run: |
           echo "NODE_V4=${{ github.event.inputs.node_v4 }}" >> $GITHUB_ENV
@@ -61,7 +59,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.CLOUDENTITY_CI_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           branch: "feature/update-faas-images"
           delete-branch: true
           title: "Update FaaS images"
