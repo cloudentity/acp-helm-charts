@@ -59,7 +59,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.CLOUDENTITY_CI_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           branch: "feature/update-faas-images"
           delete-branch: true
           title: "Update FaaS images"
