@@ -628,7 +628,7 @@ faas:
 
         ## Environment image
         ##
-        image: docker.cloudentity.io/node-env:v4-20240613-085335-5267d099
+        image: docker.cloudentity.io/node-env:v4-20241212-064355-0d923fba
 
         ## Environment expiration date
         ##
@@ -645,7 +645,7 @@ faas:
 
         ## Environment image
         ##
-        image: docker.cloudentity.io/node-env:v5-20240607-143144-b240b824
+        image: docker.cloudentity.io/node-env:v5-20241212-064355-0d923fba
 
         ## Environment expiration date
         ##
@@ -662,7 +662,7 @@ faas:
 
         ## Environment image
         ##
-        image: docker.cloudentity.io/node-env:v6-20240716-173159-7af79717
+        image: docker.cloudentity.io/node-env:v6-20241212-064355-0d923fba
 
         ## Environment expiration date
         ##
@@ -680,7 +680,7 @@ faas:
 
         ## Environment image
         ##
-        image: docker.cloudentity.io/rego-env:v6-20240716-173159-7af79717
+        image: docker.cloudentity.io/rego-env:v6-20241212-064355-0d923fba
 
         ## Environment expiration date
         ##
