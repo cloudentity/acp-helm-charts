@@ -680,7 +680,7 @@ faas:
 
         ## Environment image
         ##
-        image: docker.cloudentity.io/rego-env:v6-20241212-064355-0d923fba
+        image: docker.cloudentity.io/rego-env:v6-20250114-112120-54d42910
 
         ## Environment expiration date
         ##
