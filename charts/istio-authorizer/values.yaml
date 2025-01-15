@@ -3,7 +3,7 @@
 image:
   ## Image repository
   ##
-  repository: docker.cloudentity.io/istio-authorizer
+  repository: docker.secureauth.com/istio-authorizer
 
   ## Image pull policy
   ##
@@ -48,7 +48,7 @@ podAnnotations: []
 ## istio-authorizer image registry secret names as an array
 ##
 imagePullSecrets:
-  - name: docker.cloudentity.io
+  - name: docker.secureauth.com
 
 ## Pod security context
 ##

@@ -51,8 +51,8 @@ _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documen
 
 ### From 1.15.0 to 1.15.1
 
-Version 1.15.1 of istio authorizer helm chart uses `docker.cloudentity.io` as the secret name referencing Cloudentity registry.
-If you're using the `artifactory` and haven't overridden `imagePullSecrets` before, you have to create a new secret with the name `docker.cloudentity.io`
+Version 1.15.1 of istio authorizer helm chart uses `docker.secureauth.com` as the secret name referencing Cloudentity registry.
+If you're using the `artifactory` and haven't overridden `imagePullSecrets` before, you have to create a new secret with the name `docker.secureauth.com`
 See [Docker Pull Credentials](#docker-pull-credentials).
 
 ## Configuration
@@ -72,7 +72,7 @@ Istio authorizer defines Pod that uses a Secret to pull an image from a private 
 To manually configure Docker credentials, first create a Secret by providing credentials on the command line:
 
 ```console
-kubectl create secret docker-registry docker.cloudentity.io --docker-server=docker.cloudentity.io --docker-username=<your-name> --docker-password=<your-password>
+kubectl create secret docker-registry docker.secureauth.com --docker-server=docker.secureauth.com --docker-username=<your-name> --docker-password=<your-password>
 ```
 
 ### Prerequisites for deploying and protecting services
