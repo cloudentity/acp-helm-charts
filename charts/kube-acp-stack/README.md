@@ -71,6 +71,12 @@ $ helm upgrade [RELEASE_NAME] acp/kube-acp-stack
 
 _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
 
+### From 2.23.1 to 2.23.2
+
+Version 2.23.2 of ACP kube stack helm chart uses `docker.secureauth.com` as the secret name referencing SecureAuth registry.
+If you're using the `docker.cloudentity.io` and haven't overridden `imagePullSecrets` before, you have to create a new secret with the name `docker.secureauth.com`
+See [Docker Pull Credentials](#docker-pull-credentials).
+
 ### From 2.x to 2.13.1
 
 Default values for charts dependencies now set `fullnameOverride` to standarize database connection URLs. Users that want to keep old databases naming should set this values to `null`.

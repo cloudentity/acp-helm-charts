@@ -49,6 +49,12 @@ $ helm upgrade [RELEASE_NAME] [CHART] --install
 
 _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
 
+### From 2.23.0 to 2.23.1
+
+Version 2.23.1 of istio authorizer helm chart uses `docker.secureauth.com` as the secret name referencing SecureAuth registry.
+If you're using the `docker.cloudentity.io` and haven't overridden `imagePullSecrets` before, you have to create a new secret with the name `docker.secureauth.com`
+See [Docker Pull Credentials](#docker-pull-credentials).
+
 ### From 1.15.0 to 1.15.1
 
 Version 1.15.1 of istio authorizer helm chart uses `docker.cloudentity.io` as the secret name referencing Cloudentity registry.

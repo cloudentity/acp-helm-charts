@@ -49,6 +49,12 @@ $ helm upgrade [RELEASE_NAME] [CHART] --install
 
 _See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
 
+### From 2.23.1 to 2.23.2
+
+Version 2.23.2 of ACP helm chart uses `docker.secureauth.com` as the secret name referencing SecureAuth registry.
+If you're using the `docker.cloudentity.io` and haven't overridden `imagePullSecrets` before, you have to create a new secret with the name `docker.secureauth.com`
+See [Docker Pull Credentials](#docker-pull-credentials).
+
 ### Update to 2.21.0
 
 * Support for docker faas envs has beed added at `faas.environments`
