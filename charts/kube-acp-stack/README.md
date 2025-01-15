@@ -85,8 +85,8 @@ Dependency redis helm chart was replaced by redis-cluster helm chart. The old re
 
 ### From 0.14.x to 0.15.3
 
-Version 0.15.1 of ACP kube stack helm chart uses `docker.secureauth.com` as the secret name referencing Cloudentity registry.
-If you're using the `artifactory` and haven't overridden `imagePullSecrets` before, you have to create a new secret with the name `docker.secureauth.com`
+Version 0.15.1 of ACP kube stack helm chart uses `docker.cloudentity.io` as the secret name referencing Cloudentity registry.
+If you're using the `artifactory` and haven't overridden `imagePullSecrets` before, you have to create a new secret with the name `docker.cloudentity.io`
 See [Docker Pull Credentials](#docker-pull-credentials).
 
 ### From 0.15.x to 0.15.3
@@ -95,8 +95,8 @@ Due to bug in ACP, redis-cluster implementation was reverted back to redis helm 
 
 ### From 0.15.0 to 0.15.1 
 
-Version 0.15.1 of ACP kube stack helm chart uses `docker.secureauth.com` as the secret name referencing Cloudentity registry.
-If you're using the `artifactory` and haven't overridden `imagePullSecrets` before, you have to create a new secret with the name `docker.secureauth.com`
+Version 0.15.1 of ACP kube stack helm chart uses `docker.cloudentity.io` as the secret name referencing Cloudentity registry.
+If you're using the `artifactory` and haven't overridden `imagePullSecrets` before, you have to create a new secret with the name `docker.cloudentity.io`
 See [Docker Pull Credentials](#docker-pull-credentials).
 
 ### From 0.14.x to 0.15.0, 0.15.1, 0.15.2
