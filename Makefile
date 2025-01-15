@@ -37,9 +37,9 @@ create-cluster:
 		--name acp-helm-charts \
 		--config tests/config/kind.yaml
 	kubectl create namespace ${NAMESPACE}
-	kubectl create secret docker-registry docker.cloudentity.io \
+	kubectl create secret docker-registry docker.secureauth.com \
 		--namespace ${NAMESPACE} \
-		--docker-server=docker.cloudentity.io \
+		--docker-server=docker.secureauth.com \
 		--docker-username=${DOCKER_USER} \
 		--docker-password=${DOCKER_PWD}
 

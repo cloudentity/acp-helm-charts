@@ -3,7 +3,7 @@
 image:
   ## Image repository
   ##
-  repository: docker.cloudentity.io/acp-distroless
+  repository: docker.secureauth.com/acp-distroless
 
   ## Image pull policy
   ##
@@ -16,7 +16,7 @@ image:
 ## Global Docker registry secret names as an array
 ##
 imagePullSecrets:
-  - name: docker.cloudentity.io
+  - name: docker.secureauth.com
 
 ## String to partially override acp.name
 ##

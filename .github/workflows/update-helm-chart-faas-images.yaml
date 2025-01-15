@@ -37,7 +37,7 @@ jobs:
           echo "REGO_V6=${{ github.event.inputs.rego_v6 }}" >> $GITHUB_ENV
           echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
       - name: Docker Registry Login
-        run: echo "${{ secrets.PUBLIC_DOCKER_CLOUDENTITY_REPO_DEV_PASSWORD }}" | docker login docker.cloudentity.io -u "${{ secrets.PUBLIC_DOCKER_CLOUDENTITY_REPO_DEV_USERNAME }}" --password-stdin
+        run: echo "${{ secrets.PUBLIC_DOCKER_CLOUDENTITY_REPO_DEV_PASSWORD }}" | docker login docker.secureauth.com -u "${{ secrets.PUBLIC_DOCKER_CLOUDENTITY_REPO_DEV_USERNAME }}" --password-stdin
       - name: Update Helm Values File
         shell: bash
         run: |
@@ -47,7 +47,7 @@ jobs:
             if [ "$update" = "true" ]; then
               version=${env##*_}
               component=${env%%_*}
-              image=docker.cloudentity.io/${component,,}-env:${version,,}-$TAG
+              image=docker.secureauth.com/${component,,}-env:${version,,}-$TAG
               yq ".faas.environments.${component,,}.${version,,}.image = \"${image}\"" charts/acp/values.yaml > values.updated
               yq "." charts/acp/values.yaml | diff -B - values.updated | patch charts/acp/values.yaml - || true
               rm -f values.updated charts/acp/values.yaml.orig

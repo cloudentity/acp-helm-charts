@@ -70,5 +70,5 @@ Istio authorizer defines Pod that uses a Secret to pull an image from a private 
 To manually configure Docker credentials, first create a Secret by providing credentials on the command line:
 
 ```console
-kubectl create secret docker-registry docker.cloudentity.io --docker-server=docker.cloudentity.io --docker-username=<your-name> --docker-password=<your-password>
+kubectl create secret docker-registry docker.secureauth.com --docker-server=docker.secureauth.com --docker-username=<your-name> --docker-password=<your-password>
 ```
