@@ -680,7 +680,7 @@ faas:
 
         ## Environment image
         ##
-        image: docker.secureauth.com/rego-env:v6-20250220-155936-8027ff97
+        image: docker.secureauth.com/rego-env:v6-20250313-083507-31f7ba83
 
         ## Environment expiration date
         ##
