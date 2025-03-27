@@ -4,7 +4,7 @@ dependencies:
   async: 3.2.6
   async-lock: 1.4.1
   aws-sdk: 2.1541.0
-  axios: 1.7.9
+  axios: 1.8.3
   axios-retry: 4.0.0
   body-parser: 1.20.3
   chalk: 5.3.0
