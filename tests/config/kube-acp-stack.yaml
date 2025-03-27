@@ -97,3 +97,15 @@ redis-cluster:
     nodes: 3
     replicas: 0
   password: p@ssw0rd!
+timescaledb-single:
+  enabled: true
+  image:
+    tag: pg17.2-ts2.18.2
+  fullnameOverride: timescaledb
+  patroni:
+    kubernetes:
+      leader_label_value: "master"
+      standby_leader_label_value: "master"
+  secrets:
+    credentials:
+      PATRONI_SUPERUSER_PASSWORD: "PaSsW0rD"
