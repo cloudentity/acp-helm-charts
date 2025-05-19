@@ -3,10 +3,6 @@ name: Update FaaS Images
 on:
   workflow_dispatch:
     inputs:
-      node_v4:
-        description: 'Update Node v4 (true/false)'
-        required: true
-        default: 'false'
       node_v5:
         description: 'Update Node v5 (true/false)'
         required: true
@@ -31,7 +27,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Set Environment Variables
         run: |
-          echo "NODE_V4=${{ github.event.inputs.node_v4 }}" >> $GITHUB_ENV
           echo "NODE_V5=${{ github.event.inputs.node_v5 }}" >> $GITHUB_ENV
           echo "NODE_V6=${{ github.event.inputs.node_v6 }}" >> $GITHUB_ENV
           echo "REGO_V6=${{ github.event.inputs.rego_v6 }}" >> $GITHUB_ENV
@@ -41,7 +36,7 @@ jobs:
       - name: Update Helm Values File
         shell: bash
         run: |
-          environments=("NODE_V4" "NODE_V5" "NODE_V6" "REGO_V6")
+          environments=("NODE_V5" "NODE_V6" "REGO_V6")
           for env in "${environments[@]}"; do
             update=$(eval echo "\$$env")
             if [ "$update" = "true" ]; then
