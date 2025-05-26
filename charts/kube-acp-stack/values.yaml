@@ -44,7 +44,7 @@ redis-cluster:
               ARCH="amd64"
             fi
 
-            wget https://cloudentity-redisearch.s3.amazonaws.com/redisearch-oss-coord-v2.6.28-$ARCH.so -O /redismodules/redisearch.so
+            wget https://cloudentity-redisearch.s3.amazonaws.com/redisearch-oss-coord-v2.10.14-$ARCH.so -O /redismodules/redisearch.so
             chmod +x /redismodules/redisearch.so
         volumeMounts:
           - mountPath: /redismodules
