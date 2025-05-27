@@ -10,10 +10,10 @@ NAMESPACE ?= acp-system
 HELM_CHARTS = acp-cd,acp,istio-authorizer,kube-acp-stack
 
 # istio version
-ISTIO_VERSION ?= 1.13.3
+ISTIO_VERSION ?= 1.26.0
 
 # ACP helm chart version
-ACP_VERSION ?= 2.24.0
+ACP_VERSION ?= 2.25.0
 export ACP_VERSION
 
 ### TARGETS ###
